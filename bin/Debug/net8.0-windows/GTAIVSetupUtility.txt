@@ -1,0 +1,2 @@
+2026-01-10 03:31:58.4032|INFO|GTAIVSetupUtility.ViewModels.MainWindowViewModel|Detected Linux - DXVK functionality will be disabled.
+2026-01-10 03:32:36.5590|INFO|GTAIVSetupUtility.ViewModels.MainWindowViewModel|DXVK functionality disabled for Linux.
