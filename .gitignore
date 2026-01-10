@@ -1,0 +1,42 @@
+﻿## Build Results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+artifacts/
+
+## JetBrains Rider / IntelliJ
+.idea/
+*.sln.iml
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## .NET & NuGet
+project.lock.json
+project.fragment.lock.json
+*.nupkg
+**/packages/*
+!**/packages/build/
+.nuget/
+nuget.exe
+
+## Visual Studio Code
+.vscode/
+
+## OS Generated Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## Testing & Benchmarking
+TestResults/
+BenchmarkDotNet.Artifacts/
+*.dotCover
