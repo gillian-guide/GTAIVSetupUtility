@@ -84,4 +84,8 @@
       <Content Include=".github\workflows\build.yml" />
       <Content Include=".github\workflows\github-releases-to-discord.yml" />
     </ItemGroup>
+
+    <ItemGroup>
+        <TrimmerRootAssembly Include="System.Management" />
+    </ItemGroup>
 </Project>
