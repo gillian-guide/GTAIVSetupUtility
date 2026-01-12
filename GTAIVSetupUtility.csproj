@@ -32,6 +32,8 @@
         <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+
+        <ApplicationIcon>Assets\ivlogo.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
