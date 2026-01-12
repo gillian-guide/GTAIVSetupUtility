@@ -29,7 +29,7 @@ jobs:
         
     - name: Publish Framework-Dependent Single-File
       run: |
-        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/FD_SingleFile -r win-x64 -p:SelfContained=false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true  -p:PublishTrimmed=true -p:TrimMode=link -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false
+        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/FD_SingleFile -r win-x64 -p:SelfContained=false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true  -p:PublishTrimmed=true -p:TrimMode=link -p:DebugType=None -p:DebugSymbols=false
 
     - name: Publish Self-Contained Folder
       run: |
