@@ -46,7 +46,7 @@ namespace GTAIVSetupUtility.ViewModels
         private TextDecorationCollection? _directoryLabelDecorations = TextDecorations.Underline;
 
         [ObservableProperty]
-        private TextDecorationCollection? _tipsNoteDecorations = null;
+        private TextDecorationCollection? _tipsNoteDecorations;
 
         [ObservableProperty]
         private bool _isDirectoryButtonDefault = true;
@@ -64,7 +64,7 @@ namespace GTAIVSetupUtility.ViewModels
         private bool _isLaunchOptionsPanelEnabled;
 
         [ObservableProperty]
-        private bool _installAsync = false;
+        private bool _installAsync;
 
         [ObservableProperty]
         private bool _isAsyncEnabled;
@@ -139,16 +139,16 @@ namespace GTAIVSetupUtility.ViewModels
         [ObservableProperty]
         private bool _isLaunchOptionsButtonDefault;
 
-        public bool IsLinux = false;
+        public bool IsLinux;
         private int _vram1 = 0;
         private int _vram2 = 0;
-        private bool _ffix = false;
-        private bool _ffixLatest = false;
-        private bool _zpatch = false;
-        private bool _zpatchLatest = false;
-        private bool _isRetail = false;
-        private bool _isIvsdkInstalled = false;
-        private bool _dxvkOnIgpu = false;
+        private bool _ffix;
+        private bool _ffixLatest;
+        private bool _zpatch;
+        private bool _zpatchLatest;
+        private bool _isRetail;
+        private bool _isIvsdkInstalled;
+        private bool _dxvkOnIgpu;
         private bool _firstGpu = true;
         private readonly string _rtssConfig = File.Exists(@"C:\Program Files (x86)\RivaTuner Statistics Server\Profiles\GTAIV.exe.cfg")
             ? @"C:\Program Files (x86)\RivaTuner Statistics Server\Profiles\GTAIV.exe.cfg"
@@ -156,18 +156,17 @@ namespace GTAIVSetupUtility.ViewModels
                 ? @"C:\Program Files (x86)\RivaTuner Statistics Server\Profiles\Global"
                 : string.Empty;
 
-        private bool _rtssConflict = false;
+        private bool _rtssConflict;
         private string? _iniPath = string.Empty;
-        private string? _iniPathZp = string.Empty;
 
-        public int InstallDxvk = 0;
-        private int _vkDgpuDxvkSupport = 0;
-        private int _vkIgpuDxvkSupport = 0;
-        private int _gplSupport = 0;
+        public int InstallDxvk;
+        private int _vkDgpuDxvkSupport;
+        private int _vkIgpuDxvkSupport ;
+        private int _gplSupport;
         private bool _igpuOnly = true;
         private bool _dgpuOnly = true;
-        private bool _intelIgpu = false;
-        private bool _enableAsync = false;
+        private bool _intelIgpu;
+        private bool _enableAsync;
         
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -422,7 +421,6 @@ namespace GTAIVSetupUtility.ViewModels
                 zolikaPatchIni);
 
             _iniPath = modConfig.FusionFixIniPath;
-            _iniPathZp = modConfig.ZolikaPatchIniPath;
             _ffix = modConfig.IsFusionFix;
             
             (bool isDxvkInstalled, bool isFusionFixLatest) = HelperService.DetectDxvkInstallation(folderPath);

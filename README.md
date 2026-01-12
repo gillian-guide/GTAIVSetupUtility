@@ -33,7 +33,6 @@ Contribution is highly welcome. I'm poorly experienced with C#, but this rewrite
 Following NuGet packages were used to create this app:
 
 - [NLog](https://www.nuget.org/packages/NLog) by Jarek Kowalski, Kim Chriestensen, Julian Verdurmen - used for logging.
-- [FluentIcons.Avalonia](https://www.nuget.org/packages/FluentIcons.Avalonia) by davidxuang - used for icons.
 - [MessageBox.Avalonia](https://www.nuget.org/packages/MessageBox.Avalonia) by Lary - used for stylized message boxes.
 - And Microsoft's official packages such as [System.Management](https://www.nuget.org/packages/System.Management/) for convenience and functional code.
 
