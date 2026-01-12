@@ -27,7 +27,7 @@ Semi-automatically installs DXVK and launch options for your GTA IV installation
 - Providing tips for what the launch options actually do. And *not* providing useless options.
 
 ## Contribution
-Contribution is highly welcome. I'm poorly experienced with C#, but this rewrite was needed for many reasons. And so, the current code is extremely clunky and works out of prayers.
+Contribution is highly welcome. Some code, like the vulkan checker, require maintenance, and more localizations are possible to implement if desired. However, ensure that the functionality is not compromised in any way when contributing.
 
 ## Attribution
 Following packages were used to create this app:
