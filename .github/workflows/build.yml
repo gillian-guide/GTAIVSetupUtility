@@ -25,7 +25,7 @@ jobs:
       
     - name: Publish Self-Contained Single-File
       run: |
-        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_SingleFile -r win-x64 --self-contained true -p:EnableCompressionInSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishReadyToRun=false -p:InvariantGlobalization=true -p:DebugType=None -p:DebugSymbols=false
+        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SingleFile -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false
         
     - name: Publish Framework-Dependent Single-File
       run: |
