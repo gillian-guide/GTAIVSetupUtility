@@ -1,7 +1,7 @@
 # Gillian's GTA IV Setup Utility
 Semi-automatically installs DXVK and launch options for your GTA IV installation (+extra). It automatically checks your hardware and what options should be available (aswell as setting defaults).
 
-![image](https://github.com/user-attachments/assets/347f6315-570a-49fc-8a5f-2e4677373029)
+<img width="1007" height="584" alt="image" src="https://github.com/user-attachments/assets/ac01eb25-bf25-4121-ac94-a9347366452c" />
 
 ## Usage
 - Launch the tool.
@@ -30,11 +30,12 @@ Semi-automatically installs DXVK and launch options for your GTA IV installation
 Contribution is highly welcome. I'm poorly experienced with C#, but this rewrite was needed for many reasons. And so, the current code is extremely clunky and works out of prayers.
 
 ## Attribution
-Following NuGet packages were used to create this app:
+Following packages were used to create this app:
 
+- [Avalonia UI](https://docs.avaloniaui.net) - used for having a wonderful UI framework for native Windows Fluent UI
+- [MessageBox.Avalonia](https://www.nuget.org/packages/MessageBox.Avalonia) by Lary - used for Avalonia-stylized message boxes.
 - [NLog](https://www.nuget.org/packages/NLog) by Jarek Kowalski, Kim Chriestensen, Julian Verdurmen - used for logging.
-- [MessageBox.Avalonia](https://www.nuget.org/packages/MessageBox.Avalonia) by Lary - used for stylized message boxes.
-- And Microsoft's official packages such as [System.Management](https://www.nuget.org/packages/System.Management/) for convenience and functional code.
+- Microsoft's official package, such as [System.Management](https://www.nuget.org/packages/System.Management/).
 
 And these were used during development, but were dropped along the way:
 
