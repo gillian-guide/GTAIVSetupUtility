@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -26,10 +27,14 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            bool debug = File.Exists("DEBUG");
+            var loglevel = debug ? LogLevel.Debug : LogLevel.Info;
+            Localizations.Resources.Culture = debug ? new CultureInfo(CultureInfo.CurrentUICulture.Name) :  new CultureInfo("en-US");
+            
             if (File.Exists("GTAIVSetupUtilityLog.txt")) { File.Delete("GTAIVSetupUtilityLog.txt"); }
             LogManager.Setup().LoadConfiguration(builder => {
                 builder.ForLogger().FilterMinLevel(NLog.LogLevel.Debug).WriteToConsole();
-                builder.ForLogger().FilterMinLevel(NLog.LogLevel.Info).WriteToFile(fileName: "GTAIVSetupUtilityLog.txt");
+                builder.ForLogger().FilterMinLevel(loglevel).WriteToFile(fileName: "GTAIVSetupUtilityLog.txt");
             });
             
             Logger.Info(" Initializing the application...");
@@ -54,11 +59,11 @@ public partial class App : Application
                 
                 viewModel.InstallDxvk = 0; 
                 viewModel.IsDxvkPanelEnabled = false;
+                viewModel.IsLinux = true;
 
                 var box = MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard(
-                    "Linux Detected - DXVK Unavailable",
-                    "DXVK installation and Vulkan checking is only available on Windows.\n\n" +
-                    "These features have been disabled. Launch options configuration remains available.",
+                    Localizations.Resources.LinuxDetectedTitle,
+                    Localizations.Resources.LinuxDetectedDescription.Replace("\\n", "\n"),
                     MsBox.Avalonia.Enums.ButtonEnum.Ok,
                     MsBox.Avalonia.Enums.Icon.Info);
                 
@@ -69,7 +74,7 @@ public partial class App : Application
                 Logger.Info(" Application is not running under Wine.");
                 
                 Logger.Info(" Initializing the vulkan check...");
-                var vulkanInfo = VulkanCheckerService.VulkanCheck();
+                var vulkanInfo = await VulkanCheckerService.VulkanCheck();
                 await viewModel.ReceiveVulkanInfoAsync(vulkanInfo);
             }
         }

@@ -10,7 +10,7 @@
         x:Class="GTAIVSetupUtility.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         
-        TransparencyLevelHint="Mica"
+        TransparencyLevelHint="Mica, AcrylicBlur"
         Background="Transparent"
         Icon="/Assets/ivlogo.ico"
         SizeToContent="WidthAndHeight"
@@ -43,12 +43,14 @@
         <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,0,0,5">
             <TextBox Grid.Column="0"
                      Text="{Binding GameDirectoryPath}" 
-                     IsReadOnly="True"/>
+                     IsReadOnly="True"
+                     IsEnabled="False"/>
             <Button Grid.Column="1"
                     Content="{x:Static lang:Resources.OpenButton}" 
                     Command="{Binding SelectDirectoryCommand}"
                     Margin="5,0,0,0"
-                    IsDefault="{Binding IsDirectoryButtonDefault}"/>
+                    IsDefault="{Binding IsDirectoryButtonDefault}"
+                    IsEnabled="{Binding IsDirectoryButtonEnabled}"/>
         </Grid>
         
         <!-- Tips Section -->
@@ -148,13 +150,13 @@
                                Foreground="DarkGray"
                                Margin="3,0,0,0"/>
                     <RadioButton Grid.Column="2"
-                                 Content="3GB" 
+                                 Content="{x:Static lang:Resources.VidMemLimit3GB}" 
                                  IsChecked="{Binding IsVidMem3GB}" 
                                  IsEnabled="{Binding IsVidMemRadioEnabled}"
                                  Command="{Binding VidMemLockClickCommand}"
                                  Margin="5,0,0,0"/>
                     <RadioButton Grid.Column="3"
-                                 Content="4GB" 
+                                 Content="{x:Static lang:Resources.VidMemLimit4GB}" 
                                  IsChecked="{Binding !IsVidMem3GB}" 
                                  IsEnabled="{Binding IsVidMemRadioEnabled}"
                                  Command="{Binding VidMemLockClickCommand}"
@@ -190,7 +192,7 @@
         </Grid>
         
         <!-- Footer -->
-        <Grid Grid.Row="5" ColumnDefinitions="Auto,Auto,Auto">
+        <Grid Grid.Row="5" ColumnDefinitions="*,*,Auto">
             <Button Grid.Column="0"
                     Content="{x:Static lang:Resources.GuideLink}"
                     Command="{Binding OpenHyperlinkCommand}"
@@ -211,7 +213,7 @@
                     Foreground="SkyBlue"
                     Padding="0"
                     FontSize="12"
-                    Margin="65,0,0,0"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"/>
     
             <Button Grid.Column="2"
@@ -219,6 +221,7 @@
                     Margin="5,0,0,0"
                     Height="20"
                     Width="20"
+                    HorizontalAlignment="Right"
                     Padding="0">
                 <ic:FluentIcon Icon="Info" IconVariant="Regular" IconSize="Size12" FontSize="15"/>
             </Button>

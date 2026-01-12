@@ -3,7 +3,7 @@
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -18,7 +18,349 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="WelcomeText" xml:space="preserve">
+        <value>Здравия в Gillian's GTA IV Setup Utility!</value>
+    </data>
+    <data name="OpenButton" xml:space="preserve">
+        <value>Открыть...</value>
+    </data>
+    <data name="TipsNote" xml:space="preserve">
+        <value>Не трогайте настройки, если не уверены в том, что делаете.</value>
+    </data>
+    <data name="Tips" xml:space="preserve">
+        <value>Подсказки</value>
+    </data>
+    <data name="InstallAsyncPatch" xml:space="preserve">
+        <value>Установить async патч</value>
+    </data>
+    <data name="EnableVSync" xml:space="preserve">
+        <value>Включить VSync</value>
+    </data>
+    <data name="SetMaxFrameLatency" xml:space="preserve">
+        <value>Уст. Max Frame Latency</value>
+    </data>
+    <data name="UninstallDxvk" xml:space="preserve">
+        <value>Удалить</value>
+    </data>
+    <data name="NoRestrictions" xml:space="preserve">
+        <value>-norestrictions</value>
+    </data>
+    <data name="NoMemRestrict" xml:space="preserve">
+        <value>-nomemrestrict</value>
+    </data>
+    <data name="AvailableVidMem" xml:space="preserve">
+        <value>-availablevidmem</value>
+    </data>
+    <data name="LockedTo" xml:space="preserve">
+        <value>до:</value>
+    </data>
+    <data name="BorderlessWindowed" xml:space="preserve">
+        <value>Окно без границ</value>
+    </data>
+    <data name="MonitorDetails" xml:space="preserve">
+        <value>Сведения о мониторе</value>
+    </data>
+    <data name="SetupLaunchOptions" xml:space="preserve">
+        <value>Настроить параметры запуска</value>
+    </data>
+    <data name="GuideLink" xml:space="preserve">
+        <value>Мое руководство для инфы и оптимальных настроек графики</value>
+    </data>
+    <data name="OpenSourceLink" xml:space="preserve">
+        <value>Исходный код</value>
+    </data>
+    <data name="DirectoryLabelUnselected" xml:space="preserve">
+        <value>Укажите папку с игрой перед использованием:</value>
+    </data>
+    <data name="DirectoryLabelSelected" xml:space="preserve">
+        <value>Папка с игрой:</value>
+    </data>
+    <data name="DXVKTextInstalled" xml:space="preserve">
+        <value>Переуст. DXVK</value>
+    </data>
+    <data name="DXVKTextNotInstalled" xml:space="preserve">
+        <value>Установить DXVK</value>
+    </data>
     <data name="Title" xml:space="preserve">
         <value>Gillian's GTA IV Setup Utility</value>
+    </data>
+    <data name="InstallDXVKPrompt" xml:space="preserve">
+        <value>Установить DXVK?</value>
+    </data>
+    <data name="InstallDXVKPromptDescription" xml:space="preserve">
+        <value>Ваша встроенная графика поддерживает DXVK, но дискретная видеокарта — нет. Вы все равно хотите установить DXVK?</value>
+    </data>
+    <data name="DXVKTextDownloading" xml:space="preserve">
+        <value>Скачивание... ({0}%)</value>
+    </data>
+    <data name="DXVKTextInstalling" xml:space="preserve">
+        <value>Установка...</value>
+    </data>
+    <data name="WhichDXVKPrompt" xml:space="preserve">
+        <value>Какую версию DXVK установить?</value>
+    </data>
+    <data name="WhichDXVKPromptDescription" xml:space="preserve">
+        <value>Ваша встроенная видеокарта поддерживает более новую версию DXVK, чем ваша дискретная — какую версию вы хотите установить?\n\nНажмите «Да», чтобы установить версию, соответствующую вашей дискретной видеокарте.\n\nНажмите «Нет», чтобы установить версию, соответствующую вашей встроенной видеокарте.</value>
+    </data>
+    <data name="InteliGPUDXVKPrompt" xml:space="preserve">
+        <value>DXVK на Intel iGPUs</value>
+    </data>
+    <data name="InteliGPUDXVKPromptDescription" xml:space="preserve">
+        <value>Ваш ПК имеет только встроенную графику Intel. Хотя на бумаге она поддерживает более новые версии, некоторые говорят, что DXVK 1.10.1 может быть единственной поддерживаемой версией. Хотите установить её?\n\nЕсли выберете «Нет», DXVK будет установлен по стандартной процедуре.</value>
+    </data>
+    <data name="AsyncTipTitle" xml:space="preserve">
+        <value>На счёт async</value>
+    </data>
+    <data name="AsyncTipDescription" xml:space="preserve">
+        <value>DXVK-async — лучшая альтернатива для игры без фризов. Так как ваша видеокарта не поддерживает GPL с Fast Linking, вы можете уменьшить статтеры с помощью асинхронной компиляции шейдеров, что будет немного быстрее традиционного метода.</value>
+    </data>
+    <data name="VSyncTipTitle" xml:space="preserve">
+        <value>На счёт VSync</value>
+    </data>
+    <data name="VSyncTipDescription" xml:space="preserve">
+        <value>Внутриигровая вертикальная синхронизация (VSync) вызывает проблемы с плавностью. Лучше использовать реализацию VSync от DXVK.\n\nРекомендуется включить эту опцию, а внутриигровую — выключить.</value>
+    </data>
+    <data name="LatencyTipTitle" xml:space="preserve">
+        <value>На счёт Max Frame Latency</value>
+    </data>
+    <data name="LatencyTipDescription" xml:space="preserve">
+        <value>Эта опция может помочь избежать дополнительных проблем с плавностью. Рекомендуется оставить включенной.</value>
+    </data>
+    <data name="NoRestrictionsTipTitle" xml:space="preserve">
+        <value>На счёт -norestrictions</value>
+    </data>
+    <data name="NoRestrictionsTipDescription" xml:space="preserve">
+        <value>Эта опция позволяет выставлять любые настройки в игре независимо от ограничений, накладываемых игрой. Рекомендуется оставить включенной.</value>
+    </data>
+    <data name="NoMemRestrictTipTitle" xml:space="preserve">
+        <value>На счёт -nomemrestrict</value>
+    </data>
+    <data name="NoMemRestrictTipDescription" xml:space="preserve">
+        <value>Эта опция позволяет игре использовать всю выделенную память до предела. Рекомендуется оставить включенной.</value>
+    </data>
+    <data name="AvailableVidMemTipTitle" xml:space="preserve">
+        <value>На счёт -availablevidmem</value>
+    </data>
+    <data name="AvailableVidMemTipDescription" xml:space="preserve">
+        <value>Эта опция принудительно задает значение видеопамяти, так как игра иногда не может определить его автоматически. Рекомендуется оставить значение по умолчанию.</value>
+    </data>
+    <data name="AvailableVidMemLockTipDescription" xml:space="preserve">
+        <value>Эта опция позволяет переключаться между ограничением в 3ГБ и 4ГБ видеопамяти при настройке -availablevidmem.\n\nИгра 32-битная, поэтому идти выше 4ГБ бессмысленно. Однако некоторые пользователи сообщали о меньшем количестве проблем при блокировке до 3ГБ.\n\nРекомендуется оставить по умолчанию. Опция отключена, если обнаружен последний FusionFix.</value>
+    </data>
+    <data name="AvailableVidMemLockTipTitle" xml:space="preserve">
+        <value>На счёт ограничений объема памяти</value>
+    </data>
+    <data name="WindowedTipTitle" xml:space="preserve">
+        <value>На счёт окна без границ</value>
+    </data>
+    <data name="WindowedTipDescription" xml:space="preserve">
+        <value>Эта опция позволяет использовать полноэкранный оконный режим без границ вместо эксклюзивного полноэкранного режима. Обеспечивает более приятное использование ПК и иногда улучшенную производительность. Рекомендуется оставить эту опцию включенной.</value>
+    </data>
+    <data name="MonitorDetailsTipTitle" xml:space="preserve">
+        <value>На счёт сведений о мониторе</value>
+    </data>
+    <data name="MonitorDetailsTipDescription" xml:space="preserve">
+        <value>Эта опция принудительно задает разрешение и частоту обновления, так как игра иногда не может сделать это автоматически. Рекомендуется оставить по умолчанию.</value>
+    </data>
+    <data name="VidMemLimit3GB" xml:space="preserve">
+        <value>3ГБ</value>
+    </data>
+    <data name="VidMemLimit4GB" xml:space="preserve">
+        <value>4ГБ</value>
+    </data>
+    <data name="TextYes" xml:space="preserve">
+        <value>Да</value>
+    </data>
+    <data name="TextNo" xml:space="preserve">
+        <value>Нет</value>
+    </data>
+    <data name="SupportNone" xml:space="preserve">
+        <value>Нет</value>
+    </data>
+    <data name="SupportLegacy" xml:space="preserve">
+        <value>Устаревшая (до 2.x)</value>
+    </data>
+    <data name="SupportNewer" xml:space="preserve">
+        <value>Зафиксирована на 2.6.2</value>
+    </data>
+    <data name="SupportLatest" xml:space="preserve">
+        <value>Последняя</value>
+    </data>
+    <data name="SupportUnknown" xml:space="preserve">
+        <value>Неизвестно</value>
+    </data>
+    <data name="SupportIntel" xml:space="preserve">
+        <value>Зафиксирована на 1.10.1</value>
+    </data>
+    <data name="AboutIntroText" xml:space="preserve">
+        <value>Это ПО создано Gillian для руководства по моддингу GTA IV. Ниже приведена внутренняя информация, которая может быть полезна для отладки.</value>
+    </data>
+    <data name="SupportFull" xml:space="preserve">
+        <value>Полная поддержка с Fast Linking</value>
+    </data>
+    <data name="SupportPartly" xml:space="preserve">
+        <value>Частичная поддержка, нет Fast Linking</value>
+    </data>
+    <data name="AboutTitle" xml:space="preserve">
+        <value>О программе</value>
+    </data>
+    <data name="AboutDXVKToInstall" xml:space="preserve">
+        <value>Версия DXVK для установки</value>
+    </data>
+    <data name="AboutdGPUDXVKSupport" xml:space="preserve">
+        <value>Поддержка DXVK (дискретная)</value>
+    </data>
+    <data name="AboutiGPUDXVKSupport" xml:space="preserve">
+        <value>Поддержка DXVK (встроенная)</value>
+    </data>
+    <data name="SelectGTAIVFolder" xml:space="preserve">
+        <value>Выберите папку, содержащую GTAIV.exe</value>
+    </data>
+    <data name="InvalidFolderTitle" xml:space="preserve">
+        <value>Неверная папка</value>
+    </data>
+    <data name="InvalidFolderNoGTAIV" xml:space="preserve">
+        <value>В выбранной папке нет GTA IV.</value>
+    </data>
+    <data name="InvalidFolderWrongVersion" xml:space="preserve">
+        <value>В выбранной папке есть GTAIV.exe, но эта версия не поддерживается програмой.</value>
+    </data>
+    <data name="SupportPresent" xml:space="preserve">
+        <value>Присутствует</value>
+    </data>
+    <data name="SupportOutdated" xml:space="preserve">
+        <value>Присутствует, устарела</value>
+    </data>
+    <data name="SupportConflict" xml:space="preserve">
+        <value>Присутствует с конфликтом</value>
+    </data>
+    <data name="LatestText" xml:space="preserve">
+        <value>Последний {0}</value>
+    </data>
+    <data name="SteamVersionNoticeTitle" xml:space="preserve">
+        <value>Уведомление для Steam-версии</value>
+    </data>
+    <data name="SteamVersionNoticeDescription" xml:space="preserve">
+        <value>Похоже, у вас есть файл commandline.txt, однако вы используете версию Steam/RGL, которая этот файл не использует.\n\nПеренесите эти параметры в параметры запуска Steam (Launch Options) или аргументы запуска.</value>
+    </data>
+    <data name="DXVKInstalledTitle" xml:space="preserve">
+        <value>DXVK установлен!</value>
+    </data>
+    <data name="DXVKInstalledDescription" xml:space="preserve">
+        <value>{0} был установлен!\n\nРекомендуется зайти в Steam -&gt; Настройки -&gt; Загрузки и отключить «Кэширование шейдеров» (Enable Shader Pre-caching) — это может улучшить производительность.\n\nКроме того, вы можете включить ReBAR и принудительно активировать его для игры — это тоже может повысить производительность.</value>
+    </data>
+    <data name="DXVKUninstalledTitle" xml:space="preserve">
+        <value>DXVK удален</value>
+    </data>
+    <data name="DXVKUninstalledDescription" xml:space="preserve">
+        <value>DXVK и все его остатки успешно удалены.</value>
+    </data>
+    <data name="LaunchOptionsSetUpTitle" xml:space="preserve">
+        <value>Параметры запуска настроены!</value>
+    </data>
+    <data name="LaunchOptionsSetUpDescription" xml:space="preserve">
+        <value>Следующие параметры запуска были настроены автоматически:\n\n{0}\n\nНе беспокойтесь, что значение видеопамяти не соответствует вашему полному объему - так и задумано, вы можете изменить его при необходимости, но реальной причины для этого нет.</value>
+    </data>
+    <data name="LaunchOptionsSteamTitle" xml:space="preserve">
+        <value>Информация о параметрах запуска в Steam/RGL</value>
+    </data>
+    <data name="LaunchOptionsSteamDescription" xml:space="preserve">
+        <value>Программа не может установить параметры запуска автоматически. Вставьте их в параметры запуска Steam/RGL вручную (они будут скопированы в буфер обмена после нажатия ОК):\n\n{0}\n\nНе беспокойтесь, что значение видеопамяти не соответствует вашему полному объему - так и задумано, вы можете изменить его при необходимости, но реальной причины для этого нет.</value>
+    </data>
+    <data name="FailedToCopyTitle" xml:space="preserve">
+        <value>Не удалось скопировать параметры запуска</value>
+    </data>
+    <data name="FailedToCopyDescription" xml:space="preserve">
+        <value>Приложение не смогло скопировать параметры в буфер обмена — введите их вручную:\n\n{0}</value>
+    </data>
+    <data name="ZPatchIniModifiedTitle" xml:space="preserve">
+        <value>ZolikaPatch.ini был изменен</value>
+    </data>
+    <data name="ZPatchIniModifiedDescription" xml:space="preserve">
+        <value>Файл ZolikaPatch.ini был изменен, чтобы внести запрошенные изменения и исправить все существующие проблемы с совместимостью.</value>
+    </data>
+    <data name="VulkanInfoCheckFullFailTitle" xml:space="preserve">
+        <value>Полный сбой проверки vulkaninfo</value>
+    </data>
+    <data name="VulkanInfoCheckFullFailDescription" xml:space="preserve">
+        <value>Проверка vulkaninfo полностью провалилась. Обычно это означает, что ни одна из ваших видеокарт не поддерживает Vulkan. Убедитесь, что драйверы обновлены (не полагайтесь на драйверы Windows Update).\n\nDXVK недоступен.</value>
+    </data>
+    <data name="NotificationsTitle" xml:space="preserve">
+        <value>Уведомления</value>
+    </data>
+    <data name="NotificationsDescription" xml:space="preserve">
+        <value>\n\nУбедитесь, что ваши драйверы обновлены - также не полагайтесь на драйверы Windows Update.</value>
+    </data>
+    <data name="VulkanInfoFailPartial" xml:space="preserve">
+        <value>Проверка vulkaninfo прошла частично. Обычно это означает, что одна из ваших видеокарт поддерживает Vulkan, но драйверы устарели. Утилита продолжит работу, предполагая это, но установка DXVK не рекомендуется.</value>
+    </data>
+    <data name="VulkanInfoCheckFailDGPU" xml:space="preserve">
+        <value>Проверка vulkaninfo не прошла для дискретной видеокарты, но прошла для встроенной. Обычно это означает, что дискретная карта не поддерживает Vulkan.\n\nDXVK доступен, но с расчетом на то, что вы будете играть на встроенной графике, а не на дискретной.</value>
+    </data>
+    <data name="VulkanInfoCheckOneGPUFail" xml:space="preserve">
+        <value>Проверка vulkaninfo не прошла для одной из видеокарт, но прошла для остальных. Обычно это означает, что одна из ваших дискретных карт не поддерживает Vulkan.\n\nDXVK доступен, но с расчетом на то, что вы будете играть на поддерживаемой видеокарте.</value>
+    </data>
+    <data name="VulkanInfoOneGPLFail" xml:space="preserve">
+        <value>Проверка GPL не прошла для одного из графических процессоров, но Fast Linking поддерживается по крайней мере одним из них. Обычно это означает, что одна из ваших видеокарт не поддерживает DXVK в полном объеме. Программа продолжит работать, исходя из предположения, что вы будете играть на видеокарте, которая прошла проверку GPL (обычно это основная), но на всякий случай предоставит настройку для установки async.</value>
+    </data>
+    <data name="VulkanInfo50Series" xml:space="preserve">
+        <value>Поскольку ваша (вероятно, основная) дискретная видеокарта относится к серии NVIDIA 50хх, убедитесь, что драйверы обновлены, так как DXVK может не работать на устаревших драйверах.</value>
+    </data>
+    <data name="ASILoaderOutdatedDescription" xml:space="preserve">
+        <value>Похоже, у вас устаревший ASI Loader (dsound.dll). Настоятельно рекомендуется обновить его для лучшей совместимости модов.\n\nУдалите dsound.dll и нажмите «Да», чтобы перейти к загрузке последней версии - скачайте версию без x64, переименуйте dinput8.dll в xlive.dll, если используете даунгрейд и не планируете играть в GFWL.</value>
+    </data>
+    <data name="ASILoaderOutdatedTitle" xml:space="preserve">
+        <value>Устаревший ASI Loader</value>
+    </data>
+    <data name="FusionFixOutdatedDescription" xml:space="preserve">
+        <value>Обратите внимание, что у вас устаревший FusionFix. Настоятельно рекомендуется обновить мод для последних улучшений стабильности, исправлений и графических улучшений.\n\nНажмите «Да», чтобы перейти на страницу загрузки FusionFix.</value>
+    </data>
+    <data name="FusionFixOutdatedTitle" xml:space="preserve">
+        <value>Устаревший FusionFix</value>
+    </data>
+    <data name="GFWLAchievementsDescription" xml:space="preserve">
+        <value>Похоже, вы используете GFWL. Хотите удалить Steam Achievements (если есть) и исправить настройки ZolikaPatch для получения достижений GFWL?\n\nНажатие «Нет» может отменить это действие, если вы согласились на него ранее.</value>
+    </data>
+    <data name="GFWLAchievementsTitle" xml:space="preserve">
+        <value>Достижения GFWL</value>
+    </data>
+    <data name="InvalidInputDescription" xml:space="preserve">
+        <value>Введенное значение неверно. Введите снова.</value>
+    </data>
+    <data name="InvalidInputTitle" xml:space="preserve">
+        <value>Неверный ввод</value>
+    </data>
+    <data name="LinuxDetectedDescription" xml:space="preserve">
+        <value>Установка DXVK и проверка Vulkan доступны только в Windows.\n\nЭти функции были отключены. Настройка параметров запуска остается доступной.</value>
+    </data>
+    <data name="LinuxDetectedTitle" xml:space="preserve">
+        <value>Обнаружен Linux</value>
+    </data>
+    <data name="RTSSConflictDescription" xml:space="preserve">
+        <value>В данный момент у вас включен RivaTuner Statistics Server (возможно, как часть MSI Afterburner).\n\nЧтобы избежать проблем с запуском игры при одновременной установке DXVK и IVSDK .NET, зайдите в трей, нажмите на значок монитора с числом 60, нажмите «Add» внизу слева, выберите исполняемый файл GTA IV и установите «Application detection level» на «None».\n\nЕсли вам нужна статистика, установите значение на «Low» и перезапустите утилиту при запущенной игре.</value>
+    </data>
+    <data name="RTSSConflictTitle" xml:space="preserve">
+        <value>Конфликт с RivaTuner</value>
+    </data>
+    <data name="VRAMManualDescription" xml:space="preserve">
+        <value>Не удалось определить видеопамять автоматически.\n\nПожалуйста, введите объем вашей видеопамяти (в МБ):</value>
+    </data>
+    <data name="VRAMManualTitle" xml:space="preserve">
+        <value>Определение видеопамяти не удалось</value>
+    </data>
+    <data name="ZPatchCompatibilityDescription" xml:space="preserve">
+        <value>Ваши настройки ZolikaPatch несовместимы с FusionFix. Это может привести к вылетам, несоответствиям, визуальным проблемам и т. д.\n\nВы хотите исправить настройки?</value>
+    </data>
+    <data name="ZPatchCompatibilityTitle" xml:space="preserve">
+        <value>Исправить совместимость ZolikaPatch - FusionFix?</value>
+    </data>
+    <data name="ZPatchOutdatedDescription" xml:space="preserve">
+        <value>Ваш ZolikaPatch устарел.\n\nХотите скачать последнюю версию? (вы будете перенаправлены на сайт Zolika1351 для ручной загрузки)</value>
+    </data>
+    <data name="ZPatchOutdatedDescription2" xml:space="preserve">
+        <value>Нажмите ОК, чтобы перезапустить приложение после обновления ZolikaPatch. Не распаковывайте «PlayGTAIV.exe».</value>
+    </data>
+    <data name="ZPatchOutdatedTitle" xml:space="preserve">
+        <value>ZolikaPatch устаревший</value>
     </data>
 </root>

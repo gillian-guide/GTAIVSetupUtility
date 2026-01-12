@@ -87,7 +87,7 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This software is made by Gillian for the Modding Guide. Below is internal information text which may be useful for debugging..
+        ///   Looks up a localized string similar to This software is made by Gillian for the GTA IV Modding Guide. Below is internal information text which may be useful for debugging..
         /// </summary>
         public static string AboutIntroText {
             get {
@@ -101,6 +101,24 @@ namespace GTAIVSetupUtility.Localizations {
         public static string AboutTitle {
             get {
                 return ResourceManager.GetString("AboutTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You appear to have an outdated ASI Loader (dsound.dll). It&apos;s highly recommended to update it for best mod compatibility.\n\nDelete dsound.dll and press &apos;Yes&apos; to get redirected to download the latest version - download the non-x64 one, rename dinput8.dll to xlive.dll if you are using a downgraded version and don&apos;t plan to play GFWL..
+        /// </summary>
+        public static string ASILoaderOutdatedDescription {
+            get {
+                return ResourceManager.GetString("ASILoaderOutdatedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdated ASI Loader.
+        /// </summary>
+        public static string ASILoaderOutdatedTitle {
+            get {
+                return ResourceManager.GetString("ASILoaderOutdatedTitle", resourceCulture);
             }
         }
         
@@ -150,7 +168,7 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regarding -availablevidmem.
+        ///   Looks up a localized string similar to This option forces a specific value of video memory due to the game not being able to do so automatically sometimes. It&apos;s recommended to keep this at default..
         /// </summary>
         public static string AvailableVidMemTipDescription {
             get {
@@ -159,7 +177,7 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This option forces a specific value of video memory due to the game not being able to do so automatically sometimes. It&apos;s recommended to keep this at default..
+        ///   Looks up a localized string similar to Regarding -availablevidmem.
         /// </summary>
         public static string AvailableVidMemTipTitle {
             get {
@@ -191,6 +209,24 @@ namespace GTAIVSetupUtility.Localizations {
         public static string DirectoryLabelUnselected {
             get {
                 return ResourceManager.GetString("DirectoryLabelUnselected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has been installed!\n\nConsider going to Steam - Settings - Downloads and disable `Enable Shader Pre-caching` - this may improve your performance.\n\nAdditionally, you can enable ReBAR and force it for the game - that may, too, improve performance..
+        /// </summary>
+        public static string DXVKInstalledDescription {
+            get {
+                return ResourceManager.GetString("DXVKInstalledDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DXVK Installed!.
+        /// </summary>
+        public static string DXVKInstalledTitle {
+            get {
+                return ResourceManager.GetString("DXVKInstalledTitle", resourceCulture);
             }
         }
         
@@ -231,11 +267,83 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DXVK with all it&apos;s remains successfully uninstalled..
+        /// </summary>
+        public static string DXVKUninstalledDescription {
+            get {
+                return ResourceManager.GetString("DXVKUninstalledDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DXVK uninstalled.
+        /// </summary>
+        public static string DXVKUninstalledTitle {
+            get {
+                return ResourceManager.GetString("DXVKUninstalledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable VSync.
         /// </summary>
         public static string EnableVSync {
             get {
                 return ResourceManager.GetString("EnableVSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The app couldn&apos;t copy the options to clipboard - input them manually:\n\n{0}.
+        /// </summary>
+        public static string FailedToCopyDescription {
+            get {
+                return ResourceManager.GetString("FailedToCopyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy launch options.
+        /// </summary>
+        public static string FailedToCopyTitle {
+            get {
+                return ResourceManager.GetString("FailedToCopyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please note that your FusionFix is outdated. It is highly recommended to update the mod for access to latest stability improvements, fixes and graphical improvements\n\nPress &quot;Yes&quot; to be redirected to the download page for FusionFix..
+        /// </summary>
+        public static string FusionFixOutdatedDescription {
+            get {
+                return ResourceManager.GetString("FusionFixOutdatedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdated FusionFix.
+        /// </summary>
+        public static string FusionFixOutdatedTitle {
+            get {
+                return ResourceManager.GetString("FusionFixOutdatedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You appear to be using GFWL. Do you wish to remove Steam Achievements (if exists) and fix ZolikaPatch options to receive GFWL achievements?\n\nPressing &apos;No&apos; can revert this if you agreed to this earlier..
+        /// </summary>
+        public static string GFWLAchievementsDescription {
+            get {
+                return ResourceManager.GetString("GFWLAchievementsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GFWL Achievements.
+        /// </summary>
+        public static string GFWLAchievementsTitle {
+            get {
+                return ResourceManager.GetString("GFWLAchievementsTitle", resourceCulture);
             }
         }
         
@@ -294,6 +402,51 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected folder does not contain GTA IV..
+        /// </summary>
+        public static string InvalidFolderNoGTAIV {
+            get {
+                return ResourceManager.GetString("InvalidFolderNoGTAIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid folder.
+        /// </summary>
+        public static string InvalidFolderTitle {
+            get {
+                return ResourceManager.GetString("InvalidFolderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected folder contains GTAIV.exe, but it is not a version that this tool supports..
+        /// </summary>
+        public static string InvalidFolderWrongVersion {
+            get {
+                return ResourceManager.GetString("InvalidFolderWrongVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The inputted value is invalid. Input again..
+        /// </summary>
+        public static string InvalidInputDescription {
+            get {
+                return ResourceManager.GetString("InvalidInputDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid input.
+        /// </summary>
+        public static string InvalidInputTitle {
+            get {
+                return ResourceManager.GetString("InvalidInputTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This option may help avoiding further framepacing issues. It&apos;s recommended to keep this on..
         /// </summary>
         public static string LatencyTipDescription {
@@ -308,6 +461,69 @@ namespace GTAIVSetupUtility.Localizations {
         public static string LatencyTipTitle {
             get {
                 return ResourceManager.GetString("LatencyTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest {0}.
+        /// </summary>
+        public static string LatestText {
+            get {
+                return ResourceManager.GetString("LatestText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Following launch options have been set up automatically for you: \n\n{0}\n\nDo not worry that VRAM value isn&apos;t your full value - that is intentional and you can change that if you need to - however, there is no real reason to..
+        /// </summary>
+        public static string LaunchOptionsSetUpDescription {
+            get {
+                return ResourceManager.GetString("LaunchOptionsSetUpDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launch options are set up!.
+        /// </summary>
+        public static string LaunchOptionsSetUpTitle {
+            get {
+                return ResourceManager.GetString("LaunchOptionsSetUpTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The app can&apos;t set the launch options automatically, paste them in Steam/RGL&apos;s Launch Options manually (will be copied to clipboard after you press Ok):\n\n{0}\n\nDo not worry that VRAM value isn&apos;t your full value - that is intentional and you can change that if you need to - however, there is no real reason to..
+        /// </summary>
+        public static string LaunchOptionsSteamDescription {
+            get {
+                return ResourceManager.GetString("LaunchOptionsSteamDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information about launch options on Steam/RGL.
+        /// </summary>
+        public static string LaunchOptionsSteamTitle {
+            get {
+                return ResourceManager.GetString("LaunchOptionsSteamTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DXVK installation and Vulkan checking is only available on Windows.\n\nThese features have been disabled. Launch options configuration remains available..
+        /// </summary>
+        public static string LinuxDetectedDescription {
+            get {
+                return ResourceManager.GetString("LinuxDetectedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linux detected.
+        /// </summary>
+        public static string LinuxDetectedTitle {
+            get {
+                return ResourceManager.GetString("LinuxDetectedTitle", resourceCulture);
             }
         }
         
@@ -402,6 +618,25 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to \n\nMake sure your drivers are up-to-date - don&apos;t rely on Windows Update drivers, either.
+        ///.
+        /// </summary>
+        public static string NotificationsDescription {
+            get {
+                return ResourceManager.GetString("NotificationsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string NotificationsTitle {
+            get {
+                return ResourceManager.GetString("NotificationsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
         public static string OpenButton {
@@ -411,11 +646,38 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This tool is open source.
+        ///   Looks up a localized string similar to Source code.
         /// </summary>
         public static string OpenSourceLink {
             get {
                 return ResourceManager.GetString("OpenSourceLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You currently have RivaTuner Statistics Server enabled (it might be a part of MSI Afterburner).\n\nTo avoid issues with the game launching when DXVK and IVSDK .NET are both installed, go into your tray icons, press on the little monitor icon with the number 60, press &apos;Add&apos; in bottom left, select GTA IV&apos;s executable and set Application detection level to &apos;None&apos;.\n\nIf you want the statistics, set it to Low and restart the tool, with the game running..
+        /// </summary>
+        public static string RTSSConflictDescription {
+            get {
+                return ResourceManager.GetString("RTSSConflictDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RivaTuner Conflict.
+        /// </summary>
+        public static string RTSSConflictTitle {
+            get {
+                return ResourceManager.GetString("RTSSConflictTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a folder containing the GTAIV.exe.
+        /// </summary>
+        public static string SelectGTAIVFolder {
+            get {
+                return ResourceManager.GetString("SelectGTAIVFolder", resourceCulture);
             }
         }
         
@@ -434,6 +696,33 @@ namespace GTAIVSetupUtility.Localizations {
         public static string SetupLaunchOptions {
             get {
                 return ResourceManager.GetString("SetupLaunchOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You appear to have a commandline.txt, however you are using the Steam/RGL version which doesn&apos;t use that file.\n\nConsider moving these options to Steam Launch Options or launch arguments..
+        /// </summary>
+        public static string SteamVersionNoticeDescription {
+            get {
+                return ResourceManager.GetString("SteamVersionNoticeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Steam Version Notice&quot;.
+        /// </summary>
+        public static string SteamVersionNoticeTitle {
+            get {
+                return ResourceManager.GetString("SteamVersionNoticeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Present with conflicts.
+        /// </summary>
+        public static string SupportConflict {
+            get {
+                return ResourceManager.GetString("SupportConflict", resourceCulture);
             }
         }
         
@@ -492,11 +781,29 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Present, outdated.
+        /// </summary>
+        public static string SupportOutdated {
+            get {
+                return ResourceManager.GetString("SupportOutdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Partly supported, no Fast Linking.
         /// </summary>
         public static string SupportPartly {
             get {
                 return ResourceManager.GetString("SupportPartly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Present.
+        /// </summary>
+        public static string SupportPresent {
+            get {
+                return ResourceManager.GetString("SupportPresent", resourceCulture);
             }
         }
         
@@ -519,7 +826,7 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No.
+        ///   Looks up a localized string similar to Yes.
         /// </summary>
         public static string TextYes {
             get {
@@ -555,7 +862,7 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uninstall DXVK.
+        ///   Looks up a localized string similar to Uninstall.
         /// </summary>
         public static string UninstallDxvk {
             get {
@@ -582,6 +889,24 @@ namespace GTAIVSetupUtility.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not detect VRAM automatically.\n\nPlease enter your VRAM (in MB):.
+        /// </summary>
+        public static string VRAMManualDescription {
+            get {
+                return ResourceManager.GetString("VRAMManualDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VRAM check failed.
+        /// </summary>
+        public static string VRAMManualTitle {
+            get {
+                return ResourceManager.GetString("VRAMManualTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The in-game VSync implementation produces framepacing issues. DXVK&apos;s VSync implementation should be preferred.\n\nIt&apos;s recommended to keep this on and in-game&apos;s implementation off..
         /// </summary>
         public static string VSyncTipDescription {
@@ -596,6 +921,69 @@ namespace GTAIVSetupUtility.Localizations {
         public static string VSyncTipTitle {
             get {
                 return ResourceManager.GetString("VSyncTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due to your (likely main) discrete GPU being a 50-series NVIDIA GPU, make sure your drivers are up-to-date, as DXVK may not work on outdated drivers..
+        /// </summary>
+        public static string VulkanInfo50Series {
+            get {
+                return ResourceManager.GetString("VulkanInfo50Series", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The vulkaninfo check failed for discrete GPU but succeeded for the integrated GPU. This usually means your discrete GPU does not support Vulkan.\n\nDXVK is available, but with the assumption that you&apos;re going to be playing off the integrated GPU, not the dedicated one..
+        /// </summary>
+        public static string VulkanInfoCheckFailDGPU {
+            get {
+                return ResourceManager.GetString("VulkanInfoCheckFailDGPU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The vulkaninfo check failed entirely. This usually means none of your GPU&apos;s support Vulkan. Make sure your drivers are up-to-date - don&apos;t rely on Windows Update drivers, either.\n\nDXVK is not available..
+        /// </summary>
+        public static string VulkanInfoCheckFullFailDescription {
+            get {
+                return ResourceManager.GetString("VulkanInfoCheckFullFailDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The vulkaninfo check failed entirely.
+        /// </summary>
+        public static string VulkanInfoCheckFullFailTitle {
+            get {
+                return ResourceManager.GetString("VulkanInfoCheckFullFailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The vulkaninfo check failed for one of the GPUs but succeeded for the rest. This usually means one of your discrete GPUs does not support Vulkan.\n\nDXVK is available, but with the assumption that you&apos;re going to be playing off the supported GPU..
+        /// </summary>
+        public static string VulkanInfoCheckOneGPUFail {
+            get {
+                return ResourceManager.GetString("VulkanInfoCheckOneGPUFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The vulkaninfo check failed partially. This usually means one of your GPU&apos;s may support Vulkan but have outdated drivers - the tool will proceed assuming so, but installing DXVK is not recommended..
+        /// </summary>
+        public static string VulkanInfoFailPartial {
+            get {
+                return ResourceManager.GetString("VulkanInfoFailPartial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The GPL check failed for one of the GPUs but Fast Linking is supported by at least one of them. This usually means one of your discrete GPUs or the iGPU does not support DXVK in full.\n\nThe tool will proceed with the assumption that you&apos;re going to be playing off the GPU that didn&apos;t fail the GPL check (usually your main GPU), but provide options for async just incase..
+        /// </summary>
+        public static string VulkanInfoOneGPLFail {
+            get {
+                return ResourceManager.GetString("VulkanInfoOneGPLFail", resourceCulture);
             }
         }
         
@@ -641,6 +1029,70 @@ namespace GTAIVSetupUtility.Localizations {
         public static string WindowedTipTitle {
             get {
                 return ResourceManager.GetString("WindowedTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your ZolikaPatch options are incompatible with FusionFix. This may lead to crashes, inconsistencies, visual issues etc.\n\nDo you wish to fix the options?.
+        /// </summary>
+        public static string ZPatchCompatibilityDescription {
+            get {
+                return ResourceManager.GetString("ZPatchCompatibilityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fix ZolikaPatch - FusionFix compatibility?.
+        /// </summary>
+        public static string ZPatchCompatibilityTitle {
+            get {
+                return ResourceManager.GetString("ZPatchCompatibilityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZolikaPatch.ini has been modified to apply requested changes and fix any present issues with compatibility..
+        /// </summary>
+        public static string ZPatchIniModifiedDescription {
+            get {
+                return ResourceManager.GetString("ZPatchIniModifiedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZolikaPatch.ini modified.
+        /// </summary>
+        public static string ZPatchIniModifiedTitle {
+            get {
+                return ResourceManager.GetString("ZPatchIniModifiedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your ZolikaPatch is outdated.\n\nDo you wish to download the latest version? (this will redirect to Zolika1351&apos;s website for manual download)
+        ///.
+        /// </summary>
+        public static string ZPatchOutdatedDescription {
+            get {
+                return ResourceManager.GetString("ZPatchOutdatedDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press OK to restart the app after updating ZolikaPatch. Do not unpack &apos;PlayGTAIV.exe&apos;..
+        /// </summary>
+        public static string ZPatchOutdatedDescription2 {
+            get {
+                return ResourceManager.GetString("ZPatchOutdatedDescription2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZolikaPatch is outdated.
+        /// </summary>
+        public static string ZPatchOutdatedTitle {
+            get {
+                return ResourceManager.GetString("ZPatchOutdatedTitle", resourceCulture);
             }
         }
     }

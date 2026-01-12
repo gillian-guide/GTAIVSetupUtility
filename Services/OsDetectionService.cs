@@ -18,7 +18,7 @@ public abstract class OsDetectionService
         if (Directory.Exists("/proc") || Directory.Exists("/sys"))
             return true;
         
-        var path = Environment.GetEnvironmentVariable("PATH");
+        string? path = Environment.GetEnvironmentVariable("PATH");
         return path != null && path.Contains(':') && !path.Contains(';');
     }
 }
