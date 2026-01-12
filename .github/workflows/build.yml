@@ -1,5 +1,4 @@
 name: Build
-
 on:
   push:
     branches: [ main, master ]
@@ -25,30 +24,30 @@ jobs:
       
     - name: Publish Self-Contained Single-File
       run: |
-        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SingleFile -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false
+        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_SingleFile -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:SatelliteResourceLanguages=en;ru -p:BuiltInComInteropSupport=true
         
     - name: Publish Framework-Dependent Single-File
       run: |
-        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/FD_SingleFile -r win-x64 --self-contained false -p:EnableCompressionInSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:DebugType=None -p:DebugSymbols=false
-
+        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/FD_SingleFile -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:SatelliteResourceLanguages=en;ru -p:BuiltInComInteropSupport=true
+        
     - name: Publish Self-Contained Folder
       run: |
-        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_Folder -r win-x64 --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:PublishReadyToRun=false -p:DebugType=None -p:DebugSymbols=false
-
+        dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_Folder -r win-x64 --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:DebugType=None -p:DebugSymbols=false -p:SatelliteResourceLanguages=en;ru -p:BuiltInComInteropSupport=true
+        
     - name: Upload Self-Contained Single-File
       uses: actions/upload-artifact@v4
       with:
         name: GTAIVSetupUtility-SelfContained-SingleFile-${{ github.sha }}
         path: ./publish/SC_SingleFile
         retention-days: 90
-
+        
     - name: Upload Framework-Dependent Single-File
       uses: actions/upload-artifact@v4
       with:
         name: GTAIVSetupUtility-FrameworkDependent-SingleFile-${{ github.sha }}
         path: ./publish/FD_SingleFile
         retention-days: 90
-
+        
     - name: Upload Self-Contained Folder
       uses: actions/upload-artifact@v4
       with:
