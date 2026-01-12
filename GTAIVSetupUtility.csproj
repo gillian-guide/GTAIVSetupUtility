@@ -1,0 +1,90 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <Version>2.0.0</Version>
+        <Title>GTAIVSetupUtility</Title>
+        <Authors>Gillian</Authors>
+        <Description>Semi-automatic setup utility for GTA IV</Description>
+        <Copyright>Gillian</Copyright>
+        <PackageProjectUrl>https://github.com/gillian-guide/GTAIVSetupUtility</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/gillian-guide/GTAIVSetupUtility/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageIcon>Assets\ivlogo256.png</PackageIcon>
+        <RepositoryUrl>https://github.com/gillian-guide/GTAIVSetupUtility</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageTags>GTAIV</PackageTags>
+        <Company>Gillian</Company>
+        <AssemblyVersion>2.0.0</AssemblyVersion>
+        <FileVersion>2.0.0</FileVersion>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <TrimMode>link</TrimMode>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <SatelliteResourceLanguages>en;ru</SatelliteResourceLanguages>
+        <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Models\"/>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.3.10"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.10"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.10"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.10"/>
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.3.10">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
+        <PackageReference Include="MessageBox.Avalonia" Version="3.3.1.1" />
+        <PackageReference Include="NLog" Version="6.0.7" />
+        <PackageReference Include="System.Management" Version="10.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Localizations\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localizations\Resources.ru-RU.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.ru-RU.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Localizations\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Localizations\Resources.ru-RU.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.ru-RU.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include=".github\workflows\build.yml" />
+      <Content Include=".github\workflows\github-releases-to-discord.yml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <TrimmerRootAssembly Include="System.Management" />
+    </ItemGroup>
+</Project>

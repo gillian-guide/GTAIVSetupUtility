@@ -1,5 +1,4 @@
 name: Build
-
 on:
   push:
     branches: [ main, master ]
@@ -21,24 +20,14 @@ jobs:
         dotnet-version: '8.0.x'
         
     - name: Restore dependencies
-      run: dotnet restore GTAIVSetupUtilityWPF.csproj -r win-x64
+      run: dotnet restore GTAIVSetupUtility.csproj -r win-x64
       
-    - name: Publish Framework-Dependent
-      run: dotnet publish GTAIVSetupUtilityWPF.csproj --configuration Release --output ./publish/FrameworkDependent --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=false -p:DebugType=None -p:DebugSymbols=false
-      
-    - name: Publish Self-Contained
-      run: dotnet publish GTAIVSetupUtilityWPF.csproj --configuration Release --output ./publish/SelfContained --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:PublishReadyToRun=false -p:InvariantGlobalization=true -p:DebugType=None -p:DebugSymbols=false -r win-x64
-      
-    - name: Upload Framework-Dependent Artifact
+    - name: Publish
+      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/ -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:BuiltInComInteropSupport=true
+        
+    - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: GTAIVSetupUtilityWPF-FrameworkDependent-${{ github.sha }}
-        path: ./publish/FrameworkDependent
-        retention-days: 90
-
-    - name: Upload Self-Contained Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: GTAIVSetupUtilityWPF-SelfContained-${{ github.sha }}
-        path: ./publish/SelfContained
+        name: GTAIVSetupUtility-SelfContained-SingleFile-${{ github.sha }}
+        path: ./publish/
         retention-days: 90

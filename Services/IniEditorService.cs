@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-// hi here, i'm an awful coder, so please clean up for me if it really bothers you
-// i couldn't find a good ini parser for my needs so i just begged chatgpt for one tbh, idk if it works for anything else but i'd rather not qusetion it
+namespace GTAIVSetupUtility.Services;
 
-namespace GTAIVSetupUtilityWPF.Common;
+// i couldn't find a good ini parser for my needs that didn't break zolikapatch's config, so this is a custom one
 
-public sealed class IniEditor
+
+public sealed class IniEditorService
 {
     private const string DefaultValue = "N/A";
         
     private readonly Dictionary<string, Dictionary<string, string>> _iniData = [];
     private readonly string? _filePath;
 
-    public IniEditor(string? filePath)
+    public IniEditorService(string? filePath)
     {
         _filePath = filePath;
         LoadFile();
@@ -26,9 +26,9 @@ public sealed class IniEditor
 
         string? currentSection = null;
 
-        foreach (var line in File.ReadLines(_filePath))
+        foreach (string line in File.ReadLines(_filePath))
         {
-            var trimmedLine = line.Trim();
+            string trimmedLine = line.Trim();
 
             if (IsSection(trimmedLine))
             {
@@ -112,11 +112,11 @@ public sealed class IniEditor
     {
         var lines = new List<string>();
 
-        foreach (var (section, entries) in _iniData)
+        foreach ((string section, var entries) in _iniData)
         {
             lines.Add($"[{section}]");
                 
-            foreach (var (key, value) in entries)
+            foreach ((string key, string value) in entries)
             {
                 // Preserve non-key-value lines
                 lines.Add($"{key}={value}");

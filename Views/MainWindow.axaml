@@ -1,0 +1,231 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GTAIVSetupUtility.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lang="clr-namespace:GTAIVSetupUtility.Localizations"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="GTAIVSetupUtility.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True"
+        
+        TransparencyLevelHint="Mica, AcrylicBlur"
+        Background="Transparent"
+        Icon="/Assets/ivlogo.ico"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        Title="{x:Static lang:Resources.Title}">
+
+    <!-- this is only needed for preview -->
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+        
+        <!-- Welcome Text -->
+        <TextBlock Grid.Row="0"
+                   Text="{x:Static lang:Resources.WelcomeText}" 
+                   FontSize="28" 
+                   TextWrapping="Wrap" 
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,5"/>
+        
+        <!-- Directory Selector -->
+        <TextBlock Grid.Row="1"
+                   Text="{Binding DirectoryLabelText}" 
+                   FontWeight="{Binding DirectoryLabelFontWeight}" 
+                   TextDecorations="{Binding DirectoryLabelDecorations}"
+                   Margin="0,0,0,5"/>
+        
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,0,0,5">
+            <TextBox Grid.Column="0"
+                     Text="{Binding GameDirectoryPath}" 
+                     IsReadOnly="True"
+                     IsEnabled="False"/>
+            <Button Grid.Column="1"
+                    Content="{x:Static lang:Resources.OpenButton}" 
+                    Command="{Binding SelectDirectoryCommand}"
+                    Margin="5,0,0,0"
+                    IsDefault="{Binding IsDirectoryButtonDefault}"
+                    IsEnabled="{Binding IsDirectoryButtonEnabled}"/>
+        </Grid>
+        
+        <!-- Tips Section -->
+        <Grid Grid.Row="3" 
+              ColumnDefinitions="Auto,Auto"
+              HorizontalAlignment="Center"
+              Margin="0,0,0,5">
+            <TextBlock Grid.Column="0"
+                       Text="{x:Static lang:Resources.TipsNote}" 
+                       FontSize="14" 
+                       TextWrapping="Wrap"
+                       TextDecorations="{Binding TipsNoteDecorations}"
+                       VerticalAlignment="Center"/>
+            <CheckBox Grid.Column="1"
+                      Content="{x:Static lang:Resources.Tips}" 
+                      IsChecked="{Binding ShowTips}"
+                      Margin="5,0,0,0"/>
+        </Grid>
+        
+        <!-- Main Options -->
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto" Margin="0,0,0,5">
+            <!-- DXVK panel -->
+            <Grid Grid.Column="0"
+                  IsEnabled="{Binding IsDxvkPanelEnabled}" 
+                  VerticalAlignment="Bottom"
+                  RowDefinitions="Auto,Auto,Auto,Auto">
+                
+                <CheckBox Grid.Row="0"
+                          Content="{x:Static lang:Resources.InstallAsyncPatch}" 
+                          IsChecked="{Binding InstallAsync}" 
+                          IsEnabled="{Binding IsAsyncEnabled}"
+                          IsVisible="{Binding IsAsyncVisible}"
+                          Command="{Binding AsyncClickCommand}"/>
+                
+                <CheckBox Grid.Row="1"
+                          Content="{x:Static lang:Resources.EnableVSync}" 
+                          IsChecked="{Binding EnableVSync}"
+                          Command="{Binding VSyncClickCommand}"/>
+                
+                <CheckBox Grid.Row="2"
+                          Content="{x:Static lang:Resources.SetMaxFrameLatency}" 
+                          IsChecked="{Binding SetMaxFrameLatency}"
+                          Command="{Binding LatencyClickCommand}"/>
+                
+                <Grid Grid.Row="3" 
+                      ColumnDefinitions="Auto,Auto"
+                      Margin="0,5,0,0">
+                    <Button Grid.Column="0"
+                            Content="{Binding DxvkButtonText}" 
+                            Command="{Binding InstallDxvkCommand}" 
+                            Width="{Binding DxvkButtonWidth}"
+                            FontWeight="{Binding DxvkButtonFontWeight}"
+                            FontSize="14"
+                            IsDefault="{Binding IsDxvkButtonDefault}"
+                            HorizontalContentAlignment="Center"/>
+                    
+                    <Button Grid.Column="1"
+                            Content="{x:Static lang:Resources.UninstallDxvk}" 
+                            Command="{Binding UninstallDxvkCommand}" 
+                            Width="78"
+                            Margin="2,0,0,0"
+                            IsVisible="{Binding IsUninstallDxvkVisible}"/>
+                </Grid>
+            </Grid>
+            
+            <!-- Launch Options panel -->
+            <Grid Grid.Column="1"
+                  IsEnabled="{Binding IsLaunchOptionsPanelEnabled}"
+                  RowDefinitions="Auto,Auto,Auto,Auto"
+                  Margin="5,0,0,0">
+                  
+                <!-- Restrictions Options -->
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto">
+                    <CheckBox Grid.Column="0"
+                              Content="{x:Static lang:Resources.NoRestrictions}" 
+                              IsChecked="{Binding NoRestrictions}"
+                              Command="{Binding NoRestrictionsClickCommand}"/>
+                    <CheckBox Grid.Column="1"
+                              Content="{x:Static lang:Resources.NoMemRestrict}" 
+                              IsChecked="{Binding NoMemRestrict}"
+                              Command="{Binding NoMemRestrictClickCommand}"
+                              Margin="5,0,0,0"/>
+                </Grid>
+                
+                <!-- Vidmem Options -->
+                <Grid Grid.Row="1" 
+                      ColumnDefinitions="Auto,Auto,Auto,Auto">
+                    <CheckBox Grid.Column="0"
+                              Content="{x:Static lang:Resources.AvailableVidMem}" 
+                              IsChecked="{Binding AvailableVidMem}"
+                              IsEnabled="{Binding IsVidMemCheckboxEnabled}"
+                              Command="{Binding VidMemClickCommand}"/>
+                    <TextBlock Grid.Column="1"
+                               Text="{x:Static lang:Resources.LockedTo}" 
+                               FontSize="14" 
+                               VerticalAlignment="Center"
+                               Foreground="DarkGray"
+                               Margin="3,0,0,0"/>
+                    <RadioButton Grid.Column="2"
+                                 Content="{x:Static lang:Resources.VidMemLimit3GB}" 
+                                 IsChecked="{Binding IsVidMem3GB}" 
+                                 IsEnabled="{Binding IsVidMemRadioEnabled}"
+                                 Command="{Binding VidMemLockClickCommand}"
+                                 Margin="5,0,0,0"/>
+                    <RadioButton Grid.Column="3"
+                                 Content="{x:Static lang:Resources.VidMemLimit4GB}" 
+                                 IsChecked="{Binding !IsVidMem3GB}" 
+                                 IsEnabled="{Binding IsVidMemRadioEnabled}"
+                                 Command="{Binding VidMemLockClickCommand}"
+                                 Margin="5,0,0,0"/>
+                </Grid>
+                
+                <!-- Windowed Options -->
+                <Grid Grid.Row="2" 
+                      ColumnDefinitions="Auto,Auto">
+                    <CheckBox Grid.Column="0"
+                              Content="{x:Static lang:Resources.BorderlessWindowed}" 
+                              IsChecked="{Binding BorderlessWindowed}"
+                              IsEnabled="{Binding IsBorderlessWindowedEnabled}"
+                              Command="{Binding WindowedClickCommand}"/>
+                    <CheckBox Grid.Column="1"
+                              Content="{x:Static lang:Resources.MonitorDetails}" 
+                              IsChecked="{Binding MonitorDetails}"
+                              Command="{Binding MonitorDetailsClickCommand}"
+                              Margin="5,0,0,0"/>
+                </Grid>
+                
+                <!-- Setup Button -->
+                <Button Grid.Row="3"
+                        Content="{x:Static lang:Resources.SetupLaunchOptions}" 
+                        Command="{Binding SetupLaunchOptionsCommand}" 
+                        Width="350"
+                        FontSize="14"
+                        FontWeight="{Binding LaunchOptionsButtonFontWeight}"
+                        IsDefault="{Binding IsLaunchOptionsButtonDefault}"
+                        Margin="0,5,0,0"
+                        HorizontalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+        
+        <!-- Footer -->
+        <Grid Grid.Row="5" ColumnDefinitions="*,*,Auto">
+            <Button Grid.Column="0"
+                    Content="{x:Static lang:Resources.GuideLink}"
+                    Command="{Binding OpenHyperlinkCommand}"
+                    CommandParameter="https://gillian-guide.github.io/"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="SkyBlue"
+                    Padding="0"
+                    FontSize="12"
+                    VerticalAlignment="Bottom"/>
+    
+            <Button Grid.Column="1"
+                    Content="{x:Static lang:Resources.OpenSourceLink}"
+                    Command="{Binding OpenHyperlinkCommand}"
+                    CommandParameter="https://github.com/SandeMC/GTAIVSetupUtilityWPF"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Foreground="SkyBlue"
+                    Padding="0"
+                    FontSize="12"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"/>
+    
+            <Button Grid.Column="2"
+                    Command="{Binding AboutCommand}"
+                    Margin="5,0,0,0"
+                    Height="20"
+                    Width="20"
+                    HorizontalAlignment="Right"
+                    Padding="0">
+                <PathIcon Data="M12 1.999c5.524 0 10.002 4.478 10.002 10.002 0 5.523-4.478 10.001-10.002 10.001-5.524 0-10.002-4.478-10.002-10.001C1.998 6.477 6.476 1.999 12 1.999Zm0 1.5a8.502 8.502 0 1 0 0 17.003A8.502 8.502 0 0 0 12 3.5Zm-.004 7a.75.75 0 0 1 .744.648l.007.102.003 5.502a.75.75 0 0 1-1.493.102l-.007-.101-.003-5.502a.75.75 0 0 1 .75-.75ZM12 7.003a.999.999 0 1 1 0 1.997.999.999 0 0 1 0-1.997Z" 
+                          Width="14" 
+                          Height="14"/>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
