@@ -37,7 +37,7 @@ public static class HelperService
         }
         catch (Exception ex)
         {
-            Logger.Error(ex, " Error retrieving file version for {FilePath}", filePath);
+            Logger.Error(ex, $" Error retrieving file version for {filePath}", filePath);
             return DefaultVersion;
         }
     }

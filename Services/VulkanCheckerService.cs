@@ -50,9 +50,9 @@ namespace GTAIVSetupUtility.Service
                 var videoControllers = searcher.Get();
                 gpuCount = videoControllers.Count;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Logger.Error($" Ran into error ");
+                Logger.Error(ex ," Ran into error");
                 throw;
             }
             for (int i = 0; i < gpuCount; i++)
@@ -93,7 +93,7 @@ namespace GTAIVSetupUtility.Service
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(" Ran into error: {Argument1}", ex);
+                    Logger.Error(ex, "Ran into error");
                     atLeastOneGpuFailed = true;
                     listOfFailedGpus.Add(i);
                 }
