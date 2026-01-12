@@ -23,13 +23,13 @@ jobs:
       run: dotnet restore GTAIVSetupUtility.csproj -r win-x64
       
     - name: Publish Self-Contained Single-File
-      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_SingleFile -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:SatelliteResourceLanguages="en;ru" -p:BuiltInComInteropSupport=true
+      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_SingleFile -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:BuiltInComInteropSupport=true
     
     - name: Publish Framework-Dependent Single-File
-      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/FD_SingleFile -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:SatelliteResourceLanguages="en;ru" -p:BuiltInComInteropSupport=true
+      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/FD_SingleFile -r win-x64 --self-contained false -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:BuiltInComInteropSupport=true
     
     - name: Publish Self-Contained Folder
-      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_Folder -r win-x64 --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:DebugType=None -p:DebugSymbols=false -p:SatelliteResourceLanguages="en;ru" -p:BuiltInComInteropSupport=true
+      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/SC_Folder -r win-x64 --self-contained true -p:PublishTrimmed=true -p:TrimMode=link -p:DebugType=None -p:DebugSymbols=false -p:BuiltInComInteropSupport=true
         
     - name: Upload Self-Contained Single-File
       uses: actions/upload-artifact@v4
