@@ -1,0 +1,101 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dlss="clr-namespace:GTAIVSetupUtility.Modules.DlssIv"
+             xmlns:lang="clr-namespace:GTAIVSetupUtility.Localizations"
+             x:Class="GTAIVSetupUtility.Modules.DlssIv.DlssIvPanel"
+             x:DataType="dlss:DlssIvViewModel"
+             x:CompileBindings="True"
+             IsVisible="{Binding IsVisible}">
+
+    <StackPanel Margin="0,3,0,0" Spacing="5">
+        <Separator/>
+
+        <TextBlock Text="{x:Static lang:Resources.DlssIvDescription}"
+                   FontSize="11"
+                   Foreground="Gray"
+                   TextWrapping="Wrap"/>
+
+        <!-- On/off, upscaler, quality -->
+        <WrapPanel Orientation="Horizontal">
+            <CheckBox Content="{x:Static lang:Resources.DlssIvEnable}"
+                      IsChecked="{Binding IsModEnabled}"
+                      IsEnabled="{Binding CanToggleMod}"
+                      Command="{Binding ToggleModCommand}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvEnableTip}"
+                      Margin="0,0,14,0"/>
+
+            <TextBlock Text="{x:Static lang:Resources.DlssIvUpscalerLabel}"
+                       VerticalAlignment="Center"
+                       Margin="0,0,6,0"/>
+            <RadioButton Content="DLSS"
+                         GroupName="DlssIvUpscaler"
+                         IsChecked="{Binding IsDlssSelected}"
+                         IsEnabled="{Binding IsDlssRadioEnabled}"
+                         Margin="0,0,8,0"/>
+            <RadioButton Content="FSR"
+                         GroupName="DlssIvUpscaler"
+                         IsChecked="{Binding IsFsrSelected}"
+                         IsEnabled="{Binding IsFsrRadioEnabled}"
+                         Margin="0,0,18,0"/>
+
+            <TextBlock Text="{x:Static lang:Resources.DlssIvQualityLabel}"
+                       VerticalAlignment="Center"
+                       Margin="0,0,6,0"/>
+            <RadioButton Content="{x:Static lang:Resources.DlssIvDlaa}"
+                         GroupName="DlssIvQuality"
+                         IsChecked="{Binding IsDlaaSelected}"
+                         Margin="0,0,8,0"/>
+            <RadioButton Content="{x:Static lang:Resources.DlssIvQuality}"
+                         GroupName="DlssIvQuality"
+                         IsChecked="{Binding IsQualitySelected}"/>
+        </WrapPanel>
+
+        <!-- One preset list for whichever upscaler is selected -->
+        <WrapPanel Orientation="Horizontal">
+            <TextBlock Text="{x:Static lang:Resources.DlssIvPresetLabel}"
+                       VerticalAlignment="Center"
+                       Margin="0,0,6,0"/>
+            <ComboBox ItemsSource="{Binding ProfileOptions}"
+                      SelectedIndex="{Binding SelectedProfileIndex}"
+                      IsEnabled="{Binding IsProfileEnabled}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvFsr4LiteTip}"
+                      MinWidth="190"/>
+            <TextBlock Text="{Binding StatusText}"
+                       IsVisible="{Binding HasStatusText}"
+                       FontSize="11"
+                       Foreground="Orange"
+                       VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="10,0,0,0"/>
+        </WrapPanel>
+
+        <!-- HDR needs Windows HDR switched on before the game starts -->
+        <CheckBox Content="{x:Static lang:Resources.DlssIvHdr}"
+                  IsChecked="{Binding IsHdrEnabled}"
+                  IsEnabled="{Binding IsSettingsEnabled}"
+                  ToolTip.Tip="{x:Static lang:Resources.DlssIvHdrTip}"/>
+
+        <!-- Binary maintenance / supported FSR paths -->
+        <WrapPanel Orientation="Horizontal">
+            <Button Content="{x:Static lang:Resources.DlssIvUpdateDlss}"
+                    Command="{Binding UpdateDlssCommand}"
+                    IsEnabled="{Binding CanUpdateDlss}"
+                    Margin="0,0,6,0"/>
+            <Button Content="{x:Static lang:Resources.DlssIvUpdateFsr}"
+                    Command="{Binding UpdateFsrCommand}"
+                    IsEnabled="{Binding CanUpdateFsr}"
+                    Margin="0,0,6,0"/>
+            <Button Content="{Binding Fsr4CommunityButtonText}"
+                    Command="{Binding InstallFsr4CommunityCommand}"
+                    IsVisible="{Binding ShowFsr4CommunityButton}"
+                    Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding ProgressText}"
+                       IsVisible="{Binding IsBusy}"
+                       FontSize="11"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"/>
+        </WrapPanel>
+
+        <Separator/>
+    </StackPanel>
+</UserControl>
