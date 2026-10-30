@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
@@ -174,6 +174,9 @@
     <data name="TextNo" xml:space="preserve">
         <value>Нет</value>
     </data>
+    <data name="TextOk" xml:space="preserve">
+        <value>ОК</value>
+    </data>
     <data name="SupportNone" xml:space="preserve">
         <value>Нет</value>
     </data>
@@ -212,6 +215,36 @@
     </data>
     <data name="AboutiGPUDXVKSupport" xml:space="preserve">
         <value>Поддержка DXVK (встроенная)</value>
+    </data>
+    <data name="AboutDetectedGPUs" xml:space="preserve">
+        <value>Обнаруженные GPU</value>
+    </data>
+    <data name="AboutWindowsGameGpu" xml:space="preserve">
+        <value>Игровой GPU Windows</value>
+    </data>
+    <data name="AboutGplSupport" xml:space="preserve">
+        <value>Состояние поддержки GPL</value>
+    </data>
+    <data name="AboutIgpuOnly" xml:space="preserve">
+        <value>Только iGPU</value>
+    </data>
+    <data name="AboutDgpuOnly" xml:space="preserve">
+        <value>Только dGPU</value>
+    </data>
+    <data name="AboutIntelIgpu" xml:space="preserve">
+        <value>Intel iGPU</value>
+    </data>
+    <data name="AboutFusionFix" xml:space="preserve">
+        <value>FusionFix</value>
+    </data>
+    <data name="AboutIvsdkDotNet" xml:space="preserve">
+        <value>IVSDKDotNet</value>
+    </data>
+    <data name="AboutRtss" xml:space="preserve">
+        <value>RTSS</value>
+    </data>
+    <data name="AboutVersion" xml:space="preserve">
+        <value>Версия</value>
     </data>
     <data name="SelectGTAIVFolder" xml:space="preserve">
         <value>Выберите папку, содержащую GTAIV.exe</value>
@@ -274,16 +307,16 @@
         <value>Приложение не смогло скопировать параметры в буфер обмена — введите их вручную:\n\n{0}</value>
     </data>
     <data name="ZPatchIniModifiedTitle" xml:space="preserve">
-        <value>ZolikaPatch.ini был изменен</value>
+        <value>{0} был изменен</value>
     </data>
     <data name="ZPatchIniModifiedDescription" xml:space="preserve">
-        <value>Файл ZolikaPatch.ini был изменен, чтобы внести запрошенные изменения и исправить все существующие проблемы с совместимостью.</value>
+        <value>Файл {0} был изменен, чтобы внести запрошенные изменения и исправить все существующие проблемы с совместимостью.</value>
     </data>
     <data name="VulkanInfoCheckFullFailTitle" xml:space="preserve">
-        <value>Полный сбой проверки vulkaninfo</value>
+        <value>Полный сбой проверки Vulkan</value>
     </data>
     <data name="VulkanInfoCheckFullFailDescription" xml:space="preserve">
-        <value>Проверка vulkaninfo полностью провалилась. Обычно это означает, что ни одна из ваших видеокарт не поддерживает Vulkan. Убедитесь, что драйверы обновлены (не полагайтесь на драйверы Windows Update).\n\nDXVK недоступен.</value>
+        <value>Проверка Vulkan полностью провалилась. Обычно это означает, что ни одна из ваших видеокарт не поддерживает Vulkan. Убедитесь, что драйверы обновлены (не полагайтесь на драйверы Windows Update).\n\nDXVK недоступен.</value>
     </data>
     <data name="NotificationsTitle" xml:space="preserve">
         <value>Уведомления</value>
@@ -292,19 +325,16 @@
         <value>\n\nУбедитесь, что ваши драйверы обновлены - также не полагайтесь на драйверы Windows Update.</value>
     </data>
     <data name="VulkanInfoFailPartial" xml:space="preserve">
-        <value>Проверка vulkaninfo прошла частично. Обычно это означает, что одна из ваших видеокарт поддерживает Vulkan, но драйверы устарели. Утилита продолжит работу, предполагая это, но установка DXVK не рекомендуется.</value>
+        <value>Проверка Vulkan прошла частично. Обычно это означает, что одна из ваших видеокарт поддерживает Vulkan, но драйверы устарели. Утилита продолжит работу, предполагая это, но установка DXVK не рекомендуется.</value>
     </data>
     <data name="VulkanInfoCheckFailDGPU" xml:space="preserve">
-        <value>Проверка vulkaninfo не прошла для дискретной видеокарты, но прошла для встроенной. Обычно это означает, что дискретная карта не поддерживает Vulkan.\n\nDXVK доступен, но с расчетом на то, что вы будете играть на встроенной графике, а не на дискретной.</value>
+        <value>Проверка Vulkan не прошла для дискретной видеокарты, но прошла для встроенной. Обычно это означает, что дискретная карта не поддерживает Vulkan.\n\nDXVK доступен, но с расчетом на то, что вы будете играть на встроенной графике, а не на дискретной.</value>
     </data>
     <data name="VulkanInfoCheckOneGPUFail" xml:space="preserve">
-        <value>Проверка vulkaninfo не прошла для одной из видеокарт, но прошла для остальных. Обычно это означает, что одна из ваших дискретных карт не поддерживает Vulkan.\n\nDXVK доступен, но с расчетом на то, что вы будете играть на поддерживаемой видеокарте.</value>
+        <value>Проверка Vulkan не прошла для одной из видеокарт, но прошла для остальных. Обычно это означает, что одна из ваших дискретных карт не поддерживает Vulkan.\n\nDXVK доступен, но с расчетом на то, что вы будете играть на поддерживаемой видеокарте.</value>
     </data>
     <data name="VulkanInfoOneGPLFail" xml:space="preserve">
         <value>Проверка GPL не прошла для одного из графических процессоров, но Fast Linking поддерживается по крайней мере одним из них. Обычно это означает, что одна из ваших видеокарт не поддерживает DXVK в полном объеме. Программа продолжит работать, исходя из предположения, что вы будете играть на видеокарте, которая прошла проверку GPL (обычно это основная), но на всякий случай предоставит настройку для установки async.</value>
-    </data>
-    <data name="VulkanInfo50Series" xml:space="preserve">
-        <value>Поскольку ваша (вероятно, основная) дискретная видеокарта относится к серии NVIDIA 50хх, убедитесь, что драйверы обновлены, так как DXVK может не работать на устаревших драйверах.</value>
     </data>
     <data name="ASILoaderOutdatedDescription" xml:space="preserve">
         <value>Похоже, у вас устаревший ASI Loader (dsound.dll). Настоятельно рекомендуется обновить его для лучшей совместимости модов.\n\nУдалите dsound.dll и нажмите «Да», чтобы перейти к загрузке последней версии - скачайте версию без x64, переименуйте dinput8.dll в xlive.dll, если используете даунгрейд и не планируете играть в GFWL.</value>
@@ -319,16 +349,13 @@
         <value>Устаревший FusionFix</value>
     </data>
     <data name="GFWLAchievementsDescription" xml:space="preserve">
-        <value>Похоже, вы используете GFWL. Хотите удалить Steam Achievements (если есть) и исправить настройки ZolikaPatch для получения достижений GFWL?\n\nНажатие «Нет» может отменить это действие, если вы согласились на него ранее.</value>
+        <value>Похоже, вы используете GFWL. Хотите удалить Steam Achievements (если есть) и исправить настройки {0} для получения достижений GFWL?\n\nНажатие «Нет» может отменить это действие, если вы согласились на него ранее.</value>
+    </data>
+    <data name="GFWLAchievementsDescriptionOpenPreCE" xml:space="preserve">
+        <value>Похоже, вы используете GFWL. Хотите исправить настройки OpenPreCEPatch для получения достижений GFWL?\n\nSteam Achievements останутся включенными и продолжат работать вместе с ними. Нажатие «Нет» может отменить это действие, если вы согласились на него ранее.</value>
     </data>
     <data name="GFWLAchievementsTitle" xml:space="preserve">
         <value>Достижения GFWL</value>
-    </data>
-    <data name="InvalidInputDescription" xml:space="preserve">
-        <value>Введенное значение неверно. Введите снова.</value>
-    </data>
-    <data name="InvalidInputTitle" xml:space="preserve">
-        <value>Неверный ввод</value>
     </data>
     <data name="LinuxDetectedDescription" xml:space="preserve">
         <value>Установка DXVK и проверка Vulkan доступны только в Windows.\n\nЭти функции были отключены. Настройка параметров запуска остается доступной.</value>
@@ -349,10 +376,10 @@
         <value>Определение видеопамяти не удалось</value>
     </data>
     <data name="ZPatchCompatibilityDescription" xml:space="preserve">
-        <value>Ваши настройки ZolikaPatch несовместимы с FusionFix. Это может привести к вылетам, несоответствиям, визуальным проблемам и т. д.\n\nВы хотите исправить настройки?</value>
+        <value>Ваши настройки {0} несовместимы с FusionFix. Это может привести к вылетам, несоответствиям, визуальным проблемам и т. д.\n\nВы хотите исправить настройки?</value>
     </data>
     <data name="ZPatchCompatibilityTitle" xml:space="preserve">
-        <value>Исправить совместимость ZolikaPatch - FusionFix?</value>
+        <value>Исправить совместимость {0} - FusionFix?</value>
     </data>
     <data name="ZPatchOutdatedDescription" xml:space="preserve">
         <value>Ваш ZolikaPatch устарел.\n\nХотите скачать последнюю версию? (вы будете перенаправлены на сайт Zolika1351 для ручной загрузки)</value>
@@ -362,5 +389,134 @@
     </data>
     <data name="ZPatchOutdatedTitle" xml:space="preserve">
         <value>ZolikaPatch устаревший</value>
+    </data>
+    <data name="DlssIvEnable" xml:space="preserve">
+        <value>DLSS-IV</value>
+    </data>
+    <data name="DlssIvEnableTip" xml:space="preserve">
+        <value>Включает или выключает апскейлер DLSS-IV, переименовывая DLSS-IV.asi в .disabled. HDR и оптимизации мода работают только при включённом моде. Антиалиасинг FusionFix отключается, пока DLSS-IV активен.</value>
+    </data>
+    <data name="DlssIvUpscalerLabel" xml:space="preserve">
+        <value>Апскейлер:</value>
+    </data>
+    <data name="DlssIvQualityLabel" xml:space="preserve">
+        <value>Качество:</value>
+    </data>
+    <data name="DlssIvFsrAuto" xml:space="preserve">
+        <value>Авто</value>
+    </data>
+    <data name="DlssIvFsr31" xml:space="preserve">
+        <value>FSR 3.1</value>
+    </data>
+    <data name="DlssIvFsr4" xml:space="preserve">
+        <value>FSR 4</value>
+    </data>
+    <data name="DlssIvFsr4Lite" xml:space="preserve">
+        <value>FSR 4 Lite</value>
+    </data>
+    <data name="DlssIvDlaa" xml:space="preserve">
+        <value>Native AA / DLAA</value>
+    </data>
+    <data name="DlssIvQuality" xml:space="preserve">
+        <value>Quality</value>
+    </data>
+    <data name="DlssIvHdr" xml:space="preserve">
+        <value>HDR</value>
+    </data>
+    <data name="DlssIvHdrTip" xml:space="preserve">
+        <value>Ваш монитор должен поддерживать HDR, а HDR должен быть включён в настройках Windows до запуска игры. Точную настройку HDR (peak, paper white, roll-off) можно сделать в DLSS-IV.cfg.</value>
+    </data>
+    <data name="DlssIvUpdateDlss" xml:space="preserve">
+        <value>Обновить DLSS</value>
+    </data>
+    <data name="DlssIvUpdateFsr" xml:space="preserve">
+        <value>Обновить FSR</value>
+    </data>
+    <data name="DlssIvReady" xml:space="preserve">
+        <value>Готово.</value>
+    </data>
+    <data name="DlssIvStatusMissing" xml:space="preserve">
+        <value>DLSS-IV.asi / DLSS-IV.cfg / DLSSIV не найдены в папке игры.</value>
+    </data>
+    <data name="DlssIvRequiresDxvk" xml:space="preserve">
+        <value>DLSS-IV требует последнюю поддержку DXVK (обнаружено: {0}).</value>
+    </data>
+    <data name="DlssIvFusionFixMissing" xml:space="preserve">
+        <value>FusionFix не обнаружен. DLSS-IV требует FusionFix с графическим API Vulkan, поэтому мод был отключён.</value>
+    </data>
+    <data name="DlssIvNoUpscaling" xml:space="preserve">
+        <value>Этот графический процессор не поддерживает ни один апскейлер DLSS-IV. Мод всё ещё можно включить ради его функций производительности; настройки апскейлера останутся недоступными.</value>
+    </data>
+    <data name="DlssIvConfirmUpdateDlssTitle" xml:space="preserve">
+        <value>Обновить NVIDIA DLSS?</value>
+    </data>
+    <data name="DlssIvConfirmUpdateDlssDescription" xml:space="preserve">
+        <value>Будет скачано около {0} из репозитория DLSS SDK и заменён DLSSIV\nvngx_dlss.dll. Старый файл сохранится в резервной копии.</value>
+    </data>
+    <data name="DlssIvConfirmUpdateFsrTitle" xml:space="preserve">
+        <value>Обновить AMD FSR?</value>
+    </data>
+    <data name="DlssIvConfirmUpdateFsrDescription" xml:space="preserve">
+        <value>Будут скачаны только две подписанные DLL (около {0}) из репозитория FSR SDK и заменены DLSSIV\amd_fidelityfx_upscaler_dx12.dll и загрузчик. Старые файлы сохранятся.</value>
+    </data>
+    <data name="DlssIvUpdateDoneTitle" xml:space="preserve">
+        <value>Бинарники DLSS-IV обновлены</value>
+    </data>
+    <data name="DlssIvUpdateDlssDone" xml:space="preserve">
+        <value>NVIDIA DLSS {0} установлен.</value>
+    </data>
+    <data name="DlssIvUpdateFsrDone" xml:space="preserve">
+        <value>AMD FSR {0} установлен.</value>
+    </data>
+    <data name="DlssIvErrorTitle" xml:space="preserve">
+        <value>Ошибка DLSS-IV</value>
+    </data>
+    <data name="DlssIvBusyDownloading" xml:space="preserve">
+        <value>Загрузка... ({0}%)</value>
+    </data>
+    <data name="DlssIvPresetLabel" xml:space="preserve">
+        <value>Пресет:</value>
+    </data>
+    <data name="DlssIvPresetDefault" xml:space="preserve">
+        <value>По умолчанию</value>
+    </data>
+    <data name="DlssIvDescription" xml:space="preserve">
+        <value>DLSS-IV добавляет в GTA IV нативные DLSS, FSR и HDR.</value>
+    </data>
+    <data name="DlssIvAutoDisabledTitle" xml:space="preserve">
+        <value>DLSS-IV отключён</value>
+    </data>
+    <data name="DlssIvAutoDisabledDescription" xml:space="preserve">
+        <value>Ваша видеокарта не поддерживает последнюю версию DXVK (обнаружено: {0}). DLSS-IV требует последнюю версию DXVK, поэтому мод был автоматически отключён. Обновите драйвер видеокарты (не полагайтесь на драйверы Windows Update) и включите DLSS-IV снова.</value>
+    </data>
+    <data name="DlssIvFsr4LiteTip" xml:space="preserve">
+        <value>FSR 4 Lite выбирается драйвером AMD нативно на Ryzen AI / Radeon 7xxM-8xxM. На других GPU он недоступен: общественная INT8-сборка предназначена для RDNA2 и на других картах зависает.</value>
+    </data>
+    <data name="DxvkAlreadyLatestTitle" xml:space="preserve">
+        <value>DXVK уже обновлён</value>
+    </data>
+    <data name="DxvkAlreadyLatestDescription" xml:space="preserve">
+        <value>DXVK {0} уже установлен в папке игры. Утилита не будет скачивать его заново.</value>
+    </data>
+    <data name="DlssIvInstallFsr4" xml:space="preserve">
+        <value>Установить FSR 4</value>
+    </data>
+    <data name="DlssIvUpdateFsr4" xml:space="preserve">
+        <value>Обновить FSR 4</value>
+    </data>
+    <data name="DlssIvConfirmFsr4Title" xml:space="preserve">
+        <value>Установить общественную сборку FSR 4?</value>
+    </data>
+    <data name="DlssIvConfirmFsr4Description" xml:space="preserve">
+        <value>Будет скачана сборка fsr4xyz RDNA2 INT8 FSR 4 (около {0}) и заменена только DLSSIV\amd_fidelityfx_upscaler_dx12.dll. Она предлагается только для карт RDNA2.</value>
+    </data>
+    <data name="DlssIvFsr4Installed" xml:space="preserve">
+        <value>Общественная сборка FSR 4 {0} установлена.</value>
+    </data>
+    <data name="DlssIvFsr4UpToDate" xml:space="preserve">
+        <value>Общественная сборка FSR 4 уже обновлена ({0}).</value>
+    </data>
+    <data name="DlssIvFsr4Unsupported" xml:space="preserve">
+        <value>Эта GPU не поддерживается общественной сборкой FSR 4. Используйте DLSS или FSR 3.1.</value>
     </data>
 </root>

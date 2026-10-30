@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lang="clr-namespace:GTAIVSetupUtility.Localizations"
+        xmlns:dlss="clr-namespace:GTAIVSetupUtility.Modules.DlssIv"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GTAIVSetupUtility.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -22,7 +23,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+    <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
         
         <!-- Welcome Text -->
         <TextBlock Grid.Row="0"
@@ -190,30 +191,27 @@
             </Grid>
         </Grid>
         
+        <!-- DLSS-IV module (optional; remove this element plus the DlssIv property to drop it) -->
+        <dlss:DlssIvPanel Grid.Row="5" DataContext="{Binding DlssIv}"/>
+
         <!-- Footer -->
-        <Grid Grid.Row="5" ColumnDefinitions="*,*,Auto">
-            <Button Grid.Column="0"
-                    Content="{x:Static lang:Resources.GuideLink}"
-                    Command="{Binding OpenHyperlinkCommand}"
-                    CommandParameter="https://gillian-guide.github.io/"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Foreground="SkyBlue"
-                    Padding="0"
-                    FontSize="12"
-                    VerticalAlignment="Bottom"/>
-    
-            <Button Grid.Column="1"
-                    Content="{x:Static lang:Resources.OpenSourceLink}"
-                    Command="{Binding OpenHyperlinkCommand}"
-                    CommandParameter="https://github.com/SandeMC/GTAIVSetupUtilityWPF"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Foreground="SkyBlue"
-                    Padding="0"
-                    FontSize="12"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"/>
+        <Grid Grid.Row="6" ColumnDefinitions="*,*,Auto">
+            <HyperlinkButton Grid.Column="0"
+                             Content="{x:Static lang:Resources.GuideLink}"
+                             Command="{Binding OpenHyperlinkCommand}"
+                             CommandParameter="https://gillian-guide.github.io/"
+                             Padding="0"
+                             FontSize="12"
+                             VerticalAlignment="Bottom"/>
+
+            <HyperlinkButton Grid.Column="1"
+                             Content="{x:Static lang:Resources.OpenSourceLink}"
+                             Command="{Binding OpenHyperlinkCommand}"
+                             CommandParameter="https://github.com/SandeMC/GTAIVSetupUtilityWPF"
+                             Padding="0"
+                             FontSize="12"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Bottom"/>
     
             <Button Grid.Column="2"
                     Command="{Binding AboutCommand}"
