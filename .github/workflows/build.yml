@@ -1,4 +1,5 @@
 name: Build
+
 on:
   push:
     branches: [ main, master ]
@@ -6,27 +7,63 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
 jobs:
   build:
     runs-on: windows-latest
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
-      
+      uses: actions/checkout@v7
+
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: '8.0.x'
-        
+        dotnet-version: '10.0.x'
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ runner.os }}-${{ hashFiles('global.json', 'Directory.Packages.props', '**/*.csproj') }}
+        restore-keys: nuget-${{ runner.os }}-
+
     - name: Restore dependencies
       run: dotnet restore GTAIVSetupUtility.csproj -r win-x64
-      
+
+    - name: Verify formatting
+      run: dotnet format GTAIVSetupUtility.csproj --verify-no-changes --no-restore
+
     - name: Publish
-      run: dotnet publish GTAIVSetupUtility.csproj --configuration Release --output ./publish/ -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false -p:BuiltInComInteropSupport=true
-        
+      run: >
+        dotnet publish GTAIVSetupUtility.csproj
+        --configuration Release
+        --output ./publish/
+        --no-restore
+        -r win-x64
+        --self-contained true
+        -p:PublishSingleFile=true
+        -p:PublishTrimmed=true
+        -p:TrimMode=link
+        -p:IncludeNativeLibrariesForSelfExtract=true
+        -p:EnableCompressionInSingleFile=true
+        -p:DebugType=None
+        -p:DebugSymbols=false
+        -p:BuiltInComInteropSupport=true
+
     - name: Upload
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: GTAIVSetupUtility-SelfContained-SingleFile-${{ github.sha }}
         path: ./publish/
