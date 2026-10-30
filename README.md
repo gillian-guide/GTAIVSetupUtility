@@ -39,7 +39,7 @@ dotnet publish GTAIVSetupUtility.csproj -c Release -r win-x64 --self-contained t
 ```
 
 ## Contribution
-Contribution is highly welcome. Ensure that the functionality is not compromised in any way when contributing. The DLSS-IV module under `Modules/DlssIv/` is intentionally self-contained, but see `AGENTS.md` for the few host hooks it needs.
+Contribution is highly welcome. Ensure that the functionality is not compromised in any way when contributing. The DLSS-IV module under `Modules/DlssIv/` is intentionally self-contained.
 
 ## Attribution
 Following packages were used to create this app:
