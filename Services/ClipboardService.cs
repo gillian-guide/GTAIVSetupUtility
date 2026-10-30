@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input.Platform;
 
 namespace GTAIVSetupUtility.Services;
 
@@ -25,9 +24,9 @@ public class ClipboardService
     {
         if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
             desktop.MainWindow?.Clipboard is not { } provider)
-            throw new NullReferenceException("Missing Clipboard instance.");
+            throw new InvalidOperationException("Missing Clipboard instance.");
 
-        await provider.SetTextAsync(text);
+        await provider.SetTextAsync(text ?? string.Empty);
     }
 
     /// <summary>
@@ -44,8 +43,8 @@ public class ClipboardService
     {
         if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
             desktop.MainWindow?.Clipboard is not { } provider)
-            throw new NullReferenceException("Missing Clipboard instance.");
+            throw new InvalidOperationException("Missing Clipboard instance.");
 
-        return await provider.GetTextAsync();
+        return await provider.TryGetTextAsync();
     }
 }
