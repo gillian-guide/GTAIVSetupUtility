@@ -30,10 +30,6 @@ Built with .NET 10 and Avalonia 12. Runs on Windows and, through Wine/Proton, on
 - Warns the user if they're using the outdated `dsound.dll` and prompts them to download the latest Ultimate ASI Loader.
 - Provides tips for what the launch options actually do.
 
-## Requirements
-- Windows 10/11 x64, or Linux with Wine/Proton.
-- To build: the .NET 10 SDK (pinned by `global.json`).
-
 ## Build
 ```
 dotnet build GTAIVSetupUtility.csproj -c Debug
@@ -41,8 +37,6 @@ dotnet publish GTAIVSetupUtility.csproj -c Release -r win-x64 --self-contained t
   -p:PublishSingleFile=true -p:PublishTrimmed=true -p:TrimMode=link \
   -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish
 ```
-NuGet versions are centralized in `Directory.Packages.props`; code style/analyzer defaults are in
-`Directory.Build.props` and `.editorconfig`. CI also verifies `dotnet format`.
 
 ## Contribution
 Contribution is highly welcome. Ensure that the functionality is not compromised in any way when contributing. The DLSS-IV module under `Modules/DlssIv/` is intentionally self-contained, but see `AGENTS.md` for the few host hooks it needs.
