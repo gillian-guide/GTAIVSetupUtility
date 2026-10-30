@@ -73,7 +73,7 @@
         <CheckBox Content="{x:Static lang:Resources.DlssIvHdr}"
                   IsChecked="{Binding IsHdrEnabled}"
                   IsEnabled="{Binding IsSettingsEnabled}"
-                  ToolTip.Tip="{x:Static lang:Resources.DlssIvHdrTip}"/>
+                  Command="{Binding HdrClickCommand}"/>
 
         <!-- Binary maintenance / supported FSR paths -->
         <WrapPanel Orientation="Horizontal">

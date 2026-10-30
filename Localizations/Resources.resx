@@ -100,13 +100,19 @@
         <value>Which DXVK version to install?</value>
     </data>
     <data name="WhichDXVKPromptDescription" xml:space="preserve">
-        <value>Your iGPU supports a greater version of DXVK than your GPU - which version do you wish to install?\n\nPress 'Yes' to install the version matching your GPU.\n\nPress 'No' to install the version matching your iGPU instead.</value>
+        <value>Your iGPU supports a greater version of DXVK than your GPU - which version do you wish to install?
+
+Press 'Yes' to install the version matching your GPU.
+
+Press 'No' to install the version matching your iGPU instead.</value>
     </data>
     <data name="InteliGPUDXVKPrompt" xml:space="preserve">
         <value>DXVK on Intel iGPUs</value>
     </data>
     <data name="InteliGPUDXVKPromptDescription" xml:space="preserve">
-        <value>Your PC only has an Intel iGPU on it. While it does support more modern versions on paper, it's reported that DXVK 1.10.1 might be your only supported version. Do you wish to install it?\n\nIf 'No' is selected, DXVK will be installed following the normal procedure.</value>
+        <value>Your PC only has an Intel iGPU on it. While it does support more modern versions on paper, it's reported that DXVK 1.10.1 might be your only supported version. Do you wish to install it?
+
+If 'No' is selected, DXVK will be installed following the normal procedure.</value>
     </data>
     <data name="AsyncTipTitle" xml:space="preserve">
         <value>Regarding async</value>
@@ -118,7 +124,9 @@
         <value>Regarding VSync</value>
     </data>
     <data name="VSyncTipDescription" xml:space="preserve">
-        <value>The in-game VSync implementation produces framepacing issues. DXVK's VSync implementation should be preferred.\n\nIt's recommended to keep this on and in-game's implementation off.</value>
+        <value>The in-game VSync implementation produces framepacing issues. DXVK's VSync implementation should be preferred.
+
+It's recommended to keep this on and in-game's implementation off.</value>
     </data>
     <data name="LatencyTipTitle" xml:space="preserve">
         <value>Regarding Max Frame Latency</value>
@@ -145,7 +153,11 @@
         <value>This option forces a specific value of video memory due to the game not being able to do so automatically sometimes. It's recommended to keep this at default.</value>
     </data>
     <data name="AvailableVidMemLockTipDescription" xml:space="preserve">
-        <value>This option allows to change between a 3GB and a 4GB VRAM lock when setting -availablevidmem up.\n\nThe game is 32-bit, so going beyond 4GB is entirely pointless. However, some people reported less issues with it being locked to 3GB instead.\n\nIt's recommended to keep this at default. Option is disabled if latest FusionFix is detected.</value>
+        <value>This option allows to change between a 3GB and a 4GB VRAM lock when setting -availablevidmem up.
+
+The game is 32-bit, so going beyond 4GB is entirely pointless. However, some people reported less issues with it being locked to 3GB instead.
+
+It's recommended to keep this at default. Option is disabled if latest FusionFix is detected.</value>
     </data>
     <data name="AvailableVidMemLockTipTitle" xml:space="preserve">
         <value>Regarding the memory size locks</value>
@@ -274,13 +286,19 @@
         <value>"Steam Version Notice"</value>
     </data>
     <data name="SteamVersionNoticeDescription" xml:space="preserve">
-        <value>You appear to have a commandline.txt, however you are using the Steam/RGL version which doesn't use that file.\n\nConsider moving these options to Steam Launch Options or launch arguments.</value>
+        <value>You appear to have a commandline.txt, however you are using the Steam/RGL version which doesn't use that file.
+
+Consider moving these options to Steam Launch Options or launch arguments.</value>
     </data>
     <data name="DXVKInstalledTitle" xml:space="preserve">
         <value>DXVK Installed!</value>
     </data>
     <data name="DXVKInstalledDescription" xml:space="preserve">
-        <value>{0} has been installed!\n\nConsider going to Steam - Settings - Downloads and disable `Enable Shader Pre-caching` - this may improve your performance.\n\nAdditionally, you can enable ReBAR and force it for the game - that may, too, improve performance.</value>
+        <value>{0} has been installed!
+
+Consider going to Steam - Settings - Downloads and disable `Enable Shader Pre-caching` - this may improve your performance.
+
+Additionally, you can enable ReBAR and force it for the game - that may, too, improve performance.</value>
     </data>
     <data name="DXVKUninstalledTitle" xml:space="preserve">
         <value>DXVK uninstalled</value>
@@ -292,19 +310,29 @@
         <value>Launch options are set up!</value>
     </data>
     <data name="LaunchOptionsSetUpDescription" xml:space="preserve">
-        <value>Following launch options have been set up automatically for you: \n\n{0}\n\nDo not worry that VRAM value isn't your full value - that is intentional and you can change that if you need to - however, there is no real reason to.</value>
+        <value>Following launch options have been set up automatically for you: 
+
+{0}
+
+Do not worry that VRAM value isn't your full value - that is intentional and you can change that if you need to - however, there is no real reason to.</value>
     </data>
     <data name="LaunchOptionsSteamTitle" xml:space="preserve">
         <value>Information about launch options on Steam/RGL</value>
     </data>
     <data name="LaunchOptionsSteamDescription" xml:space="preserve">
-        <value>The app can't set the launch options automatically, paste them in Steam/RGL's Launch Options manually (will be copied to clipboard after you press Ok):\n\n{0}\n\nDo not worry that VRAM value isn't your full value - that is intentional and you can change that if you need to - however, there is no real reason to.</value>
+        <value>The app can't set the launch options automatically, paste them in Steam/RGL's Launch Options manually (will be copied to clipboard after you press Ok):
+
+{0}
+
+Do not worry that VRAM value isn't your full value - that is intentional and you can change that if you need to - however, there is no real reason to.</value>
     </data>
     <data name="FailedToCopyTitle" xml:space="preserve">
         <value>Failed to copy launch options</value>
     </data>
     <data name="FailedToCopyDescription" xml:space="preserve">
-        <value>The app couldn't copy the options to clipboard - input them manually:\n\n{0}</value>
+        <value>The app couldn't copy the options to clipboard - input them manually:
+
+{0}</value>
     </data>
     <data name="ZPatchIniModifiedTitle" xml:space="preserve">
         <value>{0} modified</value>
@@ -316,50 +344,70 @@
         <value>The Vulkan check failed entirely</value>
     </data>
     <data name="VulkanInfoCheckFullFailDescription" xml:space="preserve">
-        <value>The Vulkan check failed entirely. This usually means none of your GPUs support Vulkan. Make sure your drivers are up-to-date - don't rely on Windows Update drivers, either.\n\nDXVK is not available.</value>
+        <value>The Vulkan check failed entirely. This usually means none of your GPUs support Vulkan. Make sure your drivers are up-to-date - don't rely on Windows Update drivers, either.
+
+DXVK is not available.</value>
     </data>
     <data name="NotificationsTitle" xml:space="preserve">
         <value>Notifications</value>
     </data>
     <data name="NotificationsDescription" xml:space="preserve">
-        <value>\n\nMake sure your drivers are up-to-date - don't rely on Windows Update drivers, either.
+        <value>
+
+Make sure your drivers are up-to-date - don't rely on Windows Update drivers, either.
 </value>
     </data>
     <data name="VulkanInfoFailPartial" xml:space="preserve">
         <value>The Vulkan check failed partially. This usually means one of your GPUs may support Vulkan but has outdated drivers - the tool will proceed assuming so, but installing DXVK is not recommended.</value>
     </data>
     <data name="VulkanInfoCheckFailDGPU" xml:space="preserve">
-        <value>The Vulkan check failed for the discrete GPU but succeeded for the integrated GPU. This usually means your discrete GPU does not support Vulkan.\n\nDXVK is available, but with the assumption that you're going to be playing off the integrated GPU, not the dedicated one.</value>
+        <value>The Vulkan check failed for the discrete GPU but succeeded for the integrated GPU. This usually means your discrete GPU does not support Vulkan.
+
+DXVK is available, but with the assumption that you're going to be playing off the integrated GPU, not the dedicated one.</value>
     </data>
     <data name="VulkanInfoCheckOneGPUFail" xml:space="preserve">
-        <value>The Vulkan check failed for one of the GPUs but succeeded for the rest. This usually means one of your discrete GPUs does not support Vulkan.\n\nDXVK is available, but with the assumption that you're going to be playing off the supported GPU.</value>
+        <value>The Vulkan check failed for one of the GPUs but succeeded for the rest. This usually means one of your discrete GPUs does not support Vulkan.
+
+DXVK is available, but with the assumption that you're going to be playing off the supported GPU.</value>
     </data>
     <data name="VulkanInfoOneGPLFail" xml:space="preserve">
-        <value>The GPL check failed for one of the GPUs but Fast Linking is supported by at least one of them. This usually means one of your discrete GPUs or the iGPU does not support DXVK in full.\n\nThe tool will proceed with the assumption that you're going to be playing off the GPU that didn't fail the GPL check (usually your main GPU), but provide options for async just incase.</value>
+        <value>The GPL check failed for one of the GPUs but Fast Linking is supported by at least one of them. This usually means one of your discrete GPUs or the iGPU does not support DXVK in full.
+
+The tool will proceed with the assumption that you're going to be playing off the GPU that didn't fail the GPL check (usually your main GPU), but provide options for async just incase.</value>
     </data>
     <data name="FusionFixOutdatedTitle" xml:space="preserve">
         <value>Outdated FusionFix</value>
     </data>
     <data name="FusionFixOutdatedDescription" xml:space="preserve">
-        <value>Please note that your FusionFix is outdated. It is highly recommended to update the mod for access to latest stability improvements, fixes and graphical improvements\n\nPress "Yes" to be redirected to the download page for FusionFix.</value>
+        <value>Please note that your FusionFix is outdated. It is highly recommended to update the mod for access to latest stability improvements, fixes and graphical improvements
+
+Press "Yes" to be redirected to the download page for FusionFix.</value>
     </data>
     <data name="ASILoaderOutdatedTitle" xml:space="preserve">
         <value>Outdated ASI Loader</value>
     </data>
     <data name="ASILoaderOutdatedDescription" xml:space="preserve">
-        <value>You appear to have an outdated ASI Loader (dsound.dll). It's highly recommended to update it for best mod compatibility.\n\nDelete dsound.dll and press 'Yes' to get redirected to download the latest version - download the non-x64 one, rename dinput8.dll to xlive.dll if you are using a downgraded version and don't plan to play GFWL.</value>
+        <value>You appear to have an outdated ASI Loader (dsound.dll). It's highly recommended to update it for best mod compatibility.
+
+Delete dsound.dll and press 'Yes' to get redirected to download the latest version - download the non-x64 one, rename dinput8.dll to xlive.dll if you are using a downgraded version and don't plan to play GFWL.</value>
     </data>
     <data name="RTSSConflictTitle" xml:space="preserve">
         <value>RivaTuner Conflict</value>
     </data>
     <data name="RTSSConflictDescription" xml:space="preserve">
-        <value>You currently have RivaTuner Statistics Server enabled (it might be a part of MSI Afterburner).\n\nTo avoid issues with the game launching when DXVK and IVSDK .NET are both installed, go into your tray icons, press on the little monitor icon with the number 60, press 'Add' in bottom left, select GTA IV's executable and set Application detection level to 'None'.\n\nIf you want the statistics, set it to Low and restart the tool, with the game running.</value>
+        <value>You currently have RivaTuner Statistics Server enabled (it might be a part of MSI Afterburner).
+
+To avoid issues with the game launching when DXVK and IVSDK .NET are both installed, go into your tray icons, press on the little monitor icon with the number 60, press 'Add' in bottom left, select GTA IV's executable and set Application detection level to 'None'.
+
+If you want the statistics, set it to Low and restart the tool, with the game running.</value>
     </data>
     <data name="ZPatchOutdatedTitle" xml:space="preserve">
         <value>ZolikaPatch is outdated</value>
     </data>
     <data name="ZPatchOutdatedDescription" xml:space="preserve">
-        <value>Your ZolikaPatch is outdated.\n\nDo you wish to download the latest version? (this will redirect to Zolika1351's website for manual download)
+        <value>Your ZolikaPatch is outdated.
+
+Do you wish to download the latest version? (this will redirect to Zolika1351's website for manual download)
 </value>
     </data>
     <data name="ZPatchOutdatedDescription2" xml:space="preserve">
@@ -369,28 +417,38 @@
         <value>GFWL Achievements</value>
     </data>
     <data name="GFWLAchievementsDescription" xml:space="preserve">
-        <value>You appear to be using GFWL. Do you wish to remove Steam Achievements (if exists) and fix {0} options to receive GFWL achievements?\n\nPressing 'No' can revert this if you agreed to this earlier.</value>
+        <value>You appear to be using GFWL. Do you wish to remove Steam Achievements (if exists) and fix {0} options to receive GFWL achievements?
+
+Pressing 'No' can revert this if you agreed to this earlier.</value>
     </data>
     <data name="GFWLAchievementsDescriptionOpenPreCE" xml:space="preserve">
-        <value>You appear to be using GFWL. Do you wish to fix OpenPreCEPatch options to receive GFWL achievements?\n\nSteam Achievements stay enabled and keep working alongside them. Pressing 'No' can revert this if you agreed to this earlier.</value>
+        <value>You appear to be using GFWL. Do you wish to fix OpenPreCEPatch options to receive GFWL achievements?
+
+Steam Achievements stay enabled and keep working alongside them. Pressing 'No' can revert this if you agreed to this earlier.</value>
     </data>
     <data name="ZPatchCompatibilityTitle" xml:space="preserve">
         <value>Fix {0} - FusionFix compatibility?</value>
     </data>
     <data name="ZPatchCompatibilityDescription" xml:space="preserve">
-        <value>Your {0} options are incompatible with FusionFix. This may lead to crashes, inconsistencies, visual issues etc.\n\nDo you wish to fix the options?</value>
+        <value>Your {0} options are incompatible with FusionFix. This may lead to crashes, inconsistencies, visual issues etc.
+
+Do you wish to fix the options?</value>
     </data>
     <data name="VRAMManualTitle" xml:space="preserve">
         <value>VRAM check failed</value>
     </data>
     <data name="VRAMManualDescription" xml:space="preserve">
-        <value>Could not detect VRAM automatically.\n\nPlease enter your VRAM (in MB):</value>
+        <value>Could not detect VRAM automatically.
+
+Please enter your VRAM (in MB):</value>
     </data>
     <data name="LinuxDetectedTitle" xml:space="preserve">
         <value>Linux detected</value>
     </data>
     <data name="LinuxDetectedDescription" xml:space="preserve">
-        <value>DXVK installation and Vulkan checking is only available on Windows.\n\nThese features have been disabled. Launch options configuration remains available.</value>
+        <value>DXVK installation and Vulkan checking is only available on Windows.
+
+These features have been disabled. Launch options configuration remains available.</value>
     </data>
     <data name="DlssIvEnable" xml:space="preserve">
         <value>DLSS-IV</value>

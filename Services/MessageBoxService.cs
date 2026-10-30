@@ -27,7 +27,7 @@ public static class MessageBoxService
         var box = MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
         {
             ContentTitle = title,
-            ContentMessage = Normalize(message),
+            ContentMessage = message,
             ButtonDefinitions = buttons,
             Icon = icon,
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
@@ -72,7 +72,7 @@ public static class MessageBoxService
         var panel = new StackPanel { Margin = new Thickness(20), Spacing = 10 };
         var label = new TextBlock
         {
-            Text = Normalize(message),
+            Text = message,
             TextWrapping = TextWrapping.Wrap
         };
         var textBox = new TextBox { Text = initialValue ?? string.Empty };
@@ -105,6 +105,4 @@ public static class MessageBoxService
 
         return await box.ShowAsync();
     }
-
-    private static string Normalize(string message) => message.Replace("\\n", "\n", StringComparison.Ordinal);
 }

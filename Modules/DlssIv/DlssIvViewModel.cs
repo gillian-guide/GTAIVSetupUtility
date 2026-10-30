@@ -147,6 +147,9 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     /// <summary>Whether the Vulkan probe produced a usable result.</summary>
     public bool HasHardwareInfo => _hardwareKnown;
 
+    /// <summary>Mirrors the main window's tips toggle for the HDR explanation.</summary>
+    public bool ShowTips { get; set; } = true;
+
     /// <summary>Whether the detected DXVK tier can provide the Vulkan renderer DLSS-IV needs.</summary>
     public bool IsVulkanCapable => _hardwareKnown && _dxvkFeatureTier == 3;
 
@@ -338,6 +341,15 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         {
             Logger.Error(ex, " Could not automatically disable DLSS-IV.");
         }
+    }
+
+    [RelayCommand]
+    private async Task HdrClick()
+    {
+        Logger.Info($" User toggled HDR to: {IsHdrEnabled}");
+
+        if (ShowTips)
+            await MessageBoxService.ShowAsync(Resources.DlssIvHdr, Resources.DlssIvHdrTip, Icon.Info);
     }
 
     [RelayCommand]

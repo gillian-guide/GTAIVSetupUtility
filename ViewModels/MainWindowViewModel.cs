@@ -7,7 +7,6 @@ using GTAIVSetupUtility.Localizations;
 using GTAIVSetupUtility.Models;
 using GTAIVSetupUtility.Modules.DlssIv;
 using GTAIVSetupUtility.Services;
-using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using NLog;
 using FontWeight = Avalonia.Media.FontWeight;
@@ -163,8 +162,11 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         DlssIv.ModEnabledChanged += OnDlssIvModEnabledChanged;
+        DlssIv.ShowTips = ShowTips;
         Logger.Info(" Application sucessfully initialized!");
     }
+
+    partial void OnShowTipsChanged(bool value) => DlssIv.ShowTips = value;
 
     private async void OnDlssIvModEnabledChanged(object? sender, EventArgs e)
     {
@@ -463,14 +465,11 @@ public partial class MainWindowViewModel : ObservableObject
             case true when !_ffixLatest:
                 {
                     Logger.Info(" FusionFix is present, but outdated.");
-                    var result = await MessageBoxManager.GetMessageBoxStandard(
+                    bool update = await MessageBoxService.ConfirmAsync(
                         Resources.FusionFixOutdatedTitle,
-                        Resources.FusionFixOutdatedDescription.Replace("\\n", "\n"),
-                        ButtonEnum.YesNo,
-                        Icon.Info
-                    ).ShowAsync();
+                        Resources.FusionFixOutdatedDescription);
 
-                    if (result != ButtonResult.Yes)
+                    if (!update)
                     {
                         OpenHyperlink("https://github.com/ThirteenAG/GTAIV.EFLC.FusionFix/releases/latest");
                     }
