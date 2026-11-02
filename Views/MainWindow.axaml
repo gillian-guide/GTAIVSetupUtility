@@ -13,7 +13,7 @@
         TransparencyLevelHint="Mica, AcrylicBlur"
         Background="Transparent"
         Icon="/Assets/ivlogo.ico"
-        Width="1000"
+        Width="760"
         SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
         CanResize="False"
