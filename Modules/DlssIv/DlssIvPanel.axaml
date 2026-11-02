@@ -15,7 +15,7 @@
                    Foreground="Gray"
                    TextWrapping="Wrap"/>
 
-        <!-- On/off, upscaler, quality -->
+        <!-- On/off and upscaler -->
         <WrapPanel Orientation="Horizontal">
             <CheckBox Content="{x:Static lang:Resources.DlssIvEnable}"
                       IsChecked="{Binding IsModEnabled}"
@@ -27,16 +27,24 @@
             <TextBlock Text="{x:Static lang:Resources.DlssIvUpscalerLabel}"
                        VerticalAlignment="Center"
                        Margin="0,0,6,0"/>
-            <RadioButton Content="DLSS"
-                         GroupName="DlssIvUpscaler"
-                         IsChecked="{Binding IsDlssSelected}"
-                         IsEnabled="{Binding IsDlssRadioEnabled}"
-                         Margin="0,0,8,0"/>
-            <RadioButton Content="FSR"
-                         GroupName="DlssIvUpscaler"
-                         IsChecked="{Binding IsFsrSelected}"
-                         IsEnabled="{Binding IsFsrRadioEnabled}"
-                         Margin="0,0,18,0"/>
+            <ComboBox ItemsSource="{Binding UpscalerOptions}"
+                      SelectedIndex="{Binding SelectedUpscalerIndex}"
+                      IsEnabled="{Binding IsUpscalerComboEnabled}"
+                      MinWidth="100"/>
+        </WrapPanel>
+
+        <!-- Preset / FSR profile, plus the quality choice -->
+        <WrapPanel Orientation="Horizontal">
+            <TextBlock Text="{x:Static lang:Resources.DlssIvPresetLabel}"
+                       IsVisible="{Binding IsProfileVisible}"
+                       VerticalAlignment="Center"
+                       Margin="0,0,6,0"/>
+            <ComboBox ItemsSource="{Binding ProfileOptions}"
+                      SelectedIndex="{Binding SelectedProfileIndex}"
+                      IsEnabled="{Binding IsProfileEnabled}"
+                      IsVisible="{Binding IsProfileVisible}"
+                      MinWidth="190"
+                      Margin="0,0,16,0"/>
 
             <TextBlock Text="{x:Static lang:Resources.DlssIvQualityLabel}"
                        VerticalAlignment="Center"
@@ -44,36 +52,65 @@
             <RadioButton Content="{x:Static lang:Resources.DlssIvDlaa}"
                          GroupName="DlssIvQuality"
                          IsChecked="{Binding IsDlaaSelected}"
+                         IsEnabled="{Binding IsSettingsEnabled}"
                          Margin="0,0,8,0"/>
             <RadioButton Content="{x:Static lang:Resources.DlssIvQuality}"
                          GroupName="DlssIvQuality"
-                         IsChecked="{Binding IsQualitySelected}"/>
+                         IsChecked="{Binding IsQualitySelected}"
+                         IsEnabled="{Binding IsSettingsEnabled}"/>
         </WrapPanel>
 
-        <!-- One preset list for whichever upscaler is selected -->
+        <!-- HDR and the individual PERFORMANCE toggles -->
         <WrapPanel Orientation="Horizontal">
-            <TextBlock Text="{x:Static lang:Resources.DlssIvPresetLabel}"
+            <CheckBox Content="{x:Static lang:Resources.DlssIvHdr}"
+                      IsChecked="{Binding IsHdrEnabled}"
+                      IsEnabled="{Binding IsSettingsEnabled}"
+                      Command="{Binding HdrClickCommand}"
+                      Margin="0,0,14,0"/>
+
+            <TextBlock Text="{x:Static lang:Resources.DlssIvPerformance}"
+                       VerticalAlignment="Center"
+                       Foreground="Gray"
+                       Margin="0,0,6,0"/>
+            <CheckBox Content="{x:Static lang:Resources.DlssIvThreaded}"
+                      IsChecked="{Binding IsThreadedEnabled}"
+                      IsEnabled="{Binding IsSettingsEnabled}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvThreadedTip}"
+                      Margin="0,0,10,0"/>
+            <CheckBox Content="{x:Static lang:Resources.DlssIvUnpin}"
+                      IsChecked="{Binding IsUnpinEnabled}"
+                      IsEnabled="{Binding IsSettingsEnabled}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvUnpinTip}"
+                      Margin="0,0,10,0"/>
+            <CheckBox Content="{x:Static lang:Resources.DlssIvCpuPlace}"
+                      IsChecked="{Binding IsCpuPlaceEnabled}"
+                      IsEnabled="{Binding IsSettingsEnabled}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvCpuPlaceTip}"
+                      Margin="0,0,10,0"/>
+            <CheckBox Content="{x:Static lang:Resources.DlssIvRenameSdr}"
+                      IsChecked="{Binding IsRenameSdrEnabled}"
+                      IsEnabled="{Binding IsSettingsEnabled}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvRenameSdrTip}"/>
+        </WrapPanel>
+
+        <!-- Frame generation (latest DLSS-IV) -->
+        <WrapPanel Orientation="Horizontal" IsVisible="{Binding IsFrameGenerationAvailable}">
+            <CheckBox Content="{x:Static lang:Resources.DlssIvFrameGeneration}"
+                      IsChecked="{Binding IsFrameGenerationEnabled}"
+                      IsEnabled="{Binding IsSettingsEnabled}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvFrameGenerationTip}"
+                      Margin="0,0,10,0"/>
+            <TextBlock Text="{x:Static lang:Resources.DlssIvFrameGenerationMinFps}"
                        VerticalAlignment="Center"
                        Margin="0,0,6,0"/>
-            <ComboBox ItemsSource="{Binding ProfileOptions}"
-                      SelectedIndex="{Binding SelectedProfileIndex}"
-                      IsEnabled="{Binding IsProfileEnabled}"
-                      ToolTip.Tip="{x:Static lang:Resources.DlssIvFsr4LiteTip}"
-                      MinWidth="190"/>
-            <TextBlock Text="{Binding StatusText}"
-                       IsVisible="{Binding HasStatusText}"
-                       FontSize="11"
-                       Foreground="Orange"
-                       VerticalAlignment="Center"
-                       TextWrapping="Wrap"
-                       Margin="10,0,0,0"/>
+            <NumericUpDown Value="{Binding FrameGenerationMinFps}"
+                           Minimum="0"
+                           Maximum="240"
+                           Increment="1"
+                           IsEnabled="{Binding IsFrameGenerationEnabled}"
+                           ToolTip.Tip="{x:Static lang:Resources.DlssIvFrameGenerationMinFpsTip}"
+                           Width="90"/>
         </WrapPanel>
-
-        <!-- HDR needs Windows HDR switched on before the game starts -->
-        <CheckBox Content="{x:Static lang:Resources.DlssIvHdr}"
-                  IsChecked="{Binding IsHdrEnabled}"
-                  IsEnabled="{Binding IsSettingsEnabled}"
-                  Command="{Binding HdrClickCommand}"/>
 
         <!-- Binary maintenance / supported FSR paths -->
         <WrapPanel Orientation="Horizontal">
@@ -95,6 +132,12 @@
                        Foreground="Gray"
                        VerticalAlignment="Center"/>
         </WrapPanel>
+
+        <TextBlock Text="{Binding StatusText}"
+                   IsVisible="{Binding HasStatusText}"
+                   FontSize="11"
+                   Foreground="Orange"
+                   TextWrapping="Wrap"/>
 
         <Separator/>
     </StackPanel>

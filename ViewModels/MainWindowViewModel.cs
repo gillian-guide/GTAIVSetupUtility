@@ -7,6 +7,7 @@ using GTAIVSetupUtility.Localizations;
 using GTAIVSetupUtility.Models;
 using GTAIVSetupUtility.Modules.DlssIv;
 using GTAIVSetupUtility.Services;
+using GTAIVSetupUtility.Views;
 using MsBox.Avalonia.Enums;
 using NLog;
 using FontWeight = Avalonia.Media.FontWeight;
@@ -125,10 +126,26 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     public partial bool IsLaunchOptionsButtonDefault { get; set; }
 
+    [ObservableProperty]
+    public partial IReadOnlyList<string> GpuOptions { get; set; } = [];
+
+    [ObservableProperty]
+    public partial int SelectedGpuIndex { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsGpuSelectionVisible { get; set; }
+
+    [ObservableProperty]
+    public partial string AboutText { get; set; } = string.Empty;
+
     public bool IsLinux { get; set; }
     public DlssIvViewModel DlssIv { get; } = new();
     private GpuInfo? _defaultGpu;
     private IReadOnlyList<GpuInfo> _gpus = [];
+    private int _windowsDefaultGpuIndex;
+    private int _autoInstallDxvk;
+    private bool _autoDxvkOnIgpu;
+    private bool _suppressGpuSelection;
     private bool _ffix;
     private bool _ffixLatest;
     private bool _zpatch;
@@ -197,6 +214,9 @@ public partial class MainWindowViewModel : ObservableObject
             DlssIv.SetHardwareUnavailable();
         else
             DlssIv.SetHardware(_defaultGpu, DxvkFeatureTier);
+
+        _autoInstallDxvk = InstallDxvk;
+        _autoDxvkOnIgpu = _dxvkOnIgpu;
         return Task.CompletedTask;
     }
 
@@ -302,6 +322,8 @@ public partial class MainWindowViewModel : ObservableObject
         else
             DlssIv.SetHardware(_defaultGpu, DxvkFeatureTier);
 
+        _autoInstallDxvk = InstallDxvk;
+        _autoDxvkOnIgpu = _dxvkOnIgpu;
         Logger.Info(" Vulkan check finished!");
     }
 
@@ -316,6 +338,55 @@ public partial class MainWindowViewModel : ObservableObject
         _enableAsync = vulkanInfo.EnableAsync;
         _gpus = vulkanInfo.Gpus;
         _defaultGpu = vulkanInfo.DefaultGpu;
+        _windowsDefaultGpuIndex = vulkanInfo.DefaultGpuIndex;
+
+        var options = new List<string> { Resources.GpuAutomatic };
+        options.AddRange(_gpus.Select(GpuLabel));
+        GpuOptions = options;
+        IsGpuSelectionVisible = _gpus.Count > 1;
+
+        _suppressGpuSelection = true;
+        SelectedGpuIndex = 0;
+        _suppressGpuSelection = false;
+    }
+
+    private static string GpuLabel(GpuInfo gpu)
+    {
+        string kind = gpu.IsDiscrete ? "dGPU" : gpu.IsIntegrated ? "iGPU" : "GPU";
+        return $"{gpu.Name} ({kind}, GPU{gpu.Index})";
+    }
+
+    partial void OnSelectedGpuIndexChanged(int value)
+    {
+        if (_suppressGpuSelection || value < 0 || value > _gpus.Count)
+            return;
+
+        if (value == 0)
+        {
+            _defaultGpu = _gpus.FirstOrDefault(gpu => gpu.Index == _windowsDefaultGpuIndex)
+                          ?? _gpus.FirstOrDefault();
+            InstallDxvk = _autoInstallDxvk;
+            _dxvkOnIgpu = _autoDxvkOnIgpu;
+        }
+        else
+        {
+            _defaultGpu = _gpus[value - 1];
+            InstallDxvk = IsLinux ? 0 : Math.Max(0, _defaultGpu.DxvkSupport);
+            _dxvkOnIgpu = _defaultGpu.IsIntegrated;
+        }
+
+        if (_defaultGpu == null)
+            return;
+
+        Logger.Info($" User selected GPU{_defaultGpu.Index}: {_defaultGpu.Name} (tier {_defaultGpu.DxvkSupport}).");
+        DlssIv.SetHardware(_defaultGpu, _defaultGpu.DxvkSupport);
+        AboutText = BuildAboutText();
+
+        if (!IsLinux && !string.IsNullOrWhiteSpace(GameDirectoryPath))
+            IsDxvkPanelEnabled = InstallDxvk != 0;
+
+        if (DlssIv.IsModEnabled)
+            _ = EnsureDlssIvPrerequisitesAsync();
     }
 
     /// <summary>
@@ -594,7 +665,14 @@ public partial class MainWindowViewModel : ObservableObject
             return;
         }
 
-        DlssIv.SetVulkanEnabled(vulkanAvailable);
+        if (!vulkanAvailable)
+        {
+            DlssIv.SetVulkanEnabled(false);
+            await DlssIv.DisableForUnavailableVulkanAsync();
+            return;
+        }
+
+        DlssIv.SetVulkanEnabled(true);
     }
 
     private bool _isEnsuringDxvk;
@@ -604,9 +682,13 @@ public partial class MainWindowViewModel : ObservableObject
         if (_isEnsuringDxvk)
             return DlssIv.IsVulkanCapable;
 
+        int tier = _defaultGpu?.DxvkSupport ?? 0;
+        DxvkInstallPlan? plan = DxvkInstallerService.FindPlan(tier, InstallAsync);
+        if (plan is null)
+            return false;
+
         string? installedVersion = DxvkVersionService.GetInstalledVersion(GameDirectoryPath);
-        bool dxvkInstalled = HelperService.DetectDxvkInstallation(GameDirectoryPath).isDxvkInstalled;
-        string? latestVersion = await DxvkVersionService.GetLatestDxvkVersionAsync();
+        string? latestVersion = await DxvkInstallerService.GetLatestVersionAsync(plan);
 
         if (latestVersion is not null && installedVersion is not null &&
             DxvkVersionService.IsAtLeast(installedVersion, latestVersion))
@@ -614,20 +696,16 @@ public partial class MainWindowViewModel : ObservableObject
             return true;
         }
 
-        if (latestVersion is null && dxvkInstalled)
+        if (latestVersion is null && installedVersion is not null)
         {
-            Logger.Warn(" Could not verify the latest DXVK release; keeping the installed build.");
+            Logger.Warn($" Could not verify the latest {plan.Name} release; keeping the installed build.");
             return true;
         }
-
-        DxvkInstallPlan? plan = DxvkInstallerService.FindPlan(3, false);
-        if (plan is null)
-            return false;
 
         _isEnsuringDxvk = true;
         try
         {
-            Logger.Info(" DLSS-IV is enabled - installing the latest DXVK...");
+            Logger.Info($" DLSS-IV is enabled - installing the latest {plan.Name}...");
             IsDxvkPanelEnabled = false;
 
             var progress = new Progress<int>(percent => DownloadProgress = percent);
@@ -762,13 +840,22 @@ public partial class MainWindowViewModel : ObservableObject
     {
         Logger.Info(" Prompted to install/reinstall DXVK.");
 
-        if (InstallDxvk == 3 && !string.IsNullOrWhiteSpace(GameDirectoryPath))
+        DxvkInstallPlan? plan = DxvkInstallerService.FindPlan(InstallDxvk, InstallAsync);
+        if (plan is null)
+        {
+            Logger.Error($" No DXVK install plan for tier {InstallDxvk} (async: {InstallAsync}).");
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(GameDirectoryPath))
         {
             string? installedVersion = DxvkVersionService.GetInstalledVersion(GameDirectoryPath);
-            string? targetVersion = await DxvkVersionService.GetLatestDxvkVersionAsync();
+            string? targetVersion = await DxvkInstallerService.GetLatestVersionAsync(plan);
 
             if (installedVersion != null && targetVersion != null &&
-                DxvkVersionService.IsAtLeast(installedVersion, targetVersion))
+                (plan.Version is not null
+                    ? DxvkVersionService.IsSameVersion(installedVersion, targetVersion)
+                    : DxvkVersionService.IsAtLeast(installedVersion, targetVersion)))
             {
                 Logger.Info($" DXVK {installedVersion} is already at least {targetVersion}; skipping the download.");
                 await MessageBoxService.ShowAsync(
@@ -777,17 +864,15 @@ public partial class MainWindowViewModel : ObservableObject
                     Icon.Info);
 
                 if (DlssIv.IsModEnabled && DlssIv.HasFusionFix)
+                {
                     DlssIv.SetVulkanEnabled(DlssIv.IsVulkanCapable);
+
+                    if (!DlssIv.IsVulkanCapable)
+                        await DlssIv.DisableForUnavailableVulkanAsync();
+                }
 
                 return;
             }
-        }
-
-        DxvkInstallPlan? plan = DxvkInstallerService.FindPlan(InstallDxvk, InstallAsync);
-        if (plan is null)
-        {
-            Logger.Error($" No DXVK install plan for tier {InstallDxvk} (async: {InstallAsync}).");
-            return;
         }
 
         IsDxvkPanelEnabled = false;
@@ -867,7 +952,12 @@ public partial class MainWindowViewModel : ObservableObject
             IsDxvkPanelEnabled = true;
 
             if (DlssIv.IsModEnabled && DlssIv.HasFusionFix)
+            {
                 DlssIv.SetVulkanEnabled(DlssIv.IsVulkanCapable);
+
+                if (!DlssIv.IsVulkanCapable)
+                    await DlssIv.DisableForUnavailableVulkanAsync();
+            }
         }
         catch (Exception ex)
         {
@@ -875,7 +965,10 @@ public partial class MainWindowViewModel : ObservableObject
             InstallationState = DxvkState.NotInstalled;
 
             if (DlssIv.IsModEnabled)
+            {
                 DlssIv.SetVulkanEnabled(false);
+                await DlssIv.DisableForUnavailableVulkanAsync();
+            }
         }
     }
 
@@ -889,7 +982,10 @@ public partial class MainWindowViewModel : ObservableObject
         await DxvkInstallerService.UninstallAsync(_ffixLatest, GameDirectoryPath);
 
         if (DlssIv.IsModEnabled)
+        {
             DlssIv.SetVulkanEnabled(false);
+            await DlssIv.DisableForUnavailableVulkanAsync();
+        }
 
         await MessageBoxService.ShowAsync(
             Resources.DXVKUninstalledTitle,
@@ -1086,9 +1182,26 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task About()
     {
         Logger.Debug(" User opened the About window.");
+        AboutText = BuildAboutText();
 
+        var window = new AboutWindow { DataContext = this };
+        if (Avalonia.Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
+            {
+                MainWindow: { } owner
+            })
+        {
+            await window.ShowDialog(owner);
+        }
+        else
+        {
+            window.Show();
+        }
+    }
+
+    private string BuildAboutText()
+    {
         string patchName = _patchKind == PatchIniKind.OpenPreCE ? "OpenPreCEPatch" : "ZolikaPatch";
-        string message =
+        return
             $"{Resources.AboutIntroText}\n\n" +
             $"{Resources.AboutDXVKToInstall}: {ToSupportText(InstallDxvk)}\n" +
             $"{Resources.AboutdGPUDXVKSupport}: {ToSupportText(_vkDgpuDxvkSupport)}\n" +
@@ -1104,8 +1217,6 @@ public partial class MainWindowViewModel : ObservableObject
             $"{Resources.AboutIvsdkDotNet}: {ToYesNo(_isIvsdkInstalled)}\n" +
             $"{Resources.AboutRtss}: {ToConflictText(string.IsNullOrEmpty(_rtssConfig), _rtssConflict)}\n\n" +
             $"{Resources.AboutVersion}: {GetAssemblyVersion()}";
-
-        await MessageBoxService.ShowAsync(Resources.AboutTitle, message, Icon.Info);
     }
 
     private static string ToGplSupportText(int level) => level switch

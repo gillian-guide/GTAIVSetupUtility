@@ -24,6 +24,8 @@ public static class DlssIvBinaryService
     private const string FsrLatestApi = "https://api.github.com/repos/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK/releases/latest";
     private const string Fsr4LatestApi = "https://api.github.com/repos/the3rdparty1917/fsr4xyz/releases/latest";
     private const long OriginalFsrLoaderSize = 26_376;
+    // DLSS-IV 1.1.1 ships AMD's newer signed loader (39,184 bytes) instead of the 1.0.9 one.
+    private static readonly long[] OriginalFsrLoaderSizes = [OriginalFsrLoaderSize, 39_184];
 
     public static async Task<string> UpdateDlssAsync(
         DlssIvInstallation installation,
@@ -99,9 +101,8 @@ public static class DlssIvBinaryService
         File.Copy(tempUpscaler, Path.Combine(dataDirectory, "amd_fidelityfx_upscaler_dx12.dll"), true);
         File.Copy(tempLoader, Path.Combine(dataDirectory, "amd_fidelityfx_loader_dx12.dll"), true);
 
-        bool lite = state.RequestedFsrProfile == "fsr4-lite" || state.FsrProfile == "fsr4-lite";
-        state.FsrProfile = lite ? "fsr4-lite" : "fsr4";
-        state.FsrSource = lite ? $"AMD FSR SDK {tag} (Lite-capable)" : $"AMD FSR SDK {tag}";
+        state.FsrProfile = "fsr4";
+        state.FsrSource = $"AMD FSR SDK {tag}";
         state.FsrDllSha256 = ComputeSha256(Path.Combine(dataDirectory, "amd_fidelityfx_upscaler_dx12.dll"));
         Logger.Info($" Updated the FSR upscaler to {tag}.");
         return tag;
@@ -315,11 +316,11 @@ public static class DlssIvBinaryService
     private static void EnsureOriginalFsrLoader(DlssIvInstallation installation)
     {
         string loader = Path.Combine(installation.DataDirectory, "amd_fidelityfx_loader_dx12.dll");
-        if (File.Exists(loader) && new FileInfo(loader).Length == OriginalFsrLoaderSize)
+        if (File.Exists(loader) && IsOriginalFsrLoaderSize(new FileInfo(loader).Length))
             return;
 
         string backup = loader + ".gtaiv-utility.bak";
-        if (File.Exists(backup) && new FileInfo(backup).Length == OriginalFsrLoaderSize)
+        if (File.Exists(backup) && IsOriginalFsrLoaderSize(new FileInfo(backup).Length))
         {
             File.Copy(backup, loader, true);
             Logger.Info(" Restored DLSS-IV's original FSR loader.");
@@ -327,8 +328,10 @@ public static class DlssIvBinaryService
         }
 
         throw new InvalidOperationException(
-            "The DLSS-IV FSR loader is not the original 1.0.9 loader. Reinstall the DLSS-IV archive's DLSSIV folder first.");
+            "The DLSS-IV FSR loader is not an original loader. Reinstall the DLSS-IV archive's DLSSIV folder first.");
     }
+
+    private static bool IsOriginalFsrLoaderSize(long size) => OriginalFsrLoaderSizes.Contains(size);
 
     private static void ExtractSignedBin(ZipArchive archive, string fileName, string destination)
     {

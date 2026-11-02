@@ -1,3 +1,5 @@
+using Avalonia;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GTAIVSetupUtility.Localizations;
@@ -47,16 +49,19 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     public partial bool IsModEnabled { get; set; }
 
     [ObservableProperty]
-    public partial bool IsDlssSelected { get; set; } = true;
+    public partial IReadOnlyList<string> UpscalerOptions { get; set; } = [];
 
     [ObservableProperty]
-    public partial bool IsFsrSelected { get; set; }
+    public partial int SelectedUpscalerIndex { get; set; }
 
     [ObservableProperty]
     public partial IReadOnlyList<string> ProfileOptions { get; set; } = [];
 
     [ObservableProperty]
     public partial int SelectedProfileIndex { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsProfileVisible { get; set; }
 
     [ObservableProperty]
     public partial bool IsDlaaSelected { get; set; }
@@ -68,13 +73,34 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     public partial bool IsHdrEnabled { get; set; }
 
     [ObservableProperty]
+    public partial bool IsThreadedEnabled { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool IsUnpinEnabled { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool IsCpuPlaceEnabled { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsRenameSdrEnabled { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool IsFrameGenerationEnabled { get; set; }
+
+    [ObservableProperty]
+    public partial decimal? FrameGenerationMinFps { get; set; }
+
+    [ObservableProperty]
     public partial bool IsDlssAvailable { get; set; }
 
     [ObservableProperty]
     public partial bool IsFsr4Available { get; set; }
 
     [ObservableProperty]
-    public partial bool IsFsr4LiteAvailable { get; set; }
+    public partial bool IsXessAvailable { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsFrameGenerationAvailable { get; set; }
 
     [ObservableProperty]
     public partial bool IsBusy { get; set; }
@@ -89,10 +115,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     public partial bool CanToggleMod { get; set; }
 
     [ObservableProperty]
-    public partial bool IsDlssRadioEnabled { get; set; }
-
-    [ObservableProperty]
-    public partial bool IsFsrRadioEnabled { get; set; }
+    public partial bool IsUpscalerComboEnabled { get; set; }
 
     [ObservableProperty]
     public partial bool IsProfileEnabled { get; set; }
@@ -104,10 +127,15 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     private static readonly string[] DlssPresetLabels =
         [Resources.DlssIvPresetDefault, "K (Transformer)", "M (Transformer)", "L (Transformer)", "J (CNN)"];
 
+    private readonly List<DlssIvUpscaler> _upscalerChoices = [];
     private int _dlssPresetIndex = 1;
+
+    // 0 = auto, 1 = FSR 3.1, 2 = FSR 4
     private int _fsrProfileIndex;
     private readonly List<int> _fsrProfileChoices = [];
+
     private readonly TimeProvider _timeProvider = TimeProvider.System;
+    private bool _suppressUpscalerChange;
     private bool _suppressProfileChange;
     private bool _suppressAutoApply;
     private CancellationTokenSource? _applyCancellation;
@@ -128,19 +156,6 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
     public bool HasStatusText => !string.IsNullOrEmpty(StatusText);
 
-    /// <summary>
-    /// Whether the detected GPU can run any DLSS-IV upscaler at all. When false the mod can
-    /// still be enabled/disabled for its performance features, but the upscaler settings are
-    /// read-only and nothing is written to DLSS-IV.cfg.
-    /// </summary>
-    public bool HasUpscalingSupport =>
-        IsDlssAvailable ||
-        IsFsr4Available ||
-        IsFsr4LiteAvailable ||
-        DlssIvCapabilities.SupportsFsr31(_defaultGpu);
-
-    public bool IsUpscalerControlsEnabled => IsAvailable && HasUpscalingSupport;
-
     /// <summary>FusionFix is mandatory for DLSS-IV's Vulkan renderer.</summary>
     public bool HasFusionFix => _hasFusionFix;
 
@@ -152,6 +167,11 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
     /// <summary>Whether the detected DXVK tier can provide the Vulkan renderer DLSS-IV needs.</summary>
     public bool IsVulkanCapable => _hardwareKnown && _dxvkFeatureTier == 3;
+
+    public DlssIvUpscaler CurrentUpscaler =>
+        SelectedUpscalerIndex >= 0 && SelectedUpscalerIndex < _upscalerChoices.Count
+            ? _upscalerChoices[SelectedUpscalerIndex]
+            : DlssIvUpscaler.Fsr;
 
     /// <summary>
     /// Forces FusionFix's GraphicsAPI and d3d9.cfg's API switch on or off. Only meaningful while
@@ -165,7 +185,6 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         DlssIvConfigService.SetVulkanEnabled(_installation, _fusionFixConfigPath, enabled);
     }
 
-
     public void ClearGame()
     {
         _installation = null;
@@ -176,6 +195,8 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         StatusText = string.Empty;
         _hasFusionFix = false;
         _autoDisableHandled = false;
+        IsXessAvailable = false;
+        IsFrameGenerationAvailable = false;
         UpdateButtonStates();
     }
 
@@ -190,10 +211,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
         IsDlssAvailable = DlssIvCapabilities.SupportsDlss(defaultGpu);
         IsFsr4Available = DlssIvCapabilities.SupportsFsr4(defaultGpu);
-        IsFsr4LiteAvailable = DlssIvCapabilities.SupportsFsr4Lite(defaultGpu);
-
-        if (!IsDlssAvailable && IsDlssSelected)
-            SetUpscaler(dlss: false);
+        RefreshInstallationFeatures();
 
         if (_installation != null)
         {
@@ -220,7 +238,8 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         _hardwareKnown = false;
         IsDlssAvailable = false;
         IsFsr4Available = false;
-        IsFsr4LiteAvailable = false;
+        IsXessAvailable = false;
+        IsFrameGenerationAvailable = false;
 
         if (_installation != null)
         {
@@ -242,6 +261,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         _state = DlssIvStateStore.Load(_installation);
         _state.ModEnabled = _installation.IsEnabled;
         _autoDisableHandled = false;
+        RefreshInstallationFeatures();
 
         // OptiScaler was tried as an FSR 4 Lite backend and is not compatible with DLSS-IV's
         // custom NGX feeder. If an older build left it behind, remove it once and restore files.
@@ -282,11 +302,10 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
             }
         }
 
-        // DLSS-IV requires FusionFix's own AA to be off only when an upscaler is in use. Without
-        // upscaling support the mod is just a performance add-on, so leave the rest of the
-        // configuration completely alone.
+        // DLSS-IV requires FusionFix's own AA to be off. If the mod is active, keep the config
+        // and the UI in sync from the first load.
         bool dxvkUnsupported = _hardwareKnown && _dxvkFeatureTier != 3;
-        if (_hasFusionFix && HasUpscalingSupport && !dxvkUnsupported && _installation.IsPresent)
+        if (_hasFusionFix && IsVulkanCapable && !dxvkUnsupported && _installation.IsPresent)
             DlssIvConfigService.SetFusionFixAntialiasing(_state, _fusionFixConfigPath, disable: _installation.IsEnabled);
 
         UpdateAvailability();
@@ -300,31 +319,30 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         _ = HandleUnsupportedDxvkAsync();
     }
 
+    private void RefreshInstallationFeatures()
+    {
+        IsXessAvailable = DlssIvCapabilities.SupportsXess(_defaultGpu) && _installation?.HasXessBinary == true;
+        IsFrameGenerationAvailable = _installation?.HasFrameGenerationBinary == true;
+    }
+
     /// <summary>
-    /// DLSS-IV bundles DXVK 3.1.1 and cannot run on a GPU without the latest DXVK feature set.
-    /// If the user already has the mod enabled on such a machine, turn it off and explain why.
+    /// DLSS-IV bundles DXVK 3.1.1 and cannot run without its Vulkan feature set. If the mod is
+    /// enabled on a machine that cannot provide it, turn it off and explain why.
     /// </summary>
     private async Task HandleUnsupportedDxvkAsync()
     {
         if (_autoDisableHandled || !_hardwareKnown || _dxvkFeatureTier == 3 || _installation == null)
             return;
 
-        if (!_hasFusionFix)
-            return;
-
-        // A GPU with no upscaler at all uses the mod for its performance features; there is
-        // nothing to disable in that mode.
-        if (!HasUpscalingSupport)
-            return;
-
-        if (!_installation.IsEnabled)
+        if (!_hasFusionFix || !_installation.IsEnabled)
             return;
 
         _autoDisableHandled = true;
 
         try
         {
-            Logger.Warn($" Disabling DLSS-IV: latest DXVK is not supported (tier {_dxvkFeatureTier}).");
+            Logger.Warn($" Disabling DLSS-IV: latest DXVK/Vulkan is not supported (tier {_dxvkFeatureTier}).");
+            DlssIvConfigService.SetVulkanEnabled(_installation, _fusionFixConfigPath, enabled: false);
             DlssIvConfigService.SetModEnabled(_installation, false, _state, _fusionFixConfigPath);
             _installation = DlssIvInstallation.Find(_installation.GameDirectory);
             _state.ModEnabled = false;
@@ -340,6 +358,39 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         catch (Exception ex)
         {
             Logger.Error(ex, " Could not automatically disable DLSS-IV.");
+        }
+    }
+
+    /// <summary>
+    /// Called by the host when the latest DXVK required for Vulkan could not be installed.
+    /// </summary>
+    public async Task DisableForUnavailableVulkanAsync()
+    {
+        if (_installation == null || !_installation.IsEnabled || _autoDisableHandled)
+            return;
+
+        _autoDisableHandled = true;
+
+        try
+        {
+            Logger.Warn(" Disabling DLSS-IV: the latest DXVK/Vulkan runtime is not available.");
+            DlssIvConfigService.SetVulkanEnabled(_installation, _fusionFixConfigPath, enabled: false);
+            DlssIvConfigService.SetModEnabled(_installation, false, _state, _fusionFixConfigPath);
+            _installation = DlssIvInstallation.Find(_installation.GameDirectory);
+            _state.ModEnabled = false;
+            IsModEnabled = false;
+            DlssIvStateStore.Save(_installation, _state);
+            UpdateAvailability();
+            StatusText = Resources.DlssIvVulkanUnavailable;
+
+            await MessageBoxService.ShowAsync(
+                Resources.DlssIvAutoDisabledTitle,
+                Resources.DlssIvVulkanUnavailableDescription,
+                Icon.Warning);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, " Could not disable DLSS-IV after the DXVK/Vulkan update failed.");
         }
     }
 
@@ -360,10 +411,12 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
         bool desired = IsModEnabled;
 
-        if (desired && !_hasFusionFix)
+        if (desired && (!_hasFusionFix || !IsVulkanCapable))
         {
             IsModEnabled = false;
-            StatusText = Resources.DlssIvFusionFixMissing;
+            StatusText = !_hasFusionFix
+                ? Resources.DlssIvFusionFixMissing
+                : Resources.DlssIvVulkanUnavailable;
             return;
         }
 
@@ -374,12 +427,12 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
                 _installation,
                 desired,
                 _state,
-                HasUpscalingSupport ? _fusionFixConfigPath : null,
-                updateFusionFixAntialiasing: HasUpscalingSupport);
+                _fusionFixConfigPath,
+                updateFusionFixAntialiasing: true);
             _installation = DlssIvInstallation.Find(_installation.GameDirectory);
             _state.ModEnabled = _installation.IsEnabled;
 
-            if (desired && HasUpscalingSupport)
+            if (desired)
                 ApplyInternal();
 
             DlssIvStateStore.Save(_installation, _state);
@@ -404,30 +457,33 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
     private void ApplyInternal()
     {
-        // Without upscaling support the mod only provides its performance features: never
-        // rewrite DLSS-IV.cfg or FusionFix's AA setting in that state.
-        if (_installation == null || !HasUpscalingSupport)
+        if (_installation == null || !IsAvailable)
             return;
 
-        bool dlss = IsDlssSelected;
-        if (dlss && !IsDlssAvailable)
-            dlss = false;
+        Logger.Debug($" Applying DLSS-IV: upscaler={CurrentUpscaler}, dlssPreset={_dlssPresetIndex}, " +
+                     $"fsrProfile={_fsrProfileIndex}, fg={IsFrameGenerationEnabled}.");
 
-        Logger.Debug($" Applying DLSS-IV: dlssSelected={IsDlssSelected}, fsrSelected={IsFsrSelected}, " +
-                     $"dlssPreset={_dlssPresetIndex}, fsrProfile={_fsrProfileIndex}.");
-
+        bool auto = CurrentUpscaler == DlssIvUpscaler.Auto;
         var settings = new DlssIvSettings(
-            dlss ? DlssIvUpscaler.Dlss : DlssIvUpscaler.Fsr,
-            DlssPresetValues[Math.Clamp(_dlssPresetIndex, 0, DlssPresetValues.Length - 1)],
-            _fsrProfileIndex switch
-            {
-                1 => DlssIvFsrProfile.Fsr31,
-                2 => DlssIvFsrProfile.Fsr4,
-                3 => DlssIvFsrProfile.Fsr4Lite,
-                _ => DlssIvFsrProfile.Auto
-            },
+            CurrentUpscaler,
+            auto ? 0 : DlssPresetValues[Math.Clamp(_dlssPresetIndex, 0, DlssPresetValues.Length - 1)],
+            auto
+                ? DlssIvFsrProfile.Auto
+                : _fsrProfileIndex switch
+                {
+                    1 => DlssIvFsrProfile.Fsr31,
+                    2 => DlssIvFsrProfile.Fsr4,
+                    _ => DlssIvFsrProfile.Auto
+                },
             IsDlaaSelected ? DlssIvQuality.Dlaa : DlssIvQuality.Quality,
-            IsHdrEnabled);
+            IsHdrEnabled,
+            IsFrameGenerationEnabled,
+            Math.Max(0, (int)(FrameGenerationMinFps ?? 0)),
+            new DlssIvPerformanceSettings(
+                IsThreadedEnabled,
+                IsUnpinEnabled,
+                IsCpuPlaceEnabled,
+                IsRenameSdrEnabled));
 
         if (_installation.IsEnabled != IsModEnabled)
         {
@@ -438,7 +494,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
         DlssIvConfigService.ApplySettings(_installation, settings);
         DlssIvConfigService.SetFusionFixAntialiasing(_state, _fusionFixConfigPath, disable: _installation.IsEnabled);
-        _state.RequestedFsrProfile = ProfileKey(_fsrProfileIndex);
+        _state.RequestedFsrProfile = FsrProfileKey(_fsrProfileIndex);
 
         DlssIvStateStore.Save(_installation, _state);
         UpdateStatus();
@@ -447,7 +503,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
     private void ScheduleAutoApply()
     {
-        if (_suppressAutoApply || _installation == null || !IsUpscalerControlsEnabled)
+        if (_suppressAutoApply || _installation == null || !IsAvailable)
             return;
 
         _applyCancellation?.Cancel();
@@ -525,7 +581,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
             var progress = new Progress<int>(percent =>
                 ProgressText = string.Format(Resources.DlssIvBusyDownloading, percent));
             string tag = await DlssIvBinaryService.UpdateFsrAsync(_installation, _state, progress);
-            _state.RequestedFsrProfile = ProfileKey(_fsrProfileIndex);
+            _state.RequestedFsrProfile = FsrProfileKey(_fsrProfileIndex);
             DlssIvStateStore.Save(_installation, _state);
             await MessageBoxService.ShowAsync(
                 Resources.DlssIvUpdateDoneTitle,
@@ -576,7 +632,6 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
             }
 
             string tag = await DlssIvBinaryService.InstallFsr4CommunityAsync(_installation, _state, progress);
-            IsFsrSelected = true;
             _fsrProfileIndex = 2;
             RebuildProfileOptions();
             DlssIvStateStore.Save(_installation, _state);
@@ -597,7 +652,6 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         }
     }
 
-
     private void LoadFromConfig()
     {
         if (_installation == null)
@@ -607,84 +661,45 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         _suppressAutoApply = true;
         var values = DlssIvConfigService.LoadSettings(_installation);
 
-        bool wantsDlss = values.Upscaler switch
-        {
-            0 => true,
-            1 => false,
-            _ => IsDlssAvailable
-        };
-
-        if (wantsDlss && !IsDlssAvailable)
-            wantsDlss = false;
-
         _dlssPresetIndex = MapDlssPreset(values.Preset);
-
-        int profile = values.FsrVersion switch
+        _fsrProfileIndex = values.FsrVersion switch
         {
             3 => 1,
-            4 => IsTrackedAsLite() ? 3 : 2,
+            4 => 2,
             _ => 0
         };
 
-        _fsrProfileIndex = profile;
-        SetUpscaler(wantsDlss);
+        DlssIvUpscaler preferred = values.Upscaler switch
+        {
+            0 => DlssIvUpscaler.Dlss,
+            1 => DlssIvUpscaler.Fsr,
+            2 => DlssIvUpscaler.Xess,
+            _ => DlssIvUpscaler.Auto
+        };
 
-        // Default chain: DLSS -> FSR 4 -> FSR 4 Lite -> FSR 3.1.
-        // Only override an explicit fsr_version; an explicit FSR choice is respected.
-        int beforeFallback = _fsrProfileIndex;
-        if (!wantsDlss && values.Upscaler != 1 && values.FsrVersion == 0)
-            _fsrProfileIndex = HighestSupportedFsrProfile();
+        bool changed = RebuildUpscalerOptions(preferred);
+        changed |= RebuildProfileOptions(normalize: true);
 
-        RebuildProfileOptions();
         IsDlaaSelected = values.Quality == 0;
         IsQualitySelected = values.Quality != 0;
         IsHdrEnabled = values.Hdr != 0;
+        IsThreadedEnabled = values.Threaded;
+        IsUnpinEnabled = values.Unpin;
+        IsCpuPlaceEnabled = values.CpuPlace;
+        IsRenameSdrEnabled = values.RenameSdr;
+        IsFrameGenerationEnabled = values.FrameGeneration;
+        FrameGenerationMinFps = Math.Max(0, values.FrameGenerationMinFps);
         IsModEnabled = _installation.IsEnabled;
 
-        bool adjusted = NormalizeProfileSelection() || beforeFallback != _fsrProfileIndex;
-        _state.RequestedFsrProfile ??= ProfileKey(_fsrProfileIndex);
+        _state.RequestedFsrProfile ??= FsrProfileKey(_fsrProfileIndex);
 
         UpdateStatus();
         _suppressAutoApply = previousSuppress;
 
-        if (adjusted && IsAvailable)
+        // Only normalize an explicit choice that the current GPU/mod cannot run. Auto stays
+        // auto, and a plain load never rewrites the user's config.
+        if (changed && IsAvailable)
             ApplyInternal();
-    }
-
-    private int HighestSupportedFsrProfile() =>
-        IsFsr4Available ? 2 : IsFsr4LiteAvailable ? 3 : 1;
-
-    private bool NormalizeProfileSelection()
-    {
-        bool changed = false;
-
-        if (IsDlssSelected && !IsDlssAvailable)
-        {
-            SetUpscaler(false);
-            if (_fsrProfileIndex == 0)
-                _fsrProfileIndex = HighestSupportedFsrProfile();
-            changed = true;
-        }
-
-        // Keep the FSR fallback valid even while DLSS is selected, so switching to FSR
-        // never shows an unsupported profile.
-        bool supported = _fsrProfileIndex switch
-        {
-            2 => IsFsr4Available,
-            3 => IsFsr4LiteAvailable,
-            _ => true
-        };
-
-        if (!supported)
-        {
-            _fsrProfileIndex = HighestSupportedFsrProfile();
-            changed = true;
-        }
-
-        if (changed)
-            RebuildProfileOptions();
-
-        return changed;
     }
 
     private static int MapDlssPreset(int preset) => preset switch
@@ -697,50 +712,141 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         _ => 1
     };
 
-    private void RebuildProfileOptions()
+    private bool RebuildUpscalerOptions(DlssIvUpscaler? preferred = null)
+    {
+        var choices = new List<DlssIvUpscaler> { DlssIvUpscaler.Auto };
+        if (IsDlssAvailable)
+            choices.Add(DlssIvUpscaler.Dlss);
+        if (_defaultGpu != null)
+            choices.Add(DlssIvUpscaler.Fsr);
+        if (IsXessAvailable)
+            choices.Add(DlssIvUpscaler.Xess);
+
+        bool hadCurrent = SelectedUpscalerIndex >= 0 && SelectedUpscalerIndex < _upscalerChoices.Count;
+        DlssIvUpscaler requested = preferred ?? (hadCurrent ? CurrentUpscaler : DlssIvUpscaler.Auto);
+        DlssIvUpscaler actual = choices.Contains(requested) ? requested : DlssIvUpscaler.Auto;
+        bool changed = requested != actual;
+
+        _suppressUpscalerChange = true;
+        _upscalerChoices.Clear();
+        _upscalerChoices.AddRange(choices);
+        UpscalerOptions = choices.Select(UpscalerLabel).ToArray();
+        SetUpscalerSelection(choices.IndexOf(actual));
+        _suppressUpscalerChange = false;
+
+        Logger.Info($" Upscaler options: [{string.Join(", ", choices)}]; selected={actual}; " +
+                    $"DLSS={IsDlssAvailable}; XeSS={IsXessAvailable}; GPU={_defaultGpu?.Name ?? "none"}.");
+
+        return changed;
+    }
+
+    private void SetUpscalerSelection(int index)
+    {
+        SelectedUpscalerIndex = index;
+
+        if (Application.Current == null || index < 0)
+            return;
+
+        // A new ItemsSource resets the ComboBox selection on the next binding pass. Re-apply
+        // the selection after that pass (also covers a TwoWay binding writing -1 back).
+        Dispatcher.UIThread.Post(() =>
+        {
+            _suppressUpscalerChange = true;
+            SelectedUpscalerIndex = -1;
+            SelectedUpscalerIndex = index;
+            _suppressUpscalerChange = false;
+            RebuildProfileOptions();
+        }, DispatcherPriority.Background);
+    }
+
+    private bool RebuildProfileOptions(bool normalize = false)
     {
         _suppressProfileChange = true;
+        bool changed = false;
 
-        if (IsDlssSelected)
+        if (CurrentUpscaler == DlssIvUpscaler.Auto)
         {
+            IsProfileVisible = true;
+            ProfileOptions = [Resources.DlssIvAuto];
+            SetProfileSelection(0);
+            _suppressProfileChange = false;
+            NotifyCommunityState();
+            return false;
+        }
+
+        if (CurrentUpscaler == DlssIvUpscaler.Xess)
+        {
+            ProfileOptions = [];
+            SelectedProfileIndex = -1;
+            IsProfileVisible = false;
+            _suppressProfileChange = false;
+            NotifyCommunityState();
+            return false;
+        }
+
+        if (CurrentUpscaler == DlssIvUpscaler.Dlss)
+        {
+            IsProfileVisible = true;
             ProfileOptions = DlssPresetLabels;
-            SelectedProfileIndex = _dlssPresetIndex;
+            SetProfileSelection(_dlssPresetIndex);
+            _suppressProfileChange = false;
+            NotifyCommunityState();
+            return false;
         }
-        else
+
+        IsProfileVisible = true;
+        var labels = new List<string>
         {
-            var labels = new List<string>
-            {
-                Resources.DlssIvFsrAuto,
-                Resources.DlssIvFsr31
-            };
+            Resources.DlssIvFsrAuto,
+            Resources.DlssIvFsr31
+        };
 
-            _fsrProfileChoices.Clear();
-            _fsrProfileChoices.Add(0);
-            _fsrProfileChoices.Add(1);
+        _fsrProfileChoices.Clear();
+        _fsrProfileChoices.Add(0);
+        _fsrProfileChoices.Add(1);
 
-            if (IsFsr4Available)
-            {
-                _fsrProfileChoices.Add(2);
-                labels.Add(Resources.DlssIvFsr4);
-            }
-
-            if (IsFsr4LiteAvailable)
-            {
-                _fsrProfileChoices.Add(3);
-                labels.Add(Resources.DlssIvFsr4Lite);
-            }
-
-            if (!_fsrProfileChoices.Contains(_fsrProfileIndex))
-                _fsrProfileIndex = _fsrProfileChoices[^1];
-
-            ProfileOptions = labels;
-            SelectedProfileIndex = _fsrProfileChoices.IndexOf(_fsrProfileIndex);
+        if (IsFsr4Available)
+        {
+            _fsrProfileChoices.Add(2);
+            labels.Add(Resources.DlssIvFsr4);
         }
 
+        if (!_fsrProfileChoices.Contains(_fsrProfileIndex))
+        {
+            _fsrProfileIndex = _fsrProfileChoices[^1];
+            changed = true;
+        }
+
+        ProfileOptions = labels;
+        SetProfileSelection(_fsrProfileChoices.IndexOf(_fsrProfileIndex));
         _suppressProfileChange = false;
         NotifyCommunityState();
-        UpdateButtonStates();
+        return changed && normalize;
     }
+
+    private void SetProfileSelection(int index)
+    {
+        SelectedProfileIndex = index;
+
+        if (Application.Current == null || index < 0)
+            return;
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            _suppressProfileChange = true;
+            SelectedProfileIndex = -1;
+            SelectedProfileIndex = index;
+            _suppressProfileChange = false;
+        }, DispatcherPriority.Background);
+    }
+
+    private static string UpscalerLabel(DlssIvUpscaler upscaler) => upscaler switch
+    {
+        DlssIvUpscaler.Dlss => Resources.DlssIvDlss,
+        DlssIvUpscaler.Xess => Resources.DlssIvXess,
+        DlssIvUpscaler.Fsr => Resources.DlssIvFsr,
+        _ => Resources.DlssIvAuto
+    };
 
     private void NotifyCommunityState()
     {
@@ -749,53 +855,15 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         UpdateButtonStates();
     }
 
-    private bool IsTrackedAsLite()
-    {
-        if (!string.IsNullOrEmpty(_state.RequestedFsrProfile))
-            return IsLiteKey(_state.RequestedFsrProfile);
-
-        if (!string.IsNullOrEmpty(_state.FsrProfile))
-            return IsLiteKey(_state.FsrProfile);
-
-        if (HasLiteMarker())
-            return true;
-
-        // 28,761,864 bytes is the full-model FSR DLL shipped with DLSS-IV 1.0.9.
-        // A different file is a custom build or AMD's 4.1.2 SDK (Lite-capable).
-        string? dll = _installation == null
-            ? null
-            : Path.Combine(_installation.DataDirectory, "amd_fidelityfx_upscaler_dx12.dll");
-        return dll != null && File.Exists(dll) && new FileInfo(dll).Length != 28_761_864;
-    }
-
-    private static bool IsLiteKey(string? value) =>
-        string.Equals(value, "fsr4-lite", StringComparison.OrdinalIgnoreCase);
-
-    private bool HasLiteMarker()
-    {
-        if (_installation == null)
-            return false;
-
-        return File.Exists(Path.Combine(_installation.DataDirectory, "fsr4-lite")) ||
-               File.Exists(Path.Combine(_installation.DataDirectory, "fsr4-lite.txt"));
-    }
-
-    private void SetUpscaler(bool dlss)
-    {
-        IsDlssSelected = dlss;
-        IsFsrSelected = !dlss;
-    }
-
     private void UpdateAvailability()
     {
         bool present = _installation?.IsPresent == true;
         IsVisible = present;
 
-        // A known-unsupported DXVK feature tier blocks the upscaler settings, but a GPU with no
-        // upscaler at all must still be able to turn the mod's performance features on and off.
-        bool dxvkReady = !_hardwareKnown || _dxvkFeatureTier == 3;
-        IsAvailable = present && _hasFusionFix && (dxvkReady || !HasUpscalingSupport);
-        IsSettingsEnabled = IsUpscalerControlsEnabled;
+        bool vulkanReady = IsVulkanCapable;
+        IsAvailable = present && _hasFusionFix && vulkanReady;
+        IsSettingsEnabled = IsAvailable;
+        IsUpscalerComboEnabled = IsAvailable;
 
         if (!present)
         {
@@ -805,11 +873,11 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         {
             StatusText = Resources.DlssIvFusionFixMissing;
         }
-        else if (!HasUpscalingSupport)
+        else if (!_hardwareKnown)
         {
-            StatusText = Resources.DlssIvNoUpscaling;
+            StatusText = Resources.DlssIvVulkanUnknown;
         }
-        else if (!dxvkReady)
+        else if (!vulkanReady)
         {
             StatusText = string.Format(Resources.DlssIvRequiresDxvk, ToSupportText(_dxvkFeatureTier));
         }
@@ -835,9 +903,9 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
             return;
         }
 
-        if (!HasUpscalingSupport)
+        if (!_hardwareKnown)
         {
-            StatusText = Resources.DlssIvNoUpscaling;
+            StatusText = Resources.DlssIvVulkanUnknown;
             return;
         }
 
@@ -848,17 +916,19 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
     private void UpdateButtonStates()
     {
-        bool controlsEnabled = IsAvailable && HasUpscalingSupport;
+        bool controlsEnabled = IsAvailable;
 
         CanUpdateDlss = controlsEnabled && !IsBusy;
         CanUpdateFsr = controlsEnabled && !IsBusy;
         CanToggleMod = !IsBusy && (_installation?.IsEnabled == true || IsAvailable);
-        IsDlssRadioEnabled = controlsEnabled && IsDlssAvailable;
-        IsFsrRadioEnabled = controlsEnabled;
-        IsProfileEnabled = controlsEnabled;
+        IsUpscalerComboEnabled = controlsEnabled;
+        IsProfileEnabled = controlsEnabled && IsProfileVisible;
         IsSettingsEnabled = controlsEnabled;
-        ShowFsr4CommunityButton = controlsEnabled && IsFsrSelected && _fsrProfileIndex == 2 &&
-                                  IsFsr4CommunityAvailable && !IsBusy;
+        ShowFsr4CommunityButton = controlsEnabled &&
+                                  CurrentUpscaler == DlssIvUpscaler.Fsr &&
+                                  _fsrProfileIndex == 2 &&
+                                  IsFsr4CommunityAvailable &&
+                                  !IsBusy;
     }
 
     private void SetBusy(bool busy, string progress)
@@ -868,11 +938,10 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         UpdateButtonStates();
     }
 
-    private static string ProfileKey(int index) => index switch
+    private static string FsrProfileKey(int index) => index switch
     {
         1 => "fsr31",
         2 => "fsr4",
-        3 => "fsr4-lite",
         _ => "auto"
     };
 
@@ -886,28 +955,12 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         _ => Resources.SupportUnknown
     };
 
-    partial void OnIsDlssSelectedChanged(bool value)
+    partial void OnSelectedUpscalerIndexChanged(int value)
     {
-        Logger.Debug($" DLSS selected -> {value} (fsr={IsFsrSelected}).");
-        if (value)
-            IsFsrSelected = false;
+        if (_suppressUpscalerChange || value < 0 || value >= _upscalerChoices.Count)
+            return;
 
-        if (!_suppressProfileChange)
-            RebuildProfileOptions();
-
-        UpdateButtonStates();
-        ScheduleAutoApply();
-    }
-
-    partial void OnIsFsrSelectedChanged(bool value)
-    {
-        Logger.Debug($" FSR selected -> {value} (dlss={IsDlssSelected}).");
-        if (value)
-            IsDlssSelected = false;
-
-        if (!_suppressProfileChange)
-            RebuildProfileOptions();
-
+        RebuildProfileOptions(normalize: true);
         UpdateButtonStates();
         ScheduleAutoApply();
     }
@@ -928,15 +981,28 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
     partial void OnIsHdrEnabledChanged(bool value) => ScheduleAutoApply();
 
+    partial void OnIsThreadedEnabledChanged(bool value) => ScheduleAutoApply();
+
+    partial void OnIsUnpinEnabledChanged(bool value) => ScheduleAutoApply();
+
+    partial void OnIsCpuPlaceEnabledChanged(bool value) => ScheduleAutoApply();
+
+    partial void OnIsRenameSdrEnabledChanged(bool value) => ScheduleAutoApply();
+
+    partial void OnIsFrameGenerationEnabledChanged(bool value) => ScheduleAutoApply();
+
+    partial void OnFrameGenerationMinFpsChanged(decimal? value) => ScheduleAutoApply();
+
     partial void OnSelectedProfileIndexChanged(int value)
     {
-        if (!_suppressProfileChange)
-        {
-            if (IsDlssSelected)
-                _dlssPresetIndex = Math.Clamp(value, 0, DlssPresetValues.Length - 1);
-            else if (value >= 0 && value < _fsrProfileChoices.Count)
-                _fsrProfileIndex = _fsrProfileChoices[value];
-        }
+        if (_suppressProfileChange || value < 0)
+            return;
+
+        if (CurrentUpscaler == DlssIvUpscaler.Dlss)
+            _dlssPresetIndex = Math.Clamp(value, 0, DlssPresetValues.Length - 1);
+        else if (CurrentUpscaler == DlssIvUpscaler.Fsr &&
+                 value < _fsrProfileChoices.Count)
+            _fsrProfileIndex = _fsrProfileChoices[value];
 
         NotifyCommunityState();
         ScheduleAutoApply();

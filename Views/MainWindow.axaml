@@ -13,7 +13,8 @@
         TransparencyLevelHint="Mica, AcrylicBlur"
         Background="Transparent"
         Icon="/Assets/ivlogo.ico"
-        SizeToContent="WidthAndHeight"
+        Width="1000"
+        Height="840"
         WindowStartupLocation="CenterScreen"
         CanResize="False"
         Title="{x:Static lang:Resources.Title}">
@@ -23,7 +24,9 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
         
         <!-- Welcome Text -->
         <TextBlock Grid.Row="0"
@@ -225,5 +228,6 @@
                           Height="14"/>
             </Button>
         </Grid>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Window>

@@ -26,7 +26,8 @@ internal sealed record DxvkInstallPlan(
     DxvkReleaseApi Api,
     int AssetIndex = 0,
     string? LatestToken = null,
-    bool GplAsyncCache = false);
+    bool GplAsyncCache = false,
+    string? Version = null);
 
 internal static class DxvkInstallerService
 {
@@ -39,26 +40,77 @@ internal static class DxvkInstallerService
 
     private static readonly DxvkInstallPlan[] Plans =
     [
-        new(1, false, "DXVK-Sarek", GitHubSarekLatest, DxvkReleaseApi.GitHubLatest, AssetIndex: 1,
+        new(1, false, "DXVK-Sarek", GitHubSarekLatest, DxvkReleaseApi.GitHubLatest,
             LatestToken: "DXVK-Sarek"),
         new(1, true, "DXVK-Sarek-async", GitHubSarekLatest, DxvkReleaseApi.GitHubLatest, LatestToken: "DXVK-Sarek-async"),
 
         new(2, false, "DXVK 2.6.2", "https://api.github.com/repos/doitsujin/dxvk/releases/assets/222230856",
-            DxvkReleaseApi.GitHubAsset),
-        new(2, true, "DXVK-gplasync 2.6.2", GitLabGplAsync262, DxvkReleaseApi.GitLabRelease),
+            DxvkReleaseApi.GitHubAsset, Version: "2.6.2"),
+        new(2, true, "DXVK-gplasync 2.6.2", GitLabGplAsync262, DxvkReleaseApi.GitLabRelease, Version: "2.6.2"),
 
         new(3, false, "DXVK", GitHubDxvkLatest, DxvkReleaseApi.GitHubLatest, LatestToken: "DXVK"),
         new(3, true, "DXVK-gplasync", GitLabGplAsyncLatest, DxvkReleaseApi.GitLabLatestList,
             LatestToken: "DXVK-gplasync", GplAsyncCache: true),
 
         new(-1, false, "DXVK 1.10.1", "https://api.github.com/repos/doitsujin/dxvk/releases/assets/60669426",
-            DxvkReleaseApi.GitHubAsset),
+            DxvkReleaseApi.GitHubAsset, Version: "1.10.1"),
         new(-1, true, "DXVK-async 1.10.1", "https://api.github.com/repos/Sporif/dxvk-async/releases/assets/60677007",
-            DxvkReleaseApi.GitHubAsset)
+            DxvkReleaseApi.GitHubAsset, Version: "1.10.1")
     ];
 
     public static DxvkInstallPlan? FindPlan(int tier, bool async) =>
         Array.Find(Plans, plan => plan.Tier == tier && plan.Async == async);
+
+    /// <summary>
+    /// Resolves the version this plan is meant to provide. It must query the repository that
+    /// belongs to the plan (upstream DXVK, gplasync, Sarek or the legacy async fork), not always
+    /// the latest doitsujin release.
+    /// </summary>
+    public static async Task<string?> GetLatestVersionAsync(
+        DxvkInstallPlan plan,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            switch (plan.Api)
+            {
+                case DxvkReleaseApi.GitHubLatest:
+                    {
+                        GitHubRelease? release = await HttpService
+                            .GetJsonAsync(plan.ApiUrl, GitHubJsonContext.Default.GitHubRelease, cancellationToken)
+                            .ConfigureAwait(false);
+                        return DxvkVersionService.Normalize(release?.TagName);
+                    }
+
+                case DxvkReleaseApi.GitLabLatestList:
+                    {
+                        List<GitLabRelease>? releases = await HttpService
+                            .GetJsonAsync(plan.ApiUrl, GitHubJsonContext.Default.ListGitLabRelease, cancellationToken)
+                            .ConfigureAwait(false);
+                        return DxvkVersionService.Normalize(releases?.FirstOrDefault()?.TagName);
+                    }
+
+                case DxvkReleaseApi.GitLabRelease:
+                    {
+                        GitLabRelease? release = await HttpService
+                            .GetJsonAsync(plan.ApiUrl, GitHubJsonContext.Default.GitLabRelease, cancellationToken)
+                            .ConfigureAwait(false);
+                        return DxvkVersionService.Normalize(release?.TagName);
+                    }
+
+                case DxvkReleaseApi.GitHubAsset:
+                    return DxvkVersionService.Normalize(plan.Version ?? plan.Name);
+
+                default:
+                    return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Debug(ex, $" Could not query the latest version of {plan.Name}.");
+            return null;
+        }
+    }
 
     public static async Task InstallAsync(
         DxvkInstallPlan plan,

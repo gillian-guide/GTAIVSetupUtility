@@ -48,25 +48,14 @@ public static partial class DlssIvCapabilities
     }
 
     /// <summary>
-    /// FSR 4 Lite is only selected natively by AMD on Ryzen AI / Radeon 7xxM-8xxM APUs.
-    /// The community INT8 fork is not offered for other GPUs here: it is RDNA2-specific and
-    /// freezes on NVIDIA (tested on RTX 5060).
+    /// XeSS runs on any GPU (Intel's general path on NVIDIA/AMD is slower), but only when the
+    /// installed DLSS-IV build actually ships Intel's signed library.
     /// </summary>
-    public static bool SupportsFsr4Lite(GpuInfo? gpu) => SupportsNativeFsr4Lite(gpu);
+    public static bool SupportsXess(GpuInfo? gpu) => gpu != null;
 
     /// <summary>
     /// The fsr4xyz INT8 build is for RDNA2 cards that cannot use the stock FSR 4 path.
     /// </summary>
     public static bool SupportsCommunityFsr4(GpuInfo? gpu) =>
         gpu != null && gpu.VendorId == AmdVendorId && RadeonRx6000Regex().IsMatch(gpu.Name);
-
-    /// <summary>
-    /// AMD only selects the Lite model automatically on Ryzen AI / Radeon 7xxM-8xxM APUs.
-    /// </summary>
-    public static bool SupportsNativeFsr4Lite(GpuInfo? gpu) =>
-        gpu != null &&
-        gpu.VendorId == AmdVendorId &&
-        (RyzenAiRegex().IsMatch(gpu.Name) || RadeonMobileRegex().IsMatch(gpu.Name));
-
-    public static bool SupportsFsr31(GpuInfo? gpu) => gpu != null;
 }

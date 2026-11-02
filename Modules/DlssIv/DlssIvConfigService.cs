@@ -4,8 +4,8 @@ using NLog;
 namespace GTAIVSetupUtility.Modules.DlssIv;
 
 /// <summary>
-/// Reads and writes only the four DLSS-IV.cfg values the tool owns, plus the FusionFix
-/// anti-aliasing toggle. Everything else (comments, unknown keys, formatting) is preserved.
+/// Reads and writes only the DLSS-IV.cfg values this tool owns, plus the FusionFix anti-aliasing
+/// and Vulkan switches. Everything else (comments, unknown keys, formatting) is preserved.
 /// </summary>
 public static class DlssIvConfigService
 {
@@ -26,7 +26,13 @@ public static class DlssIvConfigService
                 ReadInt(text, "fsr_version", 0),
                 ReadInt(text, "quality", 1),
                 ReadInt(text, "hdr", 0),
-                ReadInt(text, "preset", 11));
+                ReadInt(text, "preset", 11),
+                ReadBool(text, "threaded", true),
+                ReadBool(text, "unpin", true),
+                ReadBool(text, "cpu_place", false),
+                ReadBool(text, "rename_sdr", true),
+                ReadBool(text, "fg", false),
+                ReadInt(text, "fg_min_fps", 0));
         }
         catch (Exception ex)
         {
@@ -46,27 +52,35 @@ public static class DlssIvConfigService
             File.WriteAllText(path,
                 "# DLSS-IV configuration\n" +
                 "# Created by GTAIVSetupUtility. The mod's own settings keep their defaults.\n" +
-                "quality=1\nupscaler=-1\nfsr_version=0\nhdr=0\n",
+                "upscaler=-1\nfsr_version=0\nquality=1\nhdr=0\npreset=11\n" +
+                "threaded=1\nunpin=1\ncpu_place=0\nrename_sdr=1\nfg=0\nfg_min_fps=0\n",
                 Utf8NoBom);
         }
 
         BackupOnce(path);
 
         string text = File.ReadAllText(path);
-        text = IniTextEditor.SetValue(text, null, "upscaler", settings.Upscaler == DlssIvUpscaler.Dlss ? "0" : "1");
+        text = IniTextEditor.SetValue(text, null, "upscaler", ((int)settings.Upscaler).ToString());
         text = IniTextEditor.SetValue(text, null, "fsr_version", settings.FsrProfile switch
         {
             DlssIvFsrProfile.Fsr31 => "3",
             DlssIvFsrProfile.Fsr4 => "4",
-            DlssIvFsrProfile.Fsr4Lite => "4",
             _ => "0"
         });
         text = IniTextEditor.SetValue(text, null, "quality", settings.Quality == DlssIvQuality.Dlaa ? "0" : "1");
         text = IniTextEditor.SetValue(text, null, "preset", settings.DlssPreset.ToString());
         text = IniTextEditor.SetValue(text, null, "hdr", settings.Hdr ? "1" : "0");
+        text = IniTextEditor.SetValue(text, null, "threaded", settings.Performance.Threaded ? "1" : "0");
+        text = IniTextEditor.SetValue(text, null, "unpin", settings.Performance.Unpin ? "1" : "0");
+        text = IniTextEditor.SetValue(text, null, "cpu_place", settings.Performance.CpuPlace ? "1" : "0");
+        text = IniTextEditor.SetValue(text, null, "rename_sdr", settings.Performance.RenameSdr ? "1" : "0");
+        text = IniTextEditor.SetValue(text, null, "fg", settings.FrameGeneration ? "1" : "0");
+        text = IniTextEditor.SetValue(text, null, "fg_min_fps", Math.Max(0, settings.FrameGenerationMinFps).ToString());
 
         File.WriteAllText(path, text, Utf8NoBom);
-        Logger.Info($" DLSS-IV.cfg updated: upscaler={settings.Upscaler}, fsr={settings.FsrProfile}, preset={settings.DlssPreset}, quality={settings.Quality}, hdr={settings.Hdr}");
+        Logger.Info($" DLSS-IV.cfg updated: upscaler={settings.Upscaler}, fsr={settings.FsrProfile}, " +
+                    $"preset={settings.DlssPreset}, quality={settings.Quality}, hdr={settings.Hdr}, " +
+                    $"fg={settings.FrameGeneration}, perf=[{settings.Performance}]");
     }
 
     /// <summary>
@@ -230,6 +244,15 @@ public static class DlssIvConfigService
     {
         string? value = IniTextEditor.ReadValue(text, null, key);
         return int.TryParse(value, out int parsed) ? parsed : fallback;
+    }
+
+    private static bool ReadBool(string text, string key, bool fallback)
+    {
+        string? value = IniTextEditor.ReadValue(text, null, key);
+        if (!int.TryParse(value, out int parsed))
+            return fallback;
+
+        return parsed != 0;
     }
 
     private static void BackupOnce(string path)

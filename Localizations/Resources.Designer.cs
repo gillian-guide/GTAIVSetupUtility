@@ -1241,15 +1241,6 @@ namespace GTAIVSetupUtility.Localizations {
         /// <summary>
         ///   Looks up a localized string.
         /// </summary>
-        public static string DlssIvFsr4Lite {
-            get {
-                return ResourceManager.GetString("DlssIvFsr4Lite", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
         public static string DlssIvDlaa {
             get {
                 return ResourceManager.GetString("DlssIvDlaa", resourceCulture);
@@ -1339,15 +1330,6 @@ namespace GTAIVSetupUtility.Localizations {
         public static string DlssIvFusionFixMissing {
             get {
                 return ResourceManager.GetString("DlssIvFusionFixMissing", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string DlssIvNoUpscaling {
-            get {
-                return ResourceManager.GetString("DlssIvNoUpscaling", resourceCulture);
             }
         }
 
@@ -1511,15 +1493,6 @@ namespace GTAIVSetupUtility.Localizations {
             }
         }
 
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string DlssIvFsr4LiteTip {
-            get {
-                return ResourceManager.GetString("DlssIvFsr4LiteTip", resourceCulture);
-            }
-        }
-
 
 
         /// <summary>
@@ -1610,5 +1583,212 @@ namespace GTAIVSetupUtility.Localizations {
 
 
 
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvDlss {
+            get {
+                return ResourceManager.GetString("DlssIvDlss", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvAuto {
+            get {
+                return ResourceManager.GetString("DlssIvAuto", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvFsr {
+            get {
+                return ResourceManager.GetString("DlssIvFsr", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvXess {
+            get {
+                return ResourceManager.GetString("DlssIvXess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvPerformance {
+            get {
+                return ResourceManager.GetString("DlssIvPerformance", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvThreaded {
+            get {
+                return ResourceManager.GetString("DlssIvThreaded", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvThreadedTip {
+            get {
+                return ResourceManager.GetString("DlssIvThreadedTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvUnpin {
+            get {
+                return ResourceManager.GetString("DlssIvUnpin", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvUnpinTip {
+            get {
+                return ResourceManager.GetString("DlssIvUnpinTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvCpuPlace {
+            get {
+                return ResourceManager.GetString("DlssIvCpuPlace", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvCpuPlaceTip {
+            get {
+                return ResourceManager.GetString("DlssIvCpuPlaceTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvRenameSdr {
+            get {
+                return ResourceManager.GetString("DlssIvRenameSdr", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvRenameSdrTip {
+            get {
+                return ResourceManager.GetString("DlssIvRenameSdrTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvFrameGeneration {
+            get {
+                return ResourceManager.GetString("DlssIvFrameGeneration", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvFrameGenerationTip {
+            get {
+                return ResourceManager.GetString("DlssIvFrameGenerationTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvFrameGenerationMinFps {
+            get {
+                return ResourceManager.GetString("DlssIvFrameGenerationMinFps", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvFrameGenerationMinFpsTip {
+            get {
+                return ResourceManager.GetString("DlssIvFrameGenerationMinFpsTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvVulkanUnknown {
+            get {
+                return ResourceManager.GetString("DlssIvVulkanUnknown", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvVulkanUnavailable {
+            get {
+                return ResourceManager.GetString("DlssIvVulkanUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvVulkanUnavailableDescription {
+            get {
+                return ResourceManager.GetString("DlssIvVulkanUnavailableDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string GpuSelectionLabel {
+            get {
+                return ResourceManager.GetString("GpuSelectionLabel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string GpuAutomatic {
+            get {
+                return ResourceManager.GetString("GpuAutomatic", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string GpuSelectionTip {
+            get {
+                return ResourceManager.GetString("GpuSelectionTip", resourceCulture);
+            }
+        }
     }
 }

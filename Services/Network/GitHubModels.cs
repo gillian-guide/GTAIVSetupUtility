@@ -21,6 +21,7 @@ internal sealed class GitHubAsset
 
 internal sealed class GitLabRelease
 {
+    public string? TagName { get; init; }
     public GitLabAssets? Assets { get; init; }
 }
 

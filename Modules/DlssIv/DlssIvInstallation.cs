@@ -17,6 +17,12 @@ public sealed class DlssIvInstallation
     public bool HasConfig => !string.IsNullOrEmpty(ConfigPath) && File.Exists(ConfigPath);
     public bool HasDataDirectory => Directory.Exists(DataDirectory);
 
+    /// <summary>DLSS-IV 1.1+ ships Intel's signed XeSS library.</summary>
+    public bool HasXessBinary => File.Exists(Path.Combine(DataDirectory, "libxess.dll"));
+
+    /// <summary>DLSS-IV 1.1+ ships its own frame-generation helper DLL.</summary>
+    public bool HasFrameGenerationBinary => File.Exists(Path.Combine(DataDirectory, "dlssiv-fg.dll"));
+
     /// <summary>
     /// The ASI is the mod. A leftover DLSS-IV.cfg or DLSSIV folder alone must not make the
     /// panel appear, because there is nothing the user could enable.

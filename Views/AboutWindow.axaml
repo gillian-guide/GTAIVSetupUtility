@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GTAIVSetupUtility.ViewModels"
+        xmlns:lang="clr-namespace:GTAIVSetupUtility.Localizations"
+        x:Class="GTAIVSetupUtility.Views.AboutWindow"
+        x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True"
+        Title="{x:Static lang:Resources.AboutTitle}"
+        Icon="/Assets/ivlogo.ico"
+        Width="680"
+        Height="520"
+        MinWidth="520"
+        MinHeight="360"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid Margin="16" RowDefinitions="*,Auto,Auto">
+        <ScrollViewer Grid.Row="0">
+            <SelectableTextBlock Text="{Binding AboutText}"
+                                 TextWrapping="Wrap"
+                                 FontSize="12"/>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1"
+                    IsVisible="{Binding IsGpuSelectionVisible}"
+                    Margin="0,12,0,0"
+                    Spacing="3">
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Static lang:Resources.GpuSelectionLabel}"
+                           VerticalAlignment="Center"
+                           Margin="0,0,6,0"/>
+                <ComboBox ItemsSource="{Binding GpuOptions}"
+                          SelectedIndex="{Binding SelectedGpuIndex}"
+                          MinWidth="300"
+                          ToolTip.Tip="{x:Static lang:Resources.GpuSelectionTip}"/>
+            </WrapPanel>
+            <TextBlock Text="{x:Static lang:Resources.GpuSelectionTip}"
+                       FontSize="11"
+                       Foreground="Gray"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <Button Grid.Row="2"
+                Content="{x:Static lang:Resources.TextOk}"
+                HorizontalAlignment="Right"
+                MinWidth="90"
+                Margin="0,12,0,0"
+                IsDefault="True"
+                Click="OnCloseClick"/>
+    </Grid>
+</Window>

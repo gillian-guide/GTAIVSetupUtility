@@ -467,9 +467,6 @@ Steam Achievements останутся включенными и продолжа
     <data name="DlssIvFsr4" xml:space="preserve">
         <value>FSR 4</value>
     </data>
-    <data name="DlssIvFsr4Lite" xml:space="preserve">
-        <value>FSR 4 Lite</value>
-    </data>
     <data name="DlssIvDlaa" xml:space="preserve">
         <value>Native AA / DLAA</value>
     </data>
@@ -481,6 +478,76 @@ Steam Achievements останутся включенными и продолжа
     </data>
     <data name="DlssIvHdrTip" xml:space="preserve">
         <value>Ваш монитор должен поддерживать HDR, а HDR должен быть включён в настройках Windows до запуска игры. Точную настройку HDR (peak, paper white, roll-off) можно сделать в DLSS-IV.cfg.</value>
+    </data>
+    <data name="DlssIvDlss" xml:space="preserve">
+        <value>DLSS</value>
+    </data>
+    <data name="DlssIvAuto" xml:space="preserve">
+        <value>Авто</value>
+    </data>
+    <data name="DlssIvFsr" xml:space="preserve">
+        <value>FSR</value>
+    </data>
+    <data name="DlssIvXess" xml:space="preserve">
+        <value>XeSS</value>
+    </data>
+    <data name="DlssIvPerformance" xml:space="preserve">
+        <value>Производительность:</value>
+    </data>
+    <data name="DlssIvThreaded" xml:space="preserve">
+        <value>D3D в отдельном потоке</value>
+    </data>
+    <data name="DlssIvThreadedTip" xml:space="preserve">
+        <value>Переносит работу DXVK с Direct3D в отдельный поток. Это самый большой прирост производительности DLSS-IV; отключайте, только если игра работает некорректно.</value>
+    </data>
+    <data name="DlssIvUnpin" xml:space="preserve">
+        <value>Снять привязку CPU</value>
+    </data>
+    <data name="DlssIvUnpinTip" xml:space="preserve">
+        <value>Освобождает главный поток игры от первого ядра процессора. Помогает, когда ограничение в процессоре; отключение также отключает размещение потоков.</value>
+    </data>
+    <data name="DlssIvCpuPlace" xml:space="preserve">
+        <value>Размещение потоков</value>
+    </data>
+    <data name="DlssIvCpuPlaceTip" xml:space="preserve">
+        <value>Выделяет самым занятым потокам по одному потоку процессора. Полезно на Ryzen с двумя группами ядер; отключите при рывках.</value>
+    </data>
+    <data name="DlssIvRenameSdr" xml:space="preserve">
+        <value>G-Sync в окне</value>
+    </data>
+    <data name="DlssIvRenameSdrTip" xml:space="preserve">
+        <value>Только NVIDIA и SDR: включает G-Sync в окне без рамки. Отключите при призраках или рывках с G-Sync.</value>
+    </data>
+    <data name="DlssIvFrameGeneration" xml:space="preserve">
+        <value>Генерация кадров</value>
+    </data>
+    <data name="DlssIvFrameGenerationTip" xml:space="preserve">
+        <value>Вставляет сгенерированный кадр между двумя реальными, чтобы 45 fps выглядели как 90. Работает с DLSS, FSR и XeSS; нужен перезапуск и режим «Окно без рамки», добавляет небольшую задержку ввода.</value>
+    </data>
+    <data name="DlssIvFrameGenerationMinFps" xml:space="preserve">
+        <value>Мин. FPS</value>
+    </data>
+    <data name="DlssIvFrameGenerationMinFpsTip" xml:space="preserve">
+        <value>Генерация кадров не включается ниже этого FPS. 0 — DLSS-IV выберет сам (38 fps или 30 на экране 60 Гц).</value>
+    </data>
+    <data name="DlssIvVulkanUnknown" xml:space="preserve">
+        <value>Не удалось определить поддержку Vulkan, поэтому настройки DLSS-IV недоступны.</value>
+    </data>
+    <data name="DlssIvVulkanUnavailable" xml:space="preserve">
+        <value>Последняя версия DXVK/Vulkan недоступна, поэтому DLSS-IV отключён.</value>
+    </data>
+    <data name="DlssIvVulkanUnavailableDescription" xml:space="preserve">
+        <value>DLSS-IV требуется последняя версия DXVK с Vulkan, и её не удалось установить. Мод отключён, чтобы игра не пыталась загрузить неработающий рендерер.</value>
+    </data>
+
+    <data name="GpuSelectionLabel" xml:space="preserve">
+        <value>GPU для всех операций:</value>
+    </data>
+    <data name="GpuAutomatic" xml:space="preserve">
+        <value>Автоматически (выбор Windows)</value>
+    </data>
+    <data name="GpuSelectionTip" xml:space="preserve">
+        <value>Переопределяет GPU, используемый для поддержки DXVK, профилей DLSS-IV и расчёта видеопамяти.</value>
     </data>
     <data name="DlssIvUpdateDlss" xml:space="preserve">
         <value>Обновить DLSS</value>
@@ -500,9 +567,7 @@ Steam Achievements останутся включенными и продолжа
     <data name="DlssIvFusionFixMissing" xml:space="preserve">
         <value>FusionFix не обнаружен. DLSS-IV требует FusionFix с графическим API Vulkan, поэтому мод был отключён.</value>
     </data>
-    <data name="DlssIvNoUpscaling" xml:space="preserve">
-        <value>Этот графический процессор не поддерживает ни один апскейлер DLSS-IV. Мод всё ещё можно включить ради его функций производительности; настройки апскейлера останутся недоступными.</value>
-    </data>
+
     <data name="DlssIvConfirmUpdateDlssTitle" xml:space="preserve">
         <value>Обновить NVIDIA DLSS?</value>
     </data>
@@ -534,19 +599,16 @@ Steam Achievements останутся включенными и продолжа
         <value>Пресет:</value>
     </data>
     <data name="DlssIvPresetDefault" xml:space="preserve">
-        <value>По умолчанию</value>
+        <value>Авто</value>
     </data>
     <data name="DlssIvDescription" xml:space="preserve">
-        <value>DLSS-IV добавляет в GTA IV нативные DLSS, FSR и HDR.</value>
+        <value>DLSS-IV добавляет в GTA IV нативные DLSS, FSR, XeSS, генерацию кадров и HDR.</value>
     </data>
     <data name="DlssIvAutoDisabledTitle" xml:space="preserve">
         <value>DLSS-IV отключён</value>
     </data>
     <data name="DlssIvAutoDisabledDescription" xml:space="preserve">
-        <value>Ваша видеокарта не поддерживает последнюю версию DXVK (обнаружено: {0}). DLSS-IV требует последнюю версию DXVK, поэтому мод был автоматически отключён. Обновите драйвер видеокарты (не полагайтесь на драйверы Windows Update) и включите DLSS-IV снова.</value>
-    </data>
-    <data name="DlssIvFsr4LiteTip" xml:space="preserve">
-        <value>FSR 4 Lite выбирается драйвером AMD нативно на Ryzen AI / Radeon 7xxM-8xxM. На других GPU он недоступен: общественная INT8-сборка предназначена для RDNA2 и на других картах зависает.</value>
+        <value>DLSS-IV требует последнюю версию DXVK с Vulkan (обнаружена поддержка: {0}). Мод был автоматически отключён, так как без Vulkan ни одна его функция не работает. Обновите драйвер видеокарты (не полагайтесь на драйверы Windows Update) и включите DLSS-IV снова.</value>
     </data>
     <data name="DxvkAlreadyLatestTitle" xml:space="preserve">
         <value>DXVK уже обновлён</value>
