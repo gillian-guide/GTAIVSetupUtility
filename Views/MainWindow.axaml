@@ -14,7 +14,7 @@
         Background="Transparent"
         Icon="/Assets/ivlogo.ico"
         Width="1000"
-        Height="840"
+        SizeToContent="Height"
         WindowStartupLocation="CenterScreen"
         CanResize="False"
         Title="{x:Static lang:Resources.Title}">
@@ -24,9 +24,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-        <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+    <Grid Margin="5" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
         
         <!-- Welcome Text -->
         <TextBlock Grid.Row="0"
@@ -228,6 +226,5 @@
                           Height="14"/>
             </Button>
         </Grid>
-        </Grid>
-    </ScrollViewer>
+    </Grid>
 </Window>
