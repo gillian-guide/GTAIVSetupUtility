@@ -112,6 +112,9 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     public partial bool CanUpdateFsr { get; set; }
 
     [ObservableProperty]
+    public partial bool CanUpdateXess { get; set; }
+
+    [ObservableProperty]
     public partial bool CanToggleMod { get; set; }
 
     [ObservableProperty]
@@ -600,6 +603,38 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
     }
 
     [RelayCommand]
+    private async Task UpdateXessAsync()
+    {
+        if (_installation == null)
+            return;
+
+        if (!await MessageBoxService.ConfirmAsync(Resources.DlssIvConfirmUpdateXessTitle,
+                string.Format(Resources.DlssIvConfirmUpdateXessDescription, "77 MB")))
+            return;
+
+        try
+        {
+            SetBusy(true, string.Empty);
+            var progress = new Progress<int>(percent =>
+                ProgressText = string.Format(Resources.DlssIvBusyDownloading, percent));
+            string tag = await DlssIvBinaryService.UpdateXessAsync(_installation, _state, progress);
+            await MessageBoxService.ShowAsync(
+                Resources.DlssIvUpdateDoneTitle,
+                string.Format(Resources.DlssIvUpdateXessDone, tag),
+                Icon.Success);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, " XeSS binary update failed.");
+            await MessageBoxService.ShowErrorAsync(Resources.DlssIvErrorTitle, ex.Message);
+        }
+        finally
+        {
+            SetBusy(false, Resources.DlssIvReady);
+        }
+    }
+
+    [RelayCommand]
     private async Task InstallFsr4CommunityAsync()
     {
         if (_installation == null)
@@ -920,6 +955,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
         CanUpdateDlss = controlsEnabled && !IsBusy;
         CanUpdateFsr = controlsEnabled && !IsBusy;
+        CanUpdateXess = controlsEnabled && IsXessAvailable && !IsBusy;
         CanToggleMod = !IsBusy && (_installation?.IsEnabled == true || IsAvailable);
         IsUpscalerComboEnabled = controlsEnabled;
         IsProfileEnabled = controlsEnabled && IsProfileVisible;

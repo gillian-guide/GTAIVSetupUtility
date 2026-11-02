@@ -125,6 +125,11 @@
                     Command="{Binding UpdateFsrCommand}"
                     IsEnabled="{Binding CanUpdateFsr}"
                     Margin="0,0,6,0"/>
+            <Button Content="{x:Static lang:Resources.DlssIvUpdateXess}"
+                    Command="{Binding UpdateXessCommand}"
+                    IsEnabled="{Binding CanUpdateXess}"
+                    IsVisible="{Binding IsXessAvailable}"
+                    Margin="0,0,6,0"/>
             <Button Content="{Binding Fsr4CommunityButtonText}"
                     Command="{Binding InstallFsr4CommunityCommand}"
                     IsVisible="{Binding ShowFsr4CommunityButton}"

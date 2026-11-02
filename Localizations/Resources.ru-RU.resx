@@ -555,6 +555,9 @@ Steam Achievements останутся включенными и продолжа
     <data name="DlssIvUpdateFsr" xml:space="preserve">
         <value>Обновить FSR</value>
     </data>
+    <data name="DlssIvUpdateXess" xml:space="preserve">
+        <value>Обновить XeSS</value>
+    </data>
     <data name="DlssIvReady" xml:space="preserve">
         <value>Готово.</value>
     </data>
@@ -580,6 +583,12 @@ Steam Achievements останутся включенными и продолжа
     <data name="DlssIvConfirmUpdateFsrDescription" xml:space="preserve">
         <value>Будут скачаны только две подписанные DLL (около {0}) из репозитория FSR SDK и заменены DLSSIV\amd_fidelityfx_upscaler_dx12.dll и загрузчик. Старые файлы сохранятся.</value>
     </data>
+    <data name="DlssIvConfirmUpdateXessTitle" xml:space="preserve">
+        <value>Обновить Intel XeSS?</value>
+    </data>
+    <data name="DlssIvConfirmUpdateXessDescription" xml:space="preserve">
+        <value>Будет скачан последний архив Intel XeSS SDK (около {0}) и заменён DLSSIV\libxess.dll. Старый файл сохранится в резервной копии.</value>
+    </data>
     <data name="DlssIvUpdateDoneTitle" xml:space="preserve">
         <value>Бинарники DLSS-IV обновлены</value>
     </data>
@@ -588,6 +597,9 @@ Steam Achievements останутся включенными и продолжа
     </data>
     <data name="DlssIvUpdateFsrDone" xml:space="preserve">
         <value>AMD FSR {0} установлен.</value>
+    </data>
+    <data name="DlssIvUpdateXessDone" xml:space="preserve">
+        <value>Intel XeSS {0} установлен.</value>
     </data>
     <data name="DlssIvErrorTitle" xml:space="preserve">
         <value>Ошибка DLSS-IV</value>

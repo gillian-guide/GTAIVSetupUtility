@@ -1790,5 +1790,41 @@ namespace GTAIVSetupUtility.Localizations {
                 return ResourceManager.GetString("GpuSelectionTip", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvUpdateXess {
+            get {
+                return ResourceManager.GetString("DlssIvUpdateXess", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvConfirmUpdateXessTitle {
+            get {
+                return ResourceManager.GetString("DlssIvConfirmUpdateXessTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvConfirmUpdateXessDescription {
+            get {
+                return ResourceManager.GetString("DlssIvConfirmUpdateXessDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DlssIvUpdateXessDone {
+            get {
+                return ResourceManager.GetString("DlssIvUpdateXessDone", resourceCulture);
+            }
+        }
     }
 }

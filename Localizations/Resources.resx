@@ -559,6 +559,9 @@ These features have been disabled. Launch options configuration remains availabl
     <data name="DlssIvUpdateFsr" xml:space="preserve">
         <value>Update FSR</value>
     </data>
+    <data name="DlssIvUpdateXess" xml:space="preserve">
+        <value>Update XeSS</value>
+    </data>
     <data name="DlssIvReady" xml:space="preserve">
         <value>Ready.</value>
     </data>
@@ -584,6 +587,12 @@ These features have been disabled. Launch options configuration remains availabl
     <data name="DlssIvConfirmUpdateFsrDescription" xml:space="preserve">
         <value>This downloads only the two signed DLLs (about {0}) from AMD's FSR SDK repository and replaces DLSSIV\amd_fidelityfx_upscaler_dx12.dll plus its loader. The old files are backed up.</value>
     </data>
+    <data name="DlssIvConfirmUpdateXessTitle" xml:space="preserve">
+        <value>Update the Intel XeSS runtime?</value>
+    </data>
+    <data name="DlssIvConfirmUpdateXessDescription" xml:space="preserve">
+        <value>This downloads Intel's latest XeSS SDK archive (about {0}) and replaces DLSSIV\libxess.dll. The old file is backed up.</value>
+    </data>
     <data name="DlssIvUpdateDoneTitle" xml:space="preserve">
         <value>DLSS-IV binaries updated</value>
     </data>
@@ -592,6 +601,9 @@ These features have been disabled. Launch options configuration remains availabl
     </data>
     <data name="DlssIvUpdateFsrDone" xml:space="preserve">
         <value>AMD FSR {0} has been installed.</value>
+    </data>
+    <data name="DlssIvUpdateXessDone" xml:space="preserve">
+        <value>Intel XeSS {0} has been installed.</value>
     </data>
     <data name="DlssIvErrorTitle" xml:space="preserve">
         <value>DLSS-IV error</value>

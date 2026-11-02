@@ -11,6 +11,7 @@ namespace GTAIVSetupUtility.Modules.DlssIv;
 /// Optional binary maintenance for the already-installed DLSS-IV:
 /// - official NVIDIA DLSS runtime (DLSSIV\nvngx_dlss.dll)
 /// - official AMD FSR SDK runtime (DLSSIV\amd_fidelityfx_upscaler_dx12.dll + loader)
+/// - official Intel XeSS runtime (DLSSIV\libxess.dll)
 /// - the community fsr4xyz INT8 upscaler offered on RDNA2
 /// Every overwritten file is backed up first. OptiScaler is never installed; only leftover
 /// state from older builds is cleaned up.
@@ -23,6 +24,7 @@ public static class DlssIvBinaryService
     private const string DlssLatestApi = "https://api.github.com/repos/NVIDIA/DLSS/releases/latest";
     private const string FsrLatestApi = "https://api.github.com/repos/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK/releases/latest";
     private const string Fsr4LatestApi = "https://api.github.com/repos/the3rdparty1917/fsr4xyz/releases/latest";
+    private const string XessLatestApi = "https://api.github.com/repos/intel/xess/releases/latest";
     private const long OriginalFsrLoaderSize = 26_376;
     // DLSS-IV 1.1.1 ships AMD's newer signed loader (39,184 bytes) instead of the 1.0.9 one.
     private static readonly long[] OriginalFsrLoaderSizes = [OriginalFsrLoaderSize, 39_184];
@@ -105,6 +107,52 @@ public static class DlssIvBinaryService
         state.FsrSource = $"AMD FSR SDK {tag}";
         state.FsrDllSha256 = ComputeSha256(Path.Combine(dataDirectory, "amd_fidelityfx_upscaler_dx12.dll"));
         Logger.Info($" Updated the FSR upscaler to {tag}.");
+        return tag;
+    }
+
+    /// <summary>
+    /// Replaces DLSSIV\libxess.dll with the upscaler DLL from Intel's latest XeSS SDK release.
+    /// The SDK ships only a large archive, so extract just libxess.dll from it.
+    /// </summary>
+    public static async Task<string> UpdateXessAsync(
+        DlssIvInstallation installation,
+        DlssIvState state,
+        IProgress<int> progress,
+        CancellationToken cancellationToken = default)
+    {
+        string dataDirectory = EnsureDataDirectory(installation);
+        GitHubRelease release = await ReadReleaseAsync(XessLatestApi, cancellationToken).ConfigureAwait(false);
+        string tag = release.TagName ?? "latest";
+
+        string? downloadUrl = release.Assets
+            ?.FirstOrDefault(asset => asset.Name?.EndsWith(".zip", StringComparison.OrdinalIgnoreCase) == true)
+            ?.BrowserDownloadUrl;
+
+        if (string.IsNullOrEmpty(downloadUrl))
+            throw new InvalidOperationException("The latest Intel XeSS release has no SDK zip asset.");
+
+        using var workspace = TempDirectory.Create();
+        string archivePath = workspace.CreateFile(".zip");
+        string tempDll = workspace.CreateFile(".dll");
+
+        await HttpService.DownloadFileAsync(downloadUrl, archivePath, progress, cancellationToken)
+            .ConfigureAwait(false);
+
+        using (var archive = ZipFile.OpenRead(archivePath))
+        {
+            var entry = archive.Entries.FirstOrDefault(candidate =>
+                candidate.Name.Equals("libxess.dll", StringComparison.OrdinalIgnoreCase));
+
+            if (entry == null)
+                throw new InvalidOperationException("libxess.dll was not found in the Intel XeSS SDK archive.");
+
+            entry.ExtractToFile(tempDll, true);
+        }
+
+        VerifyPeFile(tempDll);
+        BackupFile(installation, "libxess.dll");
+        File.Copy(tempDll, Path.Combine(dataDirectory, "libxess.dll"), true);
+        Logger.Info($" Updated the XeSS runtime to {tag}.");
         return tag;
     }
 
