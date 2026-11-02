@@ -27,9 +27,7 @@
     <data name="TipsNote" xml:space="preserve">
         <value>Keep the options at default values unless you know what you're doing.</value>
     </data>
-    <data name="Tips" xml:space="preserve">
-        <value>Tips</value>
-    </data>
+
     <data name="InstallAsyncPatch" xml:space="preserve">
         <value>Install the async patch</value>
     </data>

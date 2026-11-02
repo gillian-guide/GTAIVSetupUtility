@@ -65,7 +65,8 @@
             <CheckBox Content="{x:Static lang:Resources.DlssIvHdr}"
                       IsChecked="{Binding IsHdrEnabled}"
                       IsEnabled="{Binding IsSettingsEnabled}"
-                      Command="{Binding HdrClickCommand}"
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvHdrTip}"
+                      ToolTip.ShowOnDisabled="True"
                       Margin="0,0,14,0"/>
 
             <TextBlock Text="{x:Static lang:Resources.DlssIvPerformance}"
@@ -76,21 +77,25 @@
                       IsChecked="{Binding IsThreadedEnabled}"
                       IsEnabled="{Binding IsSettingsEnabled}"
                       ToolTip.Tip="{x:Static lang:Resources.DlssIvThreadedTip}"
+                      ToolTip.ShowOnDisabled="True"
                       Margin="0,0,10,0"/>
             <CheckBox Content="{x:Static lang:Resources.DlssIvUnpin}"
                       IsChecked="{Binding IsUnpinEnabled}"
                       IsEnabled="{Binding IsSettingsEnabled}"
                       ToolTip.Tip="{x:Static lang:Resources.DlssIvUnpinTip}"
+                      ToolTip.ShowOnDisabled="True"
                       Margin="0,0,10,0"/>
             <CheckBox Content="{x:Static lang:Resources.DlssIvCpuPlace}"
                       IsChecked="{Binding IsCpuPlaceEnabled}"
                       IsEnabled="{Binding IsSettingsEnabled}"
                       ToolTip.Tip="{x:Static lang:Resources.DlssIvCpuPlaceTip}"
+                      ToolTip.ShowOnDisabled="True"
                       Margin="0,0,10,0"/>
             <CheckBox Content="{x:Static lang:Resources.DlssIvRenameSdr}"
                       IsChecked="{Binding IsRenameSdrEnabled}"
                       IsEnabled="{Binding IsSettingsEnabled}"
-                      ToolTip.Tip="{x:Static lang:Resources.DlssIvRenameSdrTip}"/>
+                      ToolTip.Tip="{x:Static lang:Resources.DlssIvRenameSdrTip}"
+                      ToolTip.ShowOnDisabled="True"/>
         </WrapPanel>
 
         <!-- Frame generation (latest DLSS-IV) -->
@@ -99,6 +104,7 @@
                       IsChecked="{Binding IsFrameGenerationEnabled}"
                       IsEnabled="{Binding IsSettingsEnabled}"
                       ToolTip.Tip="{x:Static lang:Resources.DlssIvFrameGenerationTip}"
+                      ToolTip.ShowOnDisabled="True"
                       Margin="0,0,10,0"/>
             <TextBlock Text="{x:Static lang:Resources.DlssIvFrameGenerationMinFps}"
                        VerticalAlignment="Center"

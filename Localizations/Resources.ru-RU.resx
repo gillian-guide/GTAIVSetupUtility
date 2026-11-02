@@ -27,9 +27,7 @@
     <data name="TipsNote" xml:space="preserve">
         <value>Не трогайте настройки, если не уверены в том, что делаете.</value>
     </data>
-    <data name="Tips" xml:space="preserve">
-        <value>Подсказки</value>
-    </data>
+
     <data name="InstallAsyncPatch" xml:space="preserve">
         <value>Установить async патч</value>
     </data>

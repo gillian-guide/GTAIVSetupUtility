@@ -85,15 +85,6 @@ namespace GTAIVSetupUtility.Localizations {
         /// <summary>
         ///   Looks up a localized string.
         /// </summary>
-        public static string Tips {
-            get {
-                return ResourceManager.GetString("Tips", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
         public static string InstallAsyncPatch {
             get {
                 return ResourceManager.GetString("InstallAsyncPatch", resourceCulture);

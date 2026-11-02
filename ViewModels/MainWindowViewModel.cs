@@ -33,16 +33,10 @@ public partial class MainWindowViewModel : ObservableObject
     public partial TextDecorationCollection? DirectoryLabelDecorations { get; set; } = TextDecorations.Underline;
 
     [ObservableProperty]
-    public partial TextDecorationCollection? TipsNoteDecorations { get; set; }
-
-    [ObservableProperty]
     public partial bool IsDirectoryButtonDefault { get; set; } = true;
 
     [ObservableProperty]
     public partial bool IsDirectoryButtonEnabled { get; set; } = true;
-
-    [ObservableProperty]
-    public partial bool ShowTips { get; set; } = true;
 
     [ObservableProperty]
     public partial bool IsDxvkPanelEnabled { get; set; }
@@ -179,11 +173,10 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         DlssIv.ModEnabledChanged += OnDlssIvModEnabledChanged;
-        DlssIv.ShowTips = ShowTips;
         Logger.Info(" Application sucessfully initialized!");
     }
 
-    partial void OnShowTipsChanged(bool value) => DlssIv.ShowTips = value;
+    partial void OnAvailableVidMemChanged(bool value) => IsVidMemRadioEnabled = value;
 
     private async void OnDlssIvModEnabledChanged(object? sender, EventArgs e)
     {
@@ -506,7 +499,6 @@ public partial class MainWindowViewModel : ObservableObject
         GameDirectoryPath = folderPath;
         DirectoryLabelFontWeight = FontWeight.Normal;
         DirectoryLabelDecorations = null;
-        TipsNoteDecorations = TextDecorations.Underline;
         IsLaunchOptionsPanelEnabled = true;
         IsDirectoryButtonDefault = false;
 
@@ -738,100 +730,6 @@ public partial class MainWindowViewModel : ObservableObject
         {
             _isEnsuringDxvk = false;
             IsDxvkPanelEnabled = true;
-        }
-    }
-
-    [RelayCommand]
-    private async Task AsyncClick()
-    {
-        Logger.Info($" User toggled async to: {InstallAsync}");
-        if (ShowTips)
-        {
-            await ShowTip(Resources.AsyncTipTitle, Resources.AsyncTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task VSyncClick()
-    {
-        Logger.Info($" User toggled vsync to: {EnableVSync}");
-        if (ShowTips)
-        {
-            await ShowTip(Resources.VSyncTipTitle, Resources.VSyncTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task LatencyClick()
-    {
-        Logger.Info($" User toggled max frame latency to: {SetMaxFrameLatency}");
-        if (ShowTips)
-        {
-            await ShowTip(Resources.LatencyTipTitle, Resources.LatencyTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task NoRestrictionsClick()
-    {
-        Logger.Info($" User toggled -norestrictions to: {NoRestrictions}");
-        if (ShowTips)
-        {
-            await ShowTip(Resources.NoRestrictionsTipTitle, Resources.NoRestrictionsTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task NoMemRestrictClick()
-    {
-        Logger.Info($" User toggled -nomemrestrict to: {NoMemRestrict}");
-        if (ShowTips)
-        {
-            await ShowTip(Resources.NoMemRestrictTipTitle, Resources.NoMemRestrictTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task VidMemClick()
-    {
-        Logger.Info($" User toggled -availablevidmem to: {AvailableVidMem}");
-        IsVidMemRadioEnabled = AvailableVidMem;
-
-        if (ShowTips)
-        {
-            await ShowTip(Resources.AvailableVidMemTipTitle, Resources.AvailableVidMemTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task VidMemLockClick()
-    {
-        Logger.Info($" User toggled the video memory lock to: {(IsVidMem3GB ? Resources.VidMemLimit3GB : Resources.VidMemLimit4GB)}");
-        if (ShowTips)
-        {
-            await ShowTip(Resources.AvailableVidMemLockTipTitle, Resources.AvailableVidMemLockTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task WindowedClick()
-    {
-        Logger.Info($" User toggled Borderless Windowed to: {BorderlessWindowed}");
-
-        if (ShowTips)
-        {
-            await ShowTip(Resources.WindowedTipTitle, Resources.WindowedTipDescription);
-        }
-    }
-
-    [RelayCommand]
-    private async Task MonitorDetailsClick()
-    {
-        Logger.Info($" User toggled Monitor Details to: {MonitorDetails}");
-
-        if (ShowTips)
-        {
-            await ShowTip(Resources.MonitorDetailsTipTitle, Resources.MonitorDetailsTipDescription);
         }
     }
 
@@ -1265,10 +1163,5 @@ public partial class MainWindowViewModel : ObservableObject
         IsVidMemCheckboxEnabled = true;
         AvailableVidMem = true;
         IsVidMemRadioEnabled = true;
-    }
-
-    private static async Task ShowTip(string title, string message)
-    {
-        await MessageBoxService.ShowAsync(title, message, Icon.Info);
     }
 }

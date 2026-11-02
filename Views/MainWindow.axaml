@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lang="clr-namespace:GTAIVSetupUtility.Localizations"
         xmlns:dlss="clr-namespace:GTAIVSetupUtility.Modules.DlssIv"
+        xmlns:controls="using:GTAIVSetupUtility.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GTAIVSetupUtility.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -13,8 +14,7 @@
         TransparencyLevelHint="Mica, AcrylicBlur"
         Background="Transparent"
         Icon="/Assets/ivlogo.ico"
-        Width="760"
-        SizeToContent="Height"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         CanResize="False"
         Title="{x:Static lang:Resources.Title}">
@@ -54,22 +54,13 @@
                     IsEnabled="{Binding IsDirectoryButtonEnabled}"/>
         </Grid>
         
-        <!-- Tips Section -->
-        <Grid Grid.Row="3" 
-              ColumnDefinitions="Auto,Auto"
-              HorizontalAlignment="Center"
-              Margin="0,0,0,5">
-            <TextBlock Grid.Column="0"
-                       Text="{x:Static lang:Resources.TipsNote}" 
-                       FontSize="14" 
-                       TextWrapping="Wrap"
-                       TextDecorations="{Binding TipsNoteDecorations}"
-                       VerticalAlignment="Center"/>
-            <CheckBox Grid.Column="1"
-                      Content="{x:Static lang:Resources.Tips}" 
-                      IsChecked="{Binding ShowTips}"
-                      Margin="5,0,0,0"/>
-        </Grid>
+        <!-- Tips note -->
+        <TextBlock Grid.Row="3"
+                   Text="{x:Static lang:Resources.TipsNote}"
+                   FontSize="14"
+                   TextWrapping="Wrap"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,5"/>
         
         <!-- Main Options -->
         <Grid Grid.Row="4" ColumnDefinitions="*,Auto" Margin="0,0,0,5">
@@ -84,17 +75,32 @@
                           IsChecked="{Binding InstallAsync}" 
                           IsEnabled="{Binding IsAsyncEnabled}"
                           IsVisible="{Binding IsAsyncVisible}"
-                          Command="{Binding AsyncClickCommand}"/>
+                          ToolTip.ShowOnDisabled="True">
+                    <ToolTip.Tip>
+                        <controls:TipContent Title="{x:Static lang:Resources.AsyncTipTitle}"
+                                             Description="{x:Static lang:Resources.AsyncTipDescription}"/>
+                    </ToolTip.Tip>
+                </CheckBox>
                 
                 <CheckBox Grid.Row="1"
                           Content="{x:Static lang:Resources.EnableVSync}" 
                           IsChecked="{Binding EnableVSync}"
-                          Command="{Binding VSyncClickCommand}"/>
+                          ToolTip.ShowOnDisabled="True">
+                    <ToolTip.Tip>
+                        <controls:TipContent Title="{x:Static lang:Resources.VSyncTipTitle}"
+                                             Description="{x:Static lang:Resources.VSyncTipDescription}"/>
+                    </ToolTip.Tip>
+                </CheckBox>
                 
                 <CheckBox Grid.Row="2"
                           Content="{x:Static lang:Resources.SetMaxFrameLatency}" 
                           IsChecked="{Binding SetMaxFrameLatency}"
-                          Command="{Binding LatencyClickCommand}"/>
+                          ToolTip.ShowOnDisabled="True">
+                    <ToolTip.Tip>
+                        <controls:TipContent Title="{x:Static lang:Resources.LatencyTipTitle}"
+                                             Description="{x:Static lang:Resources.LatencyTipDescription}"/>
+                    </ToolTip.Tip>
+                </CheckBox>
                 
                 <Grid Grid.Row="3" 
                       ColumnDefinitions="Auto,Auto"
@@ -128,12 +134,22 @@
                     <CheckBox Grid.Column="0"
                               Content="{x:Static lang:Resources.NoRestrictions}" 
                               IsChecked="{Binding NoRestrictions}"
-                              Command="{Binding NoRestrictionsClickCommand}"/>
+                              ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.NoRestrictionsTipTitle}"
+                                                 Description="{x:Static lang:Resources.NoRestrictionsTipDescription}"/>
+                        </ToolTip.Tip>
+                    </CheckBox>
                     <CheckBox Grid.Column="1"
                               Content="{x:Static lang:Resources.NoMemRestrict}" 
                               IsChecked="{Binding NoMemRestrict}"
-                              Command="{Binding NoMemRestrictClickCommand}"
-                              Margin="5,0,0,0"/>
+                              Margin="5,0,0,0"
+                              ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.NoMemRestrictTipTitle}"
+                                                 Description="{x:Static lang:Resources.NoMemRestrictTipDescription}"/>
+                        </ToolTip.Tip>
+                    </CheckBox>
                 </Grid>
                 
                 <!-- Vidmem Options -->
@@ -143,7 +159,12 @@
                               Content="{x:Static lang:Resources.AvailableVidMem}" 
                               IsChecked="{Binding AvailableVidMem}"
                               IsEnabled="{Binding IsVidMemCheckboxEnabled}"
-                              Command="{Binding VidMemClickCommand}"/>
+                              ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.AvailableVidMemTipTitle}"
+                                                 Description="{x:Static lang:Resources.AvailableVidMemTipDescription}"/>
+                        </ToolTip.Tip>
+                    </CheckBox>
                     <TextBlock Grid.Column="1"
                                Text="{x:Static lang:Resources.LockedTo}" 
                                FontSize="14" 
@@ -154,14 +175,24 @@
                                  Content="{x:Static lang:Resources.VidMemLimit3GB}" 
                                  IsChecked="{Binding IsVidMem3GB}" 
                                  IsEnabled="{Binding IsVidMemRadioEnabled}"
-                                 Command="{Binding VidMemLockClickCommand}"
-                                 Margin="5,0,0,0"/>
+                                 Margin="5,0,0,0"
+                                 ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.AvailableVidMemLockTipTitle}"
+                                                 Description="{x:Static lang:Resources.AvailableVidMemLockTipDescription}"/>
+                        </ToolTip.Tip>
+                    </RadioButton>
                     <RadioButton Grid.Column="3"
                                  Content="{x:Static lang:Resources.VidMemLimit4GB}" 
                                  IsChecked="{Binding !IsVidMem3GB}" 
                                  IsEnabled="{Binding IsVidMemRadioEnabled}"
-                                 Command="{Binding VidMemLockClickCommand}"
-                                 Margin="5,0,0,0"/>
+                                 Margin="5,0,0,0"
+                                 ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.AvailableVidMemLockTipTitle}"
+                                                 Description="{x:Static lang:Resources.AvailableVidMemLockTipDescription}"/>
+                        </ToolTip.Tip>
+                    </RadioButton>
                 </Grid>
                 
                 <!-- Windowed Options -->
@@ -171,12 +202,22 @@
                               Content="{x:Static lang:Resources.BorderlessWindowed}" 
                               IsChecked="{Binding BorderlessWindowed}"
                               IsEnabled="{Binding IsBorderlessWindowedEnabled}"
-                              Command="{Binding WindowedClickCommand}"/>
+                              ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.WindowedTipTitle}"
+                                                 Description="{x:Static lang:Resources.WindowedTipDescription}"/>
+                        </ToolTip.Tip>
+                    </CheckBox>
                     <CheckBox Grid.Column="1"
                               Content="{x:Static lang:Resources.MonitorDetails}" 
                               IsChecked="{Binding MonitorDetails}"
-                              Command="{Binding MonitorDetailsClickCommand}"
-                              Margin="5,0,0,0"/>
+                              Margin="5,0,0,0"
+                              ToolTip.ShowOnDisabled="True">
+                        <ToolTip.Tip>
+                            <controls:TipContent Title="{x:Static lang:Resources.MonitorDetailsTipTitle}"
+                                                 Description="{x:Static lang:Resources.MonitorDetailsTipDescription}"/>
+                        </ToolTip.Tip>
+                    </CheckBox>
                 </Grid>
                 
                 <!-- Setup Button -->
