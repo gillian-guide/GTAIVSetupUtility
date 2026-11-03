@@ -3,7 +3,7 @@ Semi-automatically installs DXVK and launch options for your GTA IV installation
 
 Built with .NET 10 and Avalonia 12. Runs on Windows and, through Wine/Proton, on Linux.
 
-<img width="1007" height="584" alt="image" src="https://github.com/user-attachments/assets/ac01eb25-bf25-4121-ac94-a9347366452c" />
+<img width="628" height="479" alt="image" src="https://github.com/user-attachments/assets/3ffed728-edde-4a39-b1ec-9572295cef77" />
 
 ## Usage
 - Launch the tool. If `GTAIV.exe` is in the same folder as the utility, that folder is selected automatically.
