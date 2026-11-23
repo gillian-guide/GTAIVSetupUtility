@@ -217,6 +217,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
         {
             UpdateAvailability();
             LoadFromConfig();
+            EnsureVulkanDisabledIfUnsupported();
         }
 
         UpdateButtonStates();
@@ -310,6 +311,7 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
         UpdateAvailability();
         LoadFromConfig();
+        EnsureVulkanDisabledIfUnsupported();
 
         // Do not litter a game folder that has no DLSS-IV installation with our state file.
         if (_installation.IsPresent)
@@ -317,6 +319,29 @@ public partial class DlssIvViewModel : ObservableObject, IDisposable
 
         UpdateButtonStates();
         _ = HandleUnsupportedDxvkAsync();
+    }
+
+    /// <summary>
+    /// Startup cleanup: if the detected GPU genuinely cannot provide the Vulkan tier DLSS-IV
+    /// needs, make sure FusionFix/d3d9.cfg are not left pointing at Vulkan. This is independent
+    /// of whether the user has touched the mod or its enable checkbox.
+    /// </summary>
+    private void EnsureVulkanDisabledIfUnsupported()
+    {
+        if (!_hardwareKnown || _dxvkFeatureTier == 3 || _installation == null ||
+            !_installation.IsPresent || !_hasFusionFix)
+        {
+            return;
+        }
+
+        try
+        {
+            DlssIvConfigService.SetVulkanEnabled(_installation, _fusionFixConfigPath, enabled: false);
+        }
+        catch (Exception ex)
+        {
+            Logger.Warn(ex, " Could not turn Vulkan off for the unsupported GPU.");
+        }
     }
 
     private void RefreshInstallationFeatures()
