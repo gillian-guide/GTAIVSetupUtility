@@ -688,10 +688,12 @@ public partial class MainWindowViewModel : ObservableObject
             return true;
         }
 
-        if (latestVersion is null && installedVersion is not null)
+        if (latestVersion is null)
         {
-            Logger.Warn($" Could not verify the latest {plan.Name} release; keeping the installed build.");
-            return true;
+            // DLSS-IV is only supported on the latest DXVK. An older installed build is not a
+            // fallback: if the latest release cannot be resolved, treat Vulkan as unavailable.
+            Logger.Warn($" Could not verify the latest {plan.Name} release; DLSS-IV cannot run on an older build.");
+            return false;
         }
 
         _isEnsuringDxvk = true;
