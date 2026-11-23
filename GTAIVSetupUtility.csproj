@@ -5,7 +5,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Assets\ivlogo.ico</ApplicationIcon>
 
-        <Version>3.0.0</Version>
+        <Version>3.1.2</Version>
         <Title>GTAIVSetupUtility</Title>
         <Authors>Gillian</Authors>
         <Company>Gillian</Company>
