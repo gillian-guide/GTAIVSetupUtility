@@ -733,6 +733,32 @@ public partial class MainWindowViewModel : ObservableObject
         }
     }
 
+    private List<string> BuildDxvkConfig(DxvkInstallPlan plan)
+    {
+        var config = new List<string>();
+
+        if (EnableVSync)
+        {
+            Logger.Debug(" Adding d3d9.presentInterval = 1 and d3d9.numBackBuffers = 3");
+            config.Add("d3d9.presentInterval = 1");
+            config.Add("d3d9.numBackBuffers = 3");
+        }
+
+        if (SetMaxFrameLatency)
+        {
+            Logger.Debug(" Adding d3d9.maxFrameLatency = 1");
+            config.Add("d3d9.maxFrameLatency = 1");
+        }
+
+        if (plan.Async)
+            config.Add("dxvk.enableAsync = true");
+
+        if (plan.GplAsyncCache)
+            config.Add("dxvk.gplAsyncCache = true");
+
+        return config;
+    }
+
     [RelayCommand]
     private async Task InstallDxvkAsync()
     {
@@ -745,6 +771,8 @@ public partial class MainWindowViewModel : ObservableObject
             return;
         }
 
+        List<string> dxvkConfig = BuildDxvkConfig(plan);
+
         if (!string.IsNullOrWhiteSpace(GameDirectoryPath))
         {
             string? installedVersion = DxvkVersionService.GetInstalledVersion(GameDirectoryPath);
@@ -755,11 +783,21 @@ public partial class MainWindowViewModel : ObservableObject
                     ? DxvkVersionService.IsSameVersion(installedVersion, targetVersion)
                     : DxvkVersionService.IsAtLeast(installedVersion, targetVersion)))
             {
-                Logger.Info($" DXVK {installedVersion} is already at least {targetVersion}; skipping the download.");
-                await MessageBoxService.ShowAsync(
-                    Resources.DxvkAlreadyLatestTitle,
-                    string.Format(Resources.DxvkAlreadyLatestDescription, installedVersion),
-                    Icon.Info);
+                Logger.Info($" DXVK {installedVersion} is already at least {targetVersion}; writing dxvk.conf only.");
+
+                try
+                {
+                    await DxvkInstallerService.WriteConfigAsync(GameDirectoryPath, dxvkConfig);
+                    await MessageBoxService.ShowAsync(
+                        Resources.DxvkAlreadyLatestTitle,
+                        Resources.DxvkAlreadyLatestDescription,
+                        Icon.Info);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, " Could not write dxvk.conf for the existing DXVK installation.");
+                    await MessageBoxService.ShowErrorAsync(Resources.DxvkConfigErrorTitle, ex.Message);
+                }
 
                 if (DlssIv.IsModEnabled && DlssIv.HasFusionFix)
                 {
@@ -791,23 +829,6 @@ public partial class MainWindowViewModel : ObservableObject
         var progressReceiver = new Progress<int>(percent => { DownloadProgress = percent; });
         var stateReceiver = new Progress<DxvkState>(state => { InstallationState = state; });
 
-        List<string> dxvkConfig = [];
-
-        Logger.Info(" Setting up dxvk.conf in accordance with user's choices.");
-
-        if (EnableVSync)
-        {
-            Logger.Debug(" Adding d3d9.presentInterval = 1 and d3d9.numBackBuffers = 3");
-            dxvkConfig.Add("d3d9.presentInterval = 1");
-            dxvkConfig.Add("d3d9.numBackBuffers = 3");
-        }
-
-        if (SetMaxFrameLatency)
-        {
-            Logger.Debug(" Adding d3d9.maxFrameLatency = 1");
-            dxvkConfig.Add("d3d9.maxFrameLatency = 1");
-        }
-
         try
         {
             string versionName = plan.LatestToken is null
@@ -815,12 +836,6 @@ public partial class MainWindowViewModel : ObservableObject
                 : string.Format(Resources.LatestText, plan.LatestToken);
 
             Logger.Info($" Installing {versionName}...");
-
-            if (plan.Async)
-                dxvkConfig.Add("dxvk.enableAsync = true");
-
-            if (plan.GplAsyncCache)
-                dxvkConfig.Add("dxvk.gplAsyncCache = true");
 
             await DxvkInstallerService.InstallAsync(
                 plan,

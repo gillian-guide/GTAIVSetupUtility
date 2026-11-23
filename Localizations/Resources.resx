@@ -112,40 +112,22 @@ Press 'No' to install the version matching your iGPU instead.</value>
 
 If 'No' is selected, DXVK will be installed following the normal procedure.</value>
     </data>
-    <data name="AsyncTipTitle" xml:space="preserve">
-        <value>Regarding async</value>
-    </data>
     <data name="AsyncTipDescription" xml:space="preserve">
         <value>DXVK-async is the next best alternative to stutter-less experience - since your GPU doesn't support GPL with Fast Linking, you can reduce stutter with async shader building, which will be a little faster than traditional shader building.</value>
-    </data>
-    <data name="VSyncTipTitle" xml:space="preserve">
-        <value>Regarding VSync</value>
     </data>
     <data name="VSyncTipDescription" xml:space="preserve">
         <value>The in-game VSync implementation produces framepacing issues. DXVK's VSync implementation should be preferred.
 
 It's recommended to keep this on and in-game's implementation off.</value>
     </data>
-    <data name="LatencyTipTitle" xml:space="preserve">
-        <value>Regarding Max Frame Latency</value>
-    </data>
     <data name="LatencyTipDescription" xml:space="preserve">
         <value>This option may help avoiding further framepacing issues. It's recommended to keep this on.</value>
-    </data>
-    <data name="NoRestrictionsTipTitle" xml:space="preserve">
-        <value>Regarding -norestrictions</value>
     </data>
     <data name="NoRestrictionsTipDescription" xml:space="preserve">
         <value>This option allows you to set any in-game settings independently of what the game restricts you to. It's recommended to keep this on.</value>
     </data>
-    <data name="NoMemRestrictTipTitle" xml:space="preserve">
-        <value>Regarding -nomemrestrict</value>
-    </data>
     <data name="NoMemRestrictTipDescription" xml:space="preserve">
         <value>This option allows the game to use all the dedicated memory resources up to the limits. It's recommended to keep this on.</value>
-    </data>
-    <data name="AvailableVidMemTipTitle" xml:space="preserve">
-        <value>Regarding -availablevidmem</value>
     </data>
     <data name="AvailableVidMemTipDescription" xml:space="preserve">
         <value>This option forces a specific value of video memory due to the game not being able to do so automatically sometimes. It's recommended to keep this at default.</value>
@@ -157,17 +139,8 @@ The game is 32-bit, so going beyond 4GB is entirely pointless. However, some peo
 
 It's recommended to keep this at default. Option is disabled if latest FusionFix is detected.</value>
     </data>
-    <data name="AvailableVidMemLockTipTitle" xml:space="preserve">
-        <value>Regarding the memory size locks</value>
-    </data>
-    <data name="WindowedTipTitle" xml:space="preserve">
-        <value>Regarding Borderless Windowed</value>
-    </data>
     <data name="WindowedTipDescription" xml:space="preserve">
         <value>This option allows to use Borderless Fullscreen instead of Exclusive Fullscreen. Provides better experience and sometimes better performance. It's recommended to keep this on.</value>
-    </data>
-    <data name="MonitorDetailsTipTitle" xml:space="preserve">
-        <value>Regarding Monitor Details</value>
     </data>
     <data name="MonitorDetailsTipDescription" xml:space="preserve">
         <value>This option forces a specific resolution and refresh rate due to the game not being able to do so automatically sometimes. It's recommended to keep this at default.</value>
@@ -628,7 +601,10 @@ These features have been disabled. Launch options configuration remains availabl
         <value>DXVK is already up to date</value>
     </data>
     <data name="DxvkAlreadyLatestDescription" xml:space="preserve">
-        <value>DXVK {0} is already installed in the game folder. The tool will not download it again.</value>
+        <value>DXVK is already installed and up to date. dxvk.conf has still been written to the game folder.</value>
+    </data>
+    <data name="DxvkConfigErrorTitle" xml:space="preserve">
+        <value>Could not write dxvk.conf</value>
     </data>
     <data name="DlssIvInstallFsr4" xml:space="preserve">
         <value>Install FSR 4</value>

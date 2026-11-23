@@ -112,40 +112,22 @@
 
 Если выберете «Нет», DXVK будет установлен по стандартной процедуре.</value>
     </data>
-    <data name="AsyncTipTitle" xml:space="preserve">
-        <value>На счёт async</value>
-    </data>
     <data name="AsyncTipDescription" xml:space="preserve">
         <value>DXVK-async — лучшая альтернатива для игры без фризов. Так как ваша видеокарта не поддерживает GPL с Fast Linking, вы можете уменьшить статтеры с помощью асинхронной компиляции шейдеров, что будет немного быстрее традиционного метода.</value>
-    </data>
-    <data name="VSyncTipTitle" xml:space="preserve">
-        <value>На счёт VSync</value>
     </data>
     <data name="VSyncTipDescription" xml:space="preserve">
         <value>Внутриигровая вертикальная синхронизация (VSync) вызывает проблемы с плавностью. Лучше использовать реализацию VSync от DXVK.
 
 Рекомендуется включить эту опцию, а внутриигровую — выключить.</value>
     </data>
-    <data name="LatencyTipTitle" xml:space="preserve">
-        <value>На счёт Max Frame Latency</value>
-    </data>
     <data name="LatencyTipDescription" xml:space="preserve">
         <value>Эта опция может помочь избежать дополнительных проблем с плавностью. Рекомендуется оставить включенной.</value>
-    </data>
-    <data name="NoRestrictionsTipTitle" xml:space="preserve">
-        <value>На счёт -norestrictions</value>
     </data>
     <data name="NoRestrictionsTipDescription" xml:space="preserve">
         <value>Эта опция позволяет выставлять любые настройки в игре независимо от ограничений, накладываемых игрой. Рекомендуется оставить включенной.</value>
     </data>
-    <data name="NoMemRestrictTipTitle" xml:space="preserve">
-        <value>На счёт -nomemrestrict</value>
-    </data>
     <data name="NoMemRestrictTipDescription" xml:space="preserve">
         <value>Эта опция позволяет игре использовать всю выделенную память до предела. Рекомендуется оставить включенной.</value>
-    </data>
-    <data name="AvailableVidMemTipTitle" xml:space="preserve">
-        <value>На счёт -availablevidmem</value>
     </data>
     <data name="AvailableVidMemTipDescription" xml:space="preserve">
         <value>Эта опция принудительно задает значение видеопамяти, так как игра иногда не может определить его автоматически. Рекомендуется оставить значение по умолчанию.</value>
@@ -157,17 +139,8 @@
 
 Рекомендуется оставить по умолчанию. Опция отключена, если обнаружен последний FusionFix.</value>
     </data>
-    <data name="AvailableVidMemLockTipTitle" xml:space="preserve">
-        <value>На счёт ограничений объема памяти</value>
-    </data>
-    <data name="WindowedTipTitle" xml:space="preserve">
-        <value>На счёт окна без границ</value>
-    </data>
     <data name="WindowedTipDescription" xml:space="preserve">
         <value>Эта опция позволяет использовать полноэкранный оконный режим без границ вместо эксклюзивного полноэкранного режима. Обеспечивает более приятное использование ПК и иногда улучшенную производительность. Рекомендуется оставить эту опцию включенной.</value>
-    </data>
-    <data name="MonitorDetailsTipTitle" xml:space="preserve">
-        <value>На счёт сведений о мониторе</value>
     </data>
     <data name="MonitorDetailsTipDescription" xml:space="preserve">
         <value>Эта опция принудительно задает разрешение и частоту обновления, так как игра иногда не может сделать это автоматически. Рекомендуется оставить по умолчанию.</value>
@@ -624,7 +597,10 @@ Steam Achievements останутся включенными и продолжа
         <value>DXVK уже обновлён</value>
     </data>
     <data name="DxvkAlreadyLatestDescription" xml:space="preserve">
-        <value>DXVK {0} уже установлен в папке игры. Утилита не будет скачивать его заново.</value>
+        <value>DXVK уже установлен и обновлён. Файл dxvk.conf всё равно записан в папку игры.</value>
+    </data>
+    <data name="DxvkConfigErrorTitle" xml:space="preserve">
+        <value>Не удалось записать dxvk.conf</value>
     </data>
     <data name="DlssIvInstallFsr4" xml:space="preserve">
         <value>Установить FSR 4</value>

@@ -6,11 +6,6 @@
              x:CompileBindings="True"
              MaxWidth="420">
 
-    <StackPanel Spacing="3">
-        <TextBlock Text="{Binding Title}"
-                   FontWeight="SemiBold"
-                   TextWrapping="Wrap"/>
-        <TextBlock Text="{Binding Description}"
-                   TextWrapping="Wrap"/>
-    </StackPanel>
+    <TextBlock Text="{Binding Description}"
+               TextWrapping="Wrap"/>
 </UserControl>

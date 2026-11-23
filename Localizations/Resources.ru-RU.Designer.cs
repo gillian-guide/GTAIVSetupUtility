@@ -319,27 +319,9 @@ namespace GTAIVSetupUtility.Localizations {
         /// <summary>
         ///   Looks up a localized string.
         /// </summary>
-        public static string AsyncTipTitle {
-            get {
-                return ResourceManager.GetString("AsyncTipTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
         public static string AsyncTipDescription {
             get {
                 return ResourceManager.GetString("AsyncTipDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string VSyncTipTitle {
-            get {
-                return ResourceManager.GetString("VSyncTipTitle", resourceCulture);
             }
         }
 
@@ -355,27 +337,9 @@ namespace GTAIVSetupUtility.Localizations {
         /// <summary>
         ///   Looks up a localized string.
         /// </summary>
-        public static string LatencyTipTitle {
-            get {
-                return ResourceManager.GetString("LatencyTipTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
         public static string LatencyTipDescription {
             get {
                 return ResourceManager.GetString("LatencyTipDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string NoRestrictionsTipTitle {
-            get {
-                return ResourceManager.GetString("NoRestrictionsTipTitle", resourceCulture);
             }
         }
 
@@ -391,27 +355,9 @@ namespace GTAIVSetupUtility.Localizations {
         /// <summary>
         ///   Looks up a localized string.
         /// </summary>
-        public static string NoMemRestrictTipTitle {
-            get {
-                return ResourceManager.GetString("NoMemRestrictTipTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
         public static string NoMemRestrictTipDescription {
             get {
                 return ResourceManager.GetString("NoMemRestrictTipDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string AvailableVidMemTipTitle {
-            get {
-                return ResourceManager.GetString("AvailableVidMemTipTitle", resourceCulture);
             }
         }
 
@@ -436,36 +382,9 @@ namespace GTAIVSetupUtility.Localizations {
         /// <summary>
         ///   Looks up a localized string.
         /// </summary>
-        public static string AvailableVidMemLockTipTitle {
-            get {
-                return ResourceManager.GetString("AvailableVidMemLockTipTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string WindowedTipTitle {
-            get {
-                return ResourceManager.GetString("WindowedTipTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
         public static string WindowedTipDescription {
             get {
                 return ResourceManager.GetString("WindowedTipDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string.
-        /// </summary>
-        public static string MonitorDetailsTipTitle {
-            get {
-                return ResourceManager.GetString("MonitorDetailsTipTitle", resourceCulture);
             }
         }
 
@@ -1501,6 +1420,15 @@ namespace GTAIVSetupUtility.Localizations {
         public static string DxvkAlreadyLatestDescription {
             get {
                 return ResourceManager.GetString("DxvkAlreadyLatestDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string.
+        /// </summary>
+        public static string DxvkConfigErrorTitle {
+            get {
+                return ResourceManager.GetString("DxvkConfigErrorTitle", resourceCulture);
             }
         }
 

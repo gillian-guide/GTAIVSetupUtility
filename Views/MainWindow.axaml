@@ -77,7 +77,7 @@
                           IsVisible="{Binding IsAsyncVisible}"
                           ToolTip.ShowOnDisabled="True">
                     <ToolTip.Tip>
-                        <controls:TipContent Title="{x:Static lang:Resources.AsyncTipTitle}"
+                        <controls:TipContent
                                              Description="{x:Static lang:Resources.AsyncTipDescription}"/>
                     </ToolTip.Tip>
                 </CheckBox>
@@ -87,7 +87,7 @@
                           IsChecked="{Binding EnableVSync}"
                           ToolTip.ShowOnDisabled="True">
                     <ToolTip.Tip>
-                        <controls:TipContent Title="{x:Static lang:Resources.VSyncTipTitle}"
+                        <controls:TipContent
                                              Description="{x:Static lang:Resources.VSyncTipDescription}"/>
                     </ToolTip.Tip>
                 </CheckBox>
@@ -97,7 +97,7 @@
                           IsChecked="{Binding SetMaxFrameLatency}"
                           ToolTip.ShowOnDisabled="True">
                     <ToolTip.Tip>
-                        <controls:TipContent Title="{x:Static lang:Resources.LatencyTipTitle}"
+                        <controls:TipContent
                                              Description="{x:Static lang:Resources.LatencyTipDescription}"/>
                     </ToolTip.Tip>
                 </CheckBox>
@@ -136,7 +136,7 @@
                               IsChecked="{Binding NoRestrictions}"
                               ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.NoRestrictionsTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.NoRestrictionsTipDescription}"/>
                         </ToolTip.Tip>
                     </CheckBox>
@@ -146,7 +146,7 @@
                               Margin="5,0,0,0"
                               ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.NoMemRestrictTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.NoMemRestrictTipDescription}"/>
                         </ToolTip.Tip>
                     </CheckBox>
@@ -161,7 +161,7 @@
                               IsEnabled="{Binding IsVidMemCheckboxEnabled}"
                               ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.AvailableVidMemTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.AvailableVidMemTipDescription}"/>
                         </ToolTip.Tip>
                     </CheckBox>
@@ -178,7 +178,7 @@
                                  Margin="5,0,0,0"
                                  ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.AvailableVidMemLockTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.AvailableVidMemLockTipDescription}"/>
                         </ToolTip.Tip>
                     </RadioButton>
@@ -189,7 +189,7 @@
                                  Margin="5,0,0,0"
                                  ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.AvailableVidMemLockTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.AvailableVidMemLockTipDescription}"/>
                         </ToolTip.Tip>
                     </RadioButton>
@@ -204,7 +204,7 @@
                               IsEnabled="{Binding IsBorderlessWindowedEnabled}"
                               ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.WindowedTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.WindowedTipDescription}"/>
                         </ToolTip.Tip>
                     </CheckBox>
@@ -214,7 +214,7 @@
                               Margin="5,0,0,0"
                               ToolTip.ShowOnDisabled="True">
                         <ToolTip.Tip>
-                            <controls:TipContent Title="{x:Static lang:Resources.MonitorDetailsTipTitle}"
+                            <controls:TipContent
                                                  Description="{x:Static lang:Resources.MonitorDetailsTipDescription}"/>
                         </ToolTip.Tip>
                     </CheckBox>

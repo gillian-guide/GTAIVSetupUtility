@@ -62,6 +62,21 @@ internal static class DxvkInstallerService
         Array.Find(Plans, plan => plan.Tier == tier && plan.Async == async);
 
     /// <summary>
+    /// Overwrites dxvk.conf with the current option choices. Used when the installed DXVK is
+    /// already current and only the config needs to be (re)written.
+    /// </summary>
+    public static async Task WriteConfigAsync(
+        string gameDirectory,
+        IReadOnlyList<string> lines,
+        CancellationToken cancellationToken = default)
+    {
+        Logger.Debug(" Writing dxvk.conf...");
+        await File.WriteAllLinesAsync(
+            Path.Combine(gameDirectory, "dxvk.conf"), lines, cancellationToken).ConfigureAwait(false);
+        Logger.Debug(" dxvk.conf successfully written to the game folder.");
+    }
+
+    /// <summary>
     /// Resolves the version this plan is meant to provide. It must query the repository that
     /// belongs to the plan (upstream DXVK, gplasync, Sarek or the legacy async fork), not always
     /// the latest doitsujin release.
